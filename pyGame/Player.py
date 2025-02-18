@@ -22,14 +22,14 @@ class Player(Component):
 
     def update(self, delta_time): 
         keys = pygame.key.get_pressed()
-        speed = 250
+        speed = 300
         movement = pygame.math.Vector2(0,0)
         self._time_since_last_shot += delta_time
 
-        if keys[pygame.K_w]:
-            movement.y -= speed
-        if keys[pygame.K_s]:
-            movement.y += speed
+        # if keys[pygame.K_w]:
+        #     movement.y -= speed
+        # if keys[pygame.K_s]:
+        #     movement.y += speed
         if keys[pygame.K_a]:
             movement.x -= speed
         if keys[pygame.K_d]:
