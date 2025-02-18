@@ -71,6 +71,7 @@ class Player(Component):
     
     def aqquire_power_up(self):
         print("power uppity aqquired")
+        
         power = self._gameObject.get_component("BasePowerUp")
         power.power_change()
         
