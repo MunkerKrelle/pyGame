@@ -19,8 +19,6 @@ class GameObject:
     def destroy(self):
         self._is_destroyed = True
 
-
-
     def add_component(self, component):
         component_name = component.__class__.__name__
         self._components[component_name] = component
