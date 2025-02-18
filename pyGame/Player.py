@@ -6,7 +6,8 @@ from Components import SpriteRenderer
 
 class Player(Component):
 
-    def awake(self, game_world):  
+    def awake(self, game_world): 
+        self._lives = 3  # Spilleren starter med 3 liv 
         self._time_since_last_shot = 1
         self._shoot_dealy = 1 
         self._game_world = game_world
@@ -26,10 +27,7 @@ class Player(Component):
         movement = pygame.math.Vector2(0,0)
         self._time_since_last_shot += delta_time
 
-        # if keys[pygame.K_w]:
-        #     movement.y -= speed
-        # if keys[pygame.K_s]:
-        #     movement.y += speed
+        
         if keys[pygame.K_a]:
             movement.x -= speed
         if keys[pygame.K_d]:
@@ -65,5 +63,12 @@ class Player(Component):
             
             self._time_since_last_shot = 0
         
-
-
+    def take_damage(self):
+        self._lives -= 1
+        print(f"Player hit! Lives left: {self._lives}")
+        
+        if self._lives <= 0:
+            self.game_over()
+    def game_over(self):
+        print("Game Over!")
+        self._game_world.destroy(self._gameObject)  # Fjerner spilleren fra spillet
