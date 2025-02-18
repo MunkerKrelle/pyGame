@@ -30,4 +30,4 @@ class BasePowerUp(Component):
         damage = 200
         print(damage)
 
-        # Each power up has its own shoot function
+        # Each power up needs its own shoot function

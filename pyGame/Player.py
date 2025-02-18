@@ -72,9 +72,6 @@ class Player(Component):
     def aqquire_power_up(self):
         print("power uppity aqquired")
         power = self._gameObject.get_component("BasePowerUp")
-        
-        # power = BasePowerUp(pygame.math.Vector2(0, 0), 50, 60)
-
         power.test_power()
         
 
