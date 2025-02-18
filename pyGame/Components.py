@@ -53,6 +53,7 @@ class Transform(Component):
     def update(self, delta_time):
         pass
 
+#SpriteRenderer
 class SpriteRenderer(Component):
 
     def __init__(self, sprite_name) -> None:
