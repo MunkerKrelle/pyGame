@@ -5,7 +5,6 @@ from GameObject import GameObject
 
 class BasePowerUp(Component):
     def __init__(self,player_pos, damage, proj_speed) -> None:
-        super().__init__()
         self._gameObject = GameObject(pygame.math.Vector2(0, 0))
         self.player_pos = player_pos
         self.damage = damage
@@ -31,3 +30,6 @@ class BasePowerUp(Component):
         print(damage)
 
         # Each power up needs its own shoot function
+
+class FireballPowerUp(Component):
+    pass
