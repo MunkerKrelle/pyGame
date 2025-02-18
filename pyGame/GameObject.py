@@ -29,6 +29,7 @@ class GameObject:
         return self._components.get(component_name,None)
     
     def awake(self, game_world):
+        # print(f"Awakening GameObject {self} with components: {self._components.keys()}")
         for component in self._components.values():
             component.awake(game_world)
 

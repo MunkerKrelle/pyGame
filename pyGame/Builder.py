@@ -4,6 +4,7 @@ from Components import Animator
 from Components import SpriteRenderer
 from Player import Player
 from Enemy import Enemy
+from PowerUps import BasePowerUp
 from Components import Collider
 import pygame
 import random
@@ -23,6 +24,7 @@ class PlayerBuilder(Builder):
     def build(self):
         self._gameObject = GameObject(pygame.math.Vector2(0, 0))
         self._gameObject.add_component(Player())
+        self._gameObject.add_component(BasePowerUp(pygame.math.Vector2(0, 0), 50, 60))
         self._gameObject.add_component(SpriteRenderer("player08.png"))
         animator = self._gameObject.add_component(Animator())
         animator.add_animation("Idle","player02.png",

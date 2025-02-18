@@ -3,6 +3,7 @@ import pygame
 from GameObject import GameObject
 from Components import Laser
 from Components import SpriteRenderer
+from PowerUps import BasePowerUp
 
 class Player(Component):
 
@@ -15,7 +16,8 @@ class Player(Component):
         self._sprite_size = pygame.math.Vector2(sr.sprite_image.get_width(),sr.sprite_image.get_height())
         self._gameObject.transform.position.x = (self._screen_size.x/2) - (self._sprite_size.x/2)
         self._gameObject.transform.position.y = (self._screen_size.y) - (self._sprite_size.y)
-
+        
+        
 
     def start(self):
         pass
@@ -36,6 +38,8 @@ class Player(Component):
             movement.x += speed
         if keys[pygame.K_SPACE]:
             self.shoot()
+        if keys[pygame.K_g]:
+            self.aqquire_power_up()
 
         self._gameObject.transform.translate(movement*delta_time)
 
@@ -64,6 +68,16 @@ class Player(Component):
             self._game_world.instantiate(projectile)
             
             self._time_since_last_shot = 0
+    
+    def aqquire_power_up(self):
+        print("power uppity aqquired")
+        power = self._gameObject.get_component("BasePowerUp")
+        
+        # power = BasePowerUp(pygame.math.Vector2(0, 0), 50, 60)
+
+        power.test_power()
+        
+
         
 
 
