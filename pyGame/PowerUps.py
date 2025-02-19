@@ -1,35 +1,60 @@
 import pygame
 from Components import Component
 from GameObject import GameObject
+from Components import SpriteRenderer
+from Components import Laser
 
 
 class BasePowerUp(Component):
-    def __init__(self,player_pos, damage, proj_speed) -> None:
+    def __init__(self,player_pos, damage, proj_speed, sprite) -> None:
         self._gameObject = GameObject(pygame.math.Vector2(0, 0))
         self.player_pos = player_pos
         self.damage = damage
         self.proj_speed = proj_speed
+        self.sprite = sprite
         print("power up has been constructed")
 
     def awake(self, game_world):
         print("power up has awoken")
-        # self.damage = 300
-        # print(self.damage)
 
     def start(self):
         print("power up has started")
 
     def update(self, delta_time):
-        # print("power up has updated")
         pass
 
     def power_change(self):
-        # print("new power aqquired...")
-
-        damage = 200
-        print(damage)
-
-        # Each power up needs its own shoot function
+        print("new power aqquired...")
+        # self.damage = 200
+        return self.damage
+    
+    def shoot_projectile_sprite(self):
+        sprite = "laser.png"
+        return sprite
 
 class FireballPowerUp(Component):
-    pass
+    def __init__(self,player_pos, damage, proj_speed, sprite) -> None:
+        self._gameObject = GameObject(pygame.math.Vector2(0, 0))
+        self.player_pos = player_pos
+        self.damage = damage
+        self.proj_speed = proj_speed
+        self.sprite = sprite
+        print("fireball has been constructed")
+
+    def awake(self, game_world):
+        print("fireball up has awoken")
+
+    def start(self):
+        print("fireball up has started")
+
+    def update(self, delta_time):
+        pass
+
+    def power_change(self):
+        print("new power aqquired...")
+        # self.damage = 333
+        return self.damage, self.proj_speed
+
+    def shoot_projectile_sprite(self):
+        sprite = "shield.png"
+        return sprite

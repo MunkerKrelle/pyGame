@@ -3,9 +3,10 @@ import pygame
 from GameObject import GameObject
 from Components import Laser
 from Components import SpriteRenderer
-from PowerUps import BasePowerUp
+from PowerUps import FireballPowerUp
 
 class Player(Component):
+    bullet_sprite = "blank"
 
     def awake(self, game_world):  
         self._time_since_last_shot = 1
@@ -16,8 +17,16 @@ class Player(Component):
         self._sprite_size = pygame.math.Vector2(sr.sprite_image.get_width(),sr.sprite_image.get_height())
         self._gameObject.transform.position.x = (self._screen_size.x/2) - (self._sprite_size.x/2)
         self._gameObject.transform.position.y = (self._screen_size.y) - (self._sprite_size.y)
+
+        global name
+        name = "BasePowerUp"
+
+        global power
+        power = self._gameObject.get_component(name)
+        power.power_change()
         
-        
+        global bullet_sprite
+        self.bullet_sprite = power.shoot_projectile_sprite()
 
     def start(self):
         pass
@@ -55,10 +64,15 @@ class Player(Component):
             self._gameObject.transform.position.y = 0
     
     def shoot(self):
+        global bullet_sprite
+
         if self._time_since_last_shot >= self._shoot_dealy:
             projectile = GameObject(None)
-            sr = projectile.add_component(SpriteRenderer("laser.png"))
-            projectile.add_component(Laser())
+            sr = projectile.add_component(SpriteRenderer(self.bullet_sprite))
+            global power
+            print(power.damage)
+            projectile.add_component(Laser(power.proj_speed))
+            print(power.proj_speed)
 
             projectile_position = pygame.math.Vector2(self._gameObject.transform.position.x+(self._sprite_size.x/2)-sr.sprite_image.get_width()/2
                                                     ,self._gameObject.transform.position.y-40)
@@ -70,11 +84,16 @@ class Player(Component):
             self._time_since_last_shot = 0
     
     def aqquire_power_up(self):
-        print("power uppity aqquired")
-        power = self._gameObject.get_component("BasePowerUp")
-        power.power_change()
+        global name
+        name = "FireballPowerUp"
         
+        global power
+        power = self._gameObject.get_component(name)
+        power.power_change()
 
+        global bullet_sprite
+        self.bullet_sprite = power.shoot_projectile_sprite()
+        
         
 
 
