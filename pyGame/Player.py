@@ -2,12 +2,18 @@ from Components import Component
 import pygame
 from GameObject import GameObject
 from Components import Laser
+from Components import Collider
 from Components import SpriteRenderer
 
 class Player(Component):
 
     def awake(self, game_world): 
-        self._lives = 3  # Spilleren starter med 3 liv 
+        self._lives = 3  
+        self.gameObject.add_component(Collider())
+
+        
+        self.gameObject.tag = "Player"
+
         self._time_since_last_shot = 1
         self._shoot_dealy = 1 
         self._game_world = game_world
@@ -58,7 +64,10 @@ class Player(Component):
                                                     ,self._gameObject.transform.position.y-40)
             
             projectile.transform.position = projectile_position
-            
+
+            collider = projectile.add_component(Collider())
+            projectile.tag = "PlayerProjectile"  
+
             self._game_world.instantiate(projectile)
             
             self._time_since_last_shot = 0
