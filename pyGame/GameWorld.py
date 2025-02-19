@@ -73,13 +73,19 @@ class GameWorld:
             pygame.display.flip()
             self._clock.tick(60)
 
+
+    def run(self):
+        gw.Awake()
+        gw.Start()
+
+        while self._running:
+            gw.update()
+            
         pygame.quit()
     
 
 gw = GameWorld()
 
-gw.Awake()
-gw.Start()
-gw.update()
+
 
         
