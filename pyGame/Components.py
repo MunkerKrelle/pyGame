@@ -32,6 +32,7 @@ class Transform(Component):
     def __init__(self, position) -> None:
         super().__init__()
         self._position = position
+        self._rotation = 0  # Initialize rotation to 0 degrees
 
     @property
     def position(self):
@@ -41,13 +42,20 @@ class Transform(Component):
     def position(self,value):
         self._position = value
 
+    @property
+    def rotation(self):
+        return self._rotation
+
+    @rotation.setter
+    def rotation(self, value):
+        self._rotation = value % 360  # Ensure rotation is within 0-360 degrees
+
     def translate(self, direction):
         self._position += direction
-    
-    def rot_center(self, rect, angle):
-        rot_image = pygame.transform.rotate(self, angle)
-        rot_rect = rot_image.get_rect(center=rect.center)
-        return rot_image,rot_rect
+
+    def rotate(self, angle):
+        self._rotation += angle
+        self._rotation %= 360  # Keep rotation within 0-360 degrees
 
     def awake(self, game_world):
         pass
@@ -56,7 +64,7 @@ class Transform(Component):
         pass
    
     def update(self, delta_time):
-        pass
+        pass 
 
 #SpriteRenderer
 class SpriteRenderer(Component):
@@ -85,7 +93,7 @@ class SpriteRenderer(Component):
     def sprite(self):
         return self._sprite
    
-    def awake(self, game_world):
+    def awake(self, game_world, ):
       self._game_world = game_world
       self._sprite.rect.topleft = self.gameObject.transform.position
 
