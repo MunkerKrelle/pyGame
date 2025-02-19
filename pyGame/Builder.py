@@ -48,13 +48,13 @@ class EnemyBuilder(Builder):
 
     def build(self):
         # Load the spritesheet
-        spritesheet = pygame.image.load("Assets/EnemyShips/Weapons/Aseprite/Nairan - Dreadnought - Weapons.png").convert_alpha()
+        spritesheet = ("Assets/EnemyShips/Weapons/pngs/Nairan - Dreadnought - Weapons.png")
 
         # Create the GameObject
         self._gameObject = GameObject(pygame.math.Vector2(0, 0))
 
         # Add components
-        self._gameObject.add_component(SpriteRenderer("Nairan - Dreadnought - Base.png"))
+        self._gameObject.add_component(SpriteRenderer("/EnemyShips/Designs - Base/pngs/Nairan - Dreadnought - Base.png"))
         self._gameObject.add_component(Collider())
         self._gameObject.add_component(Enemy())
         
@@ -65,13 +65,13 @@ class EnemyBuilder(Builder):
         # Define animation parameters
         frame_width = 128  # Adjust based on your spritesheet
         frame_height = 128  # Adjust based on your spritesheet
-        frame_count = 8  # Adjust based on your spritesheet
+        frame_count = 34  # Adjust based on your spritesheet
 
         # Add the animation to the animator
-        animator.add_spritesheet_animation("WeaponFire", spritesheet, spritesheet.get_width(), spritesheet.get_height(), frame_count)
+        animator.add_spritesheet_animation("WeaponFire", spritesheet, 128, 128, frame_count)
 
         animator.play_animation("WeaponFire")
-        
+
     def get_gameObject(self) -> GameObject:
         return self._gameObject
     

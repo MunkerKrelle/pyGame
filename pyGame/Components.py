@@ -43,7 +43,12 @@ class Transform(Component):
 
     def translate(self, direction):
         self._position += direction
-        
+    
+    def rot_center(self, rect, angle):
+        rot_image = pygame.transform.rotate(self, angle)
+        rot_rect = rot_image.get_rect(center=rect.center)
+        return rot_image,rot_rect
+
     def awake(self, game_world):
         pass
 
@@ -90,7 +95,7 @@ class SpriteRenderer(Component):
     def update(self, delta_time):
         self._sprite.rect.topleft = self.gameObject.transform.position
         self._game_world.screen.blit(self._sprite_image,self._sprite.rect) 
-        
+
 class Animator(Component):
 
     def __init__(self) -> None:
