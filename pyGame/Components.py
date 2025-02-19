@@ -223,7 +223,14 @@ class Collider(Component):
         
         if self.gameObject.tag == "Enemy" and other.gameObject.tag == "PlayerProjectile":
             self.gameObject.destroy()  
-            other.gameObject.destroy()  
+            other.gameObject.destroy() 
+
+        if self.gameObject.tag == "Player" and other.gameObject.tag == "Enemy":
+            player = self.gameObject.get_component("Player")  
+            if player:
+                player.take_damage()  
+                other.gameObject.destroy()  
+        
 
         if "collision_enter" in self._listeners:
             self._listeners["collision_enter"](other)
