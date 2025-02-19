@@ -216,6 +216,10 @@ class Collider():
 
     def collision_enter(self, other):
         self._other_colliders.append(other)
+        if self.gameObject.tag == "Player" and (other.gameObject.tag == "Enemy" or other.gameObject.tag == "EnemyProjectile"):
+            player = self.gameObject.get_component("Player")  
+            if player:
+                player.take_damage()  
         if "collision_enter" in self._listeners:
             self._listeners["collision_enter"](other)
 
