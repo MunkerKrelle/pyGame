@@ -32,7 +32,6 @@ class Transform(Component):
     def __init__(self, position) -> None:
         super().__init__()
         self._position = position
-        self._flip = pygame.transform.flip(self._sprite_image, False, False)
 
     @property
     def position(self):
@@ -42,22 +41,12 @@ class Transform(Component):
     def position(self,value):
         self._position = value
 
-    @property
-    def rotation(self):
-        return self._rotation
-
     def translate(self, direction):
         self._position += direction
 
     @property
     def flip(self):
         return self._flip
-    
-    @flip.setter
-    def flip(self, flip_vertical, flip_horizontal):
-        self._flip = pygame.transform.flip(self, flip_vertical, flip_horizontal)
-   
-
 
     def awake(self, game_world):
         pass
@@ -78,7 +67,7 @@ class SpriteRenderer(Component):
         self._sprite = pygame.sprite.Sprite()
         self._sprite.rect = self._sprite_image.get_rect()
         self._sprite_mask = pygame.mask.from_surface(self.sprite_image)
-        self._sprite_flip = pygame.transform.flip(self._sprite_image, False, False)
+        # self._sprite_flip = pygame.transform.flip(self._sprite_image, False, False)
 
     @property
     def sprite_image(self):
@@ -96,13 +85,13 @@ class SpriteRenderer(Component):
     def sprite(self):
         return self._sprite
     
-    @property
-    def sprite_flip(self):
-        return self._sprite_flip
+    # @property
+    # def sprite_flip(self):
+    #     return self._sprite_flip
     
-    @sprite_flip.setter
-    def sprite_flip(self, flip_vertical, flip_horizontal):
-        self._sprite_flip = pygame.transform.flip(self._sprite_image, flip_vertical, flip_horizontal)
+    # @sprite_flip.setter
+    # def sprite_flip(self, flip_vertical, flip_horizontal):
+    #     self._sprite_flip = pygame.transform.flip(self._sprite_image, flip_vertical, flip_horizontal)
     
     def awake(self, game_world, ):
       self._game_world = game_world

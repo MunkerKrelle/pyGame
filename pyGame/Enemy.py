@@ -18,7 +18,7 @@ class Enemy(Component):
         pass
 
     def update(self, delta_time):
-        speed = 1
+        speed = 50
         movement = pygame.math.Vector2(0,speed)
 
         self._gameObject.transform.translate(movement*delta_time)

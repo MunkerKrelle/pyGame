@@ -67,3 +67,11 @@ class Frigate(State):
         print("Frigate move")
     def die(self):
         print("Frigate die")
+
+class Scout(State):
+    def attack(self):
+        print("Scout attack")
+    def move(self):
+        print("Scout move")
+    def die(self):
+        print("Scout die")
