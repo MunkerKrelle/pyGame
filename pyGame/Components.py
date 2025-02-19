@@ -145,18 +145,15 @@ class Laser(Component):
 
     def update(self, delta_time):
         speed = 500
-        movement = pygame.math.Vector2(0, -speed)  # Standard er opad
-
-        # Hvis projektilet er en fjendes skud, bevæger det sig nedad
+        movement = pygame.math.Vector2(0,-speed)
+        
         if self.gameObject.tag == "EnemyProjectile":
             movement.y = speed  # Fjendens skud skal bevæge sig nedad
 
-        self.gameObject.transform.translate(movement * delta_time)
+        self._gameObject.transform.translate(movement*delta_time)
 
-        # Fjern projektilet, hvis det går uden for skærmen
-        if self.gameObject.transform.position.y < 0 or self.gameObject.transform.position.y > self._game_world.screen.get_height():
-            self.gameObject.destroy()
-
+        if self._gameObject.transform.position.y < 0:
+            self._gameObject.destroy()
 
 
 class Collider(Component):  
