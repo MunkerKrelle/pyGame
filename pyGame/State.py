@@ -4,11 +4,20 @@ class State(Component):
     def __init__(self) -> None:
         super().__init__()
 
-        def attack(self):
+    def awake(self, game_world):
+        pass
+
+    def start(self):
+        pass
+   
+    def update(self, delta_time):
+        pass 
+
+    def attack(self):
             pass
-        def move(self):
+    def move(self):
             pass
-        def die(self):
+    def die(self):
             pass
 
 class Battlecruiser(State):

@@ -3,6 +3,10 @@ import random
 import pygame
 class Enemy(Component):
 
+    def __init__(self,state) -> None:
+        super().__init__()
+        self._state = state
+
     def awake(self, game_world):
         sr = self.gameObject.get_component("SpriteRenderer")
 

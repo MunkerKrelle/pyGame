@@ -5,6 +5,7 @@ from Components import SpriteRenderer
 from Player import Player
 from Enemy import Enemy
 from Components import Collider
+from State import Dreadnought, State
 import pygame
 import random
 
@@ -46,18 +47,33 @@ class PlayerBuilder(Builder):
 
 class EnemyBuilder(Builder):
 
-    def build(self):
+    def build(self, shipType):
         # Load the spritesheet
-        spritesheet = ("Assets/EnemyShips/Weapons/pngs/Nairan - Dreadnought - Weapons.png")
 
         # Create the GameObject
         self._gameObject = GameObject(pygame.math.Vector2(0, 0))
 
-        # Add components
+        if shipType == "Dreadnought":
+            self._gameObject.add_component(SpriteRenderer("/EnemyShips/Designs - Base/pngs/Nairan - Dreadnought - Base.png"))
+            spritesheet = ("Assets/EnemyShips/Weapons/pngs/Nairan - Dreadnought - Weapons.png")
+            state = Dreadnought()
+        elif shipType == "Battlecruiser":
+            pass
+        elif shipType == "Frigate":
+            pass
+        elif shipType == "Fighter":
+            pass
+        elif shipType == "Bomber":
+            pass
+        elif shipType == "Scout":
+            pass
+        elif shipType == "Torpedo  Ship":
+            pass
+
         self._gameObject.add_component(SpriteRenderer("/EnemyShips/Designs - Base/pngs/Nairan - Dreadnought - Base.png"))
         self._gameObject.add_component(Collider())
-        self._gameObject.add_component(Enemy())
-        
+        self._gameObject.add_component(Enemy(state))
+
         # Add an Animator component
         animator = Animator()
         self._gameObject.add_component(animator)
@@ -71,6 +87,7 @@ class EnemyBuilder(Builder):
         animator.add_spritesheet_animation("WeaponFire", spritesheet, 128, 128, frame_count)
 
         animator.play_animation("WeaponFire")
+        # self._gameObject.get_component(SpriteRenderer()).flip(True, False)
 
     def get_gameObject(self) -> GameObject:
         return self._gameObject

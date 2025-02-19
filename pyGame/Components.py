@@ -32,7 +32,7 @@ class Transform(Component):
     def __init__(self, position) -> None:
         super().__init__()
         self._position = position
-        self._rotation = 0  # Initialize rotation to 0 degrees
+        self._flip = pygame.transform.flip(self._sprite_image, False, False)
 
     @property
     def position(self):
@@ -46,16 +46,18 @@ class Transform(Component):
     def rotation(self):
         return self._rotation
 
-    @rotation.setter
-    def rotation(self, value):
-        self._rotation = value % 360  # Ensure rotation is within 0-360 degrees
-
     def translate(self, direction):
         self._position += direction
 
-    def rotate(self, angle):
-        self._rotation += angle
-        self._rotation %= 360  # Keep rotation within 0-360 degrees
+    @property
+    def flip(self):
+        return self._flip
+    
+    @flip.setter
+    def flip(self, flip_vertical, flip_horizontal):
+        self._flip = pygame.transform.flip(self, flip_vertical, flip_horizontal)
+   
+
 
     def awake(self, game_world):
         pass
@@ -76,6 +78,7 @@ class SpriteRenderer(Component):
         self._sprite = pygame.sprite.Sprite()
         self._sprite.rect = self._sprite_image.get_rect()
         self._sprite_mask = pygame.mask.from_surface(self.sprite_image)
+        self._sprite_flip = pygame.transform.flip(self._sprite_image, False, False)
 
     @property
     def sprite_image(self):
@@ -92,7 +95,15 @@ class SpriteRenderer(Component):
     @property
     def sprite(self):
         return self._sprite
-   
+    
+    @property
+    def sprite_flip(self):
+        return self._sprite_flip
+    
+    @sprite_flip.setter
+    def sprite_flip(self, flip_vertical, flip_horizontal):
+        self._sprite_flip = pygame.transform.flip(self._sprite_image, flip_vertical, flip_horizontal)
+    
     def awake(self, game_world, ):
       self._game_world = game_world
       self._sprite.rect.topleft = self.gameObject.transform.position
