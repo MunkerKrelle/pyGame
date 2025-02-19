@@ -48,7 +48,7 @@ class EnemyBuilder(Builder):
 
     def build(self):
         # Load the spritesheet
-        spritesheet = pygame.image.load("Assets/Nairan - Dreadnought - Weapons.aseprite").convert_alpha()
+        spritesheet = pygame.image.load("Assets/EnemyShips/Weapons/Aseprite/Nairan - Dreadnought - Weapons.png").convert_alpha()
 
         # Create the GameObject
         self._gameObject = GameObject(pygame.math.Vector2(0, 0))
