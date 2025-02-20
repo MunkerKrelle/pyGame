@@ -45,11 +45,11 @@ class GameWorld:
         self._gameObjects.append(gameObject)
 
 
-    def Awake(self): # needs renamed to awake, lowercase. for consistency
+    def Awake(self):
         for gameObject in self._gameObjects[:]:
             gameObject.awake(self)
     
-    def Start(self): # needs renamed to start, lowercase for consistency
+    def Start(self):
         for gameObject in self._gameObjects[:]:
             gameObject.start()
 
