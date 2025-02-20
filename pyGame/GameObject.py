@@ -3,7 +3,7 @@ from Components import Transform
 
 class GameObject:
 
-    def __init__(self,position) -> None:
+    def __init__(self, position) -> None:
         self._components = {}
         self._transform = self.add_component(Transform(position))
         self._is_destroyed = False
@@ -26,18 +26,16 @@ class GameObject:
         return component
 
     def get_component(self, component_name):
-        return self._components.get(component_name,None)
+        return self._components.get(component_name, None)
     
     def awake(self, game_world):
-        # print(f"Awakening GameObject {self} with components: {self._components.keys()}")
-        for component in self._components.values():
+        for component in list(self._components.values()):  
             component.awake(game_world)
 
     def start(self):
-        for component in self._components.values():
+        for component in list(self._components.values()):  
             component.start()
 
-    def update(self, delt_time):
-        for component in self._components.values():
-            component.update(delt_time)       
-         
+    def update(self, delta_time):
+        for component in list(self._components.values()):  
+            component.update(delta_time)
