@@ -63,7 +63,7 @@ class SpriteRenderer(Component):
     def __init__(self, sprite_name) -> None:
         super().__init__()
 
-        self._sprite_image = pygame.image.load(f"Assets\{sprite_name}")
+        self._sprite_image = pygame.image.load(f"Assets\\{sprite_name}")
         self._sprite = pygame.sprite.Sprite()
         self._sprite.rect = self._sprite_image.get_rect()
         self._sprite_mask = pygame.mask.from_surface(self.sprite_image)
@@ -117,7 +117,7 @@ class Animator(Component):
         frames = []
         for arg in args:
             # Load each frame from PNG sequence
-            sprite_image = pygame.image.load(f"Assets\{arg}")
+            sprite_image = pygame.image.load(f"Assets\\{arg}")
             frames.append(sprite_image)
         
         self._animations[name] = frames
