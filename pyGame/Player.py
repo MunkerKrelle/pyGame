@@ -101,7 +101,7 @@ class Player(Component):
             # self._game_world.instantiate(projectile)
             projectile = GameObject(None)
             sr = projectile.add_component(SpriteRenderer("laser.png"))
-            projectile.add_component(Laser())
+            projectile.add_component(Laser(power.proj_speed))
 
             projectile_position = pygame.math.Vector2(self._gameObject.transform.position.x+(self._sprite_size.x/2)-sr.sprite_image.get_width()/2
                                                     ,self._gameObject.transform.position.y-40)
