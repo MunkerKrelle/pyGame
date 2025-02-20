@@ -5,12 +5,13 @@ from Components import Laser
 from Components import Collider
 from Components import SpriteRenderer
 
+
 class Player(Component):
+
 
     def awake(self, game_world): 
         self._lives = 3  
         self.gameObject.add_component(Collider())
-
         
         self.gameObject.tag = "Player"
 
@@ -24,8 +25,8 @@ class Player(Component):
         self._gameObject.transform.position.y = (self._screen_size.y) - (self._sprite_size.y)
 
 
+
     def start(self):
-        
         pass
 
     def update(self, delta_time): 
@@ -33,7 +34,6 @@ class Player(Component):
         speed = 300
         movement = pygame.math.Vector2(0,0)
         self._time_since_last_shot += delta_time
-
         
         if keys[pygame.K_a]:
             movement.x -= speed
@@ -56,10 +56,23 @@ class Player(Component):
             self._gameObject.transform.position.y = 0
     
     def shoot(self):
+        global bullet_sprite
+        global power
         if self._time_since_last_shot >= self._shoot_dealy:
+            for i in range(power.proj_amount):
+                projectile = GameObject(None)
+                sr = projectile.add_component(SpriteRenderer(power.sprite))
+                print(power.damage)
+                projectile.add_component(Laser(power.proj_speed))
+                print(power.proj_speed)
+                projectile_position = power.unique_shoot(sr, self._sprite_size.x / 2, i, power.proj_amount, power.proj_spread_angle)
+                projectile.transform.position = projectile_position
+
+                self._game_world.instantiate(projectile)
+
             projectile = GameObject(None)
             sr = projectile.add_component(SpriteRenderer("laser.png"))
-            projectile.add_component(Laser())
+            projectile.add_component(Laser(power.proj_speed))
 
             projectile_position = pygame.math.Vector2(self._gameObject.transform.position.x+(self._sprite_size.x/2)-sr.sprite_image.get_width()/2
                                                     ,self._gameObject.transform.position.y-40)
@@ -71,7 +84,7 @@ class Player(Component):
 
             self._game_world.instantiate(projectile)
             
-            self._time_since_last_shot = 0
+            self._time_since_last_shot = 0    
         
     def take_damage(self):
         self._lives -= 1
