@@ -135,6 +135,16 @@ class Animator(Component):
             
             #Skifter til en ny sprite
             self._sprite_renderer.sprite_image = animation_sequence[self._current_frame_index]
+            
+    def add_spritesheet_animation(self, name, spritesheet_path, frame_width, frame_height, frame_count):
+            spritesheet = pygame.image.load(spritesheet_path)
+            frames = []
+            for i in range(frame_count):
+                frame_rect = pygame.Rect(i * frame_width, 0, frame_width, frame_height)
+                frame_image = spritesheet.subsurface(frame_rect)
+                frames.append(frame_image)
+
+            self._animations[name] = frames
 
 class Laser(Component):
 
