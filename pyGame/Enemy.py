@@ -55,7 +55,7 @@ class Enemy(Component):
         """Fjenden skyder et projektil mod spilleren."""
         projectile = GameObject(None)
         sr = projectile.add_component(SpriteRenderer("laser.png"))  
-        projectile.add_component(Laser())  
+        projectile.add_component(Laser(500))  
 
         
         projectile_position = pygame.math.Vector2(
