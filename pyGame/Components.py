@@ -184,8 +184,8 @@ class Laser(Component):
         movement = pygame.math.Vector2(0, - self.speed)
         self._gameObject.transform.translate(movement * delta_time)
         
-        if self.gameObject.tag == "EnemyProjectile":
-            movement.y = self.speed  # Fjendens skud skal bevæge sig nedad
+        # if self.gameObject.tag == "EnemyProjectile":
+        #     movement.y = self.speed  # Fjendens skud skal bevæge sig nedad
 
         self._gameObject.transform.translate(movement*delta_time)
 
