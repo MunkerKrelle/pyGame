@@ -63,8 +63,8 @@ class SpriteRenderer(Component):
     def __init__(self, sprite_name) -> None:
         super().__init__()
 
-        # self._sprite_image = pygame.image.load(f"pygame\\Assets\\{sprite_name}") # Jeres version
-        self._sprite_image = pygame.image.load(f"C:/AxP/Githubrepositories/Semester4/pyGame/pyGame/Assets/{sprite_name}") # Sargons Version
+        self._sprite_image = pygame.image.load(f"pygame\\Assets\\{sprite_name}") # Jeres version
+        #self._sprite_image = pygame.image.load(f"C:/AxP/Githubrepositories/Semester4/pyGame/pyGame/Assets/{sprite_name}") # Sargons Version
         self._sprite = pygame.sprite.Sprite()
         self._sprite.rect = self._sprite_image.get_rect()
         self._sprite_mask = pygame.mask.from_surface(self.sprite_image)
@@ -117,8 +117,8 @@ class Animator(Component):
     def add_animation(self, name, *args):
         frames = []
         for arg in args:
-            # sprite_image = pygame.image.load(f"pygame\\Assets\\{arg}") # Jeres version
-            sprite_image = pygame.image.load(f"C:/AxP/Githubrepositories/Semester4/pyGame/pyGame/Assets/{arg}") # SARGONS VERSION
+            sprite_image = pygame.image.load(f"pygame\\Assets\\{arg}") # Jeres version
+            #sprite_image = pygame.image.load(f"C:/AxP/Githubrepositories/Semester4/pyGame/pyGame/Assets/{arg}") # SARGONS VERSION
             frames.append(sprite_image)
         
         self._animations[name] = frames
@@ -158,15 +158,7 @@ class Animator(Component):
             
             self._sprite_renderer.sprite_image = animation_sequence[self._current_frame_index]
             
-    def add_spritesheet_animation(self, name, spritesheet_path, frame_width, frame_height, frame_count):
-            spritesheet = pygame.image.load(spritesheet_path)
-            frames = []
-            for i in range(frame_count):
-                frame_rect = pygame.Rect(i * frame_width, 0, frame_width, frame_height)
-                frame_image = spritesheet.subsurface(frame_rect)
-                frames.append(frame_image)
-
-            self._animations[name] = frames
+    
 
 
 
