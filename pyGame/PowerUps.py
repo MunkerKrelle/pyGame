@@ -40,9 +40,9 @@ class BasePowerUp(Component):
     #     print("a unique shot was fired")
     #     return projectile_position
     
-    def unique_shoot(self, sr, proj_center, shot_index, spread):
+    def unique_shoot(self, sr, proj_center, shot_index, total_projectiles, spread):
         # Calculate X offset based on shot index and spread
-        offset = (shot_index - 1) * spread  # Center shot at index 1 if 3 shots (0,1,2)
+        offset = (shot_index - (total_projectiles - 1) / 2) * spread  # Center shot at index 1 if 3 shots (0,1,2)
         
         projectile_position = pygame.math.Vector2(
             self._gameObject.transform.position.x + proj_center - sr.sprite_image.get_width() / 2 + offset,
@@ -81,9 +81,8 @@ class FireballPowerUp(Component):
         sprite = "shield.png"
         return sprite
     
-    def unique_shoot(self, sr, proj_center, shot_index, spread):
-        # Calculate X offset based on shot index and spread
-        offset = (shot_index - 1) * spread  # Center shot at index 1 if 3 shots (0,1,2)
+    def unique_shoot(self, sr, proj_center, shot_index, total_projectiles, spread):
+        offset = (shot_index - (total_projectiles - 1) / 2) * spread  # centers the projectiles
         
         projectile_position = pygame.math.Vector2(
             self._gameObject.transform.position.x + proj_center - sr.sprite_image.get_width() / 2 + offset,
@@ -92,12 +91,6 @@ class FireballPowerUp(Component):
         
         print(f"A unique fireball was fired at position {projectile_position}")
         return projectile_position
-    
-    # def unique_shoot(self, sr, proj_center):
-    #     projectile_position = pygame.math.Vector2(self._gameObject.transform.position.x+(proj_center)-sr.sprite_image.get_width()/2
-    #                                                 ,self._gameObject.transform.position.y-40)
-    #     print("a unique fireball was fired")
-    #     return projectile_position
 
 class MultiShot(Component):
     def __init__(self,player_pos, damage, proj_amount, proj_speed, proj_spread_angle, sprite) -> None:
@@ -129,14 +122,13 @@ class MultiShot(Component):
         sprite = "player_fire-spaceship.png"
         return sprite
     
-    def unique_shoot(self, sr, proj_center, shot_index, spread):
-        # Calculate X offset based on shot index and spread
-        offset = (shot_index - 1) * spread  # Center shot at index 1 if 3 shots (0,1,2)
+    def unique_shoot(self, sr, proj_center, shot_index, total_projectiles, spread):
+        offset = (shot_index - (total_projectiles - 1) / 2) * spread # centers the projectiles
         
         projectile_position = pygame.math.Vector2(
             self._gameObject.transform.position.x + proj_center - sr.sprite_image.get_width() / 2 + offset,
             self._gameObject.transform.position.y - 40
         )
         
-        print(f"A unique multishot was fired at position {projectile_position}")
+        print(f"A unique multi shot was fired at position {projectile_position}")
         return projectile_position
