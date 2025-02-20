@@ -25,6 +25,7 @@ class Player(Component):
 
 
     def start(self):
+        
         pass
 
     def update(self, delta_time): 
