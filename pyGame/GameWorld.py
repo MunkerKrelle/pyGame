@@ -10,6 +10,7 @@ class GameWorld:
     def __init__(self) -> None:
         pygame.init()
 
+        self._screen = pygame.display.set_mode((1280,720))
         self._gameObjects = []
         self._colliders = []
         builder = PlayerBuilder()
@@ -18,11 +19,15 @@ class GameWorld:
         self._gameObjects.append(builder.get_gameObject())
 
         builder = EnemyBuilder()
-        builder.build()
+        builder.build("Dreadnought")
+        self._gameObjects.append(builder.get_gameObject())
+        builder.build("Scout")
+        self._gameObjects.append(builder.get_gameObject())
+        builder.build("Frigate")
+        self._gameObjects.append(builder.get_gameObject())
+        builder.build("Bomber")
         self._gameObjects.append(builder.get_gameObject())
 
-
-        self._screen = pygame.display.set_mode((1280,720))
         self._running = True
         self._clock = pygame.time.Clock()
 

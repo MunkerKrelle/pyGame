@@ -43,7 +43,11 @@ class Transform(Component):
 
     def translate(self, direction):
         self._position += direction
-        
+
+    @property
+    def flip(self):
+        return self._flip
+
     def awake(self, game_world):
         pass
 
@@ -51,7 +55,7 @@ class Transform(Component):
         pass
    
     def update(self, delta_time):
-        pass
+        pass 
 
 #SpriteRenderer
 class SpriteRenderer(Component):
@@ -59,10 +63,11 @@ class SpriteRenderer(Component):
     def __init__(self, sprite_name) -> None:
         super().__init__()
 
-        self._sprite_image = pygame.image.load(f"pygame\\Assets\\{sprite_name}")
+        self._sprite_image = pygame.image.load(f"Assets\\{sprite_name}")
         self._sprite = pygame.sprite.Sprite()
         self._sprite.rect = self._sprite_image.get_rect()
         self._sprite_mask = pygame.mask.from_surface(self.sprite_image)
+        # self._sprite_flip = pygame.transform.flip(self._sprite_image, False, False)
 
     @property
     def sprite_image(self):
@@ -79,8 +84,16 @@ class SpriteRenderer(Component):
     @property
     def sprite(self):
         return self._sprite
-   
-    def awake(self, game_world):
+    
+    # @property
+    # def sprite_flip(self):
+    #     return self._sprite_flip
+    
+    # @sprite_flip.setter
+    # def sprite_flip(self, flip_vertical, flip_horizontal):
+    #     self._sprite_flip = pygame.transform.flip(self._sprite_image, flip_vertical, flip_horizontal)
+    
+    def awake(self, game_world, ):
       self._game_world = game_world
       self._sprite.rect.topleft = self.gameObject.transform.position
 
@@ -90,7 +103,7 @@ class SpriteRenderer(Component):
     def update(self, delta_time):
         self._sprite.rect.topleft = self.gameObject.transform.position
         self._game_world.screen.blit(self._sprite_image,self._sprite.rect) 
-    
+
 class Animator(Component):
 
     def __init__(self) -> None:
@@ -101,15 +114,27 @@ class Animator(Component):
         self._current_frame_index = 0
 
     def add_animation(self, name, *args):
-        frames =[]
+        frames = []
         for arg in args:
-            sprite_image = pygame.image.load(f"pygame\\Assets\\{arg}")
+            # Load each frame from PNG sequence
+            sprite_image = pygame.image.load(f"Assets\\{arg}")
             frames.append(sprite_image)
         
         self._animations[name] = frames
-    
+
+    def add_spritesheet_animation(self, name, spritesheet_path, frame_width, frame_height, frame_count):
+        spritesheet = pygame.image.load(spritesheet_path)
+        frames = []
+        for i in range(frame_count):
+            frame_rect = pygame.Rect(i * frame_width, 0, frame_width, frame_height)
+            frame_image = spritesheet.subsurface(frame_rect)
+            frames.append(frame_image)
+        
+        self._animations[name] = frames
+
     def play_animation(self, animation):
         self._current_animation = animation
+        self._current_frame_index = 0  # Reset frame index when playing a new animation
 
     def awake(self, game_world):
         self._sprite_renderer = self._gameObject.get_component("SpriteRenderer")
@@ -119,22 +144,20 @@ class Animator(Component):
 
     def update(self, delta_time):
         frame_duration = 0.1
-
         self._animation_time += delta_time
 
-        #skal vi skifte frame
         if self._animation_time >= frame_duration:
             self._animation_time = 0
             self._current_frame_index += 1
             
-            #får vi fat på vores aimation
             animation_sequence = self._animations[self._current_animation]
 
             if self._current_frame_index >= len(animation_sequence):
-                self._current_frame_index = 0 #Resetter vores animation
+                self._current_frame_index = 0  # Reset animation
             
-            #Skifter til en ny sprite
             self._sprite_renderer.sprite_image = animation_sequence[self._current_frame_index]
+
+
 
 class Laser(Component):
 

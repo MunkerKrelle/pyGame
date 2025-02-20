@@ -5,6 +5,7 @@ from Components import SpriteRenderer
 from Player import Player
 from Enemy import Enemy
 from Components import Collider
+from State import Battlecruiser, Bomber, Dreadnought, Fighter, Frigate, Scout, State, Torpedo_Ship
 import pygame
 import random
 
@@ -45,14 +46,80 @@ class PlayerBuilder(Builder):
         return self._gameObject
 
 class EnemyBuilder(Builder):
-    
-    def build(self):
-        self._gameObject = GameObject(pygame.math.Vector2(0,0))
-        sprites = ["enemy_01.png", "enemy_02.png", "enemy_03.png"]
-        selected_sprite = random.choice(sprites)
-        self._gameObject.add_component(SpriteRenderer(selected_sprite))
+
+    def build(self, shipType):
+        # Load the spritesheet
+
+        # Create the GameObject
+        self._gameObject = GameObject(pygame.math.Vector2(0, 0))
+
+        # Add an Animator component
+        animator = Animator()
+        self._gameObject.add_component(animator)
+
+        if shipType == "Dreadnought":
+            self._gameObject.add_component(SpriteRenderer("/EnemyShips/Designs - Base/pngs/Nairan - Dreadnought - Base.png"))
+            spritesheet = ("Assets/EnemyShips/Weapons/pngs/Nairan - Dreadnought - Weapons.png")
+            state = Dreadnought()
+            frame_width = 128  # Adjust based on your spritesheet
+            frame_height = 128  # Adjust based on your spritesheet
+            frame_count = 34  # Adjust based on your spritesheet
+        elif shipType == "Battlecruiser":
+            self._gameObject.add_component(SpriteRenderer("/EnemyShips/Designs - Base/pngs/Nairan - Battlecruiser - Base.png"))
+            spritesheet = ("Assets/EnemyShips/Weapons/pngs/Nairan - Battlecruiser - Weapons.png")
+            state = Battlecruiser()
+            frame_width = 128  # Adjust based on your spritesheet
+            frame_height = 128  # Adjust based on your spritesheet
+            frame_count = 9  # Adjust based on your spritesheet
+        elif shipType == "Frigate":
+            self._gameObject.add_component(SpriteRenderer("/EnemyShips/Designs - Base/pngs/Nairan - Frigate - Base.png"))
+            spritesheet = ("Assets/EnemyShips/Weapons/pngs/Nairan - Frigate - Weapons.png")
+            state = Frigate()
+            frame_width = 64  # Adjust based on your spritesheet
+            frame_height = 64  # Adjust based on your spritesheet
+            frame_count = 5  # Adjust based on your spritesheet
+        elif shipType == "Fighter":
+            self._gameObject.add_component(SpriteRenderer("/EnemyShips/Designs - Base/pngs/Nairan - Fighter - Base.png"))
+            spritesheet = ("Assets/EnemyShips/Weapons/pngs/Nairan - Fighter - Weapons.png")
+            state = Fighter()
+            frame_width = 64  # Adjust based on your spritesheet
+            frame_height = 64  # Adjust based on your spritesheet
+            frame_count = 28  # Adjust based on your spritesheet
+        elif shipType == "Bomber":
+            self._gameObject.add_component(SpriteRenderer("/EnemyShips/Designs - Base/pngs/Nairan - Bomber - Base.png"))
+            spritesheet = ("Assets/EnemyShips/Designs - Base/pngs/Nairan - Bomber - Base.png")
+            state = Bomber()
+            frame_width = 64  # Adjust based on your spritesheet
+            frame_height = 64  # Adjust based on your spritesheet
+            frame_count = 1  # Adjust based on your spritesheet
+        elif shipType == "Scout":
+            self._gameObject.add_component(SpriteRenderer("/EnemyShips/Designs - Base/pngs/Nairan - Scout - Base.png"))
+            spritesheet = ("Assets/EnemyShips/Weapons/pngs/Nairan - Scout - Weapons.png")
+            state = Scout()
+            frame_width = 64  # Adjust based on your spritesheet
+            frame_height = 64  # Adjust based on your spritesheet
+            frame_count = 6  # Adjust based on your spritesheet
+        elif shipType == "Torpedo  Ship":
+            self._gameObject.add_component(SpriteRenderer("/EnemyShips/Designs - Base/pngs/Nairan - Torpedo Ship - Base.png"))
+            spritesheet = ("Assets/EnemyShips/Weapons/pngs/Nairan - Torpedo Ship - Weapons.png")
+            state = Torpedo_Ship()
+            frame_width = 64  # Adjust based on your spritesheet
+            frame_height = 64  # Adjust based on your spritesheet
+            frame_count = 6  # Adjust based on your spritesheet
+
         self._gameObject.add_component(Collider())
-        self._gameObject.add_component(Enemy())
+        self._gameObject.add_component(Enemy(state))
+
+
+        # Add the animation to the animator
+        animator.add_spritesheet_animation("WeaponFire", spritesheet, frame_width, frame_height, frame_count)
+
+        animator.play_animation("WeaponFire")
+        # self._gameObject.get_component(SpriteRenderer()).flip(True, False)
 
     def get_gameObject(self) -> GameObject:
         return self._gameObject
+    
+
+        #     animator = self._gameObject.add_component(Animator())
+        # animator.add_spritesheet_animation("Attack", "Assets/EnemyShips/Weapons/Nairan - Dreadnought - Weapons.png", 64, 64, 4)
