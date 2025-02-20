@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 import pygame
+import os
 
 class Component(ABC):
 
@@ -64,6 +65,9 @@ class SpriteRenderer(Component):
         super().__init__()
 
         self._sprite_image = pygame.image.load(f"Assets\\{sprite_name}")
+        #sprite_path = os.path.join("C:/Users/Verno/OneDrive - EaDania/GitHub/pyGame/pyGame/assets", sprite_name)
+        #self._sprite_image = pygame.image.load(sprite_path)
+        #self._sprite_image = pygame.image.load(f"C:/AxP/Githubrepositories/Semester4/pyGame/pyGame/Assets/{sprite_name}") # Sargons Version
         self._sprite = pygame.sprite.Sprite()
         self._sprite.rect = self._sprite_image.get_rect()
         self._sprite_mask = pygame.mask.from_surface(self.sprite_image)
@@ -118,7 +122,12 @@ class Animator(Component):
         for arg in args:
             # Load each frame from PNG sequence
             sprite_image = pygame.image.load(f"Assets\\{arg}")
-            frames.append(sprite_image)
+            
+
+            #sprite_path = os.path.join("C:/Users/Verno/OneDrive - EaDania/GitHub/pyGame/pyGame/assets", arg)
+            #sprite_image = pygame.image.load(sprite_path)
+
+            frames.append(sprite_image) 
         
         self._animations[name] = frames
 
