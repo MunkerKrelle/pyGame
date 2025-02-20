@@ -8,6 +8,10 @@ from GameObject import GameObject
 
 class Enemy(Component):
 
+    def __init__(self,state) -> None:
+        super().__init__()
+        self._state = state
+
     def awake(self, game_world):
         self._game_world = game_world
         sr = self.gameObject.get_component("SpriteRenderer")
@@ -31,6 +35,8 @@ class Enemy(Component):
         pass
 
     def update(self, delta_time):
+        speed = 50
+        movement = pygame.math.Vector2(0,speed)
         
         speed = 100  
         movement = pygame.math.Vector2(0, speed)
