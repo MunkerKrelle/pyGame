@@ -5,6 +5,7 @@ from Components import SpriteRenderer
 from Player import Player
 from Builder import PlayerBuilder
 from Builder import EnemyBuilder
+from ScoreManager import ScoreManager
 class GameWorld:
 
     def __init__(self) -> None:
@@ -25,6 +26,8 @@ class GameWorld:
         self._screen = pygame.display.set_mode((1280,720))
         self._running = True
         self._clock = pygame.time.Clock()
+
+        self.score_manager = ScoreManager()
 
     @property
     def screen(self):
@@ -52,16 +55,25 @@ class GameWorld:
 
         while self._running:
             for event in pygame.event.get():
+
                 if event.type == pygame.QUIT:
                     self._running =False
+    
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_o:
+                        self.score_manager.increase_score()
+
+                    if event.key == pygame.K_p:
+                        self.score_manager.decrease_score()
 
             self._screen.fill("cornflowerblue")
 
             delta_time = self._clock.tick(60) / 1000.0
-
+            
             #draw your game
             for gameObject in self._gameObjects[:]:
                 gameObject.update(delta_time)
+
 
             for i, collider1 in enumerate(self._colliders):
                 for j in range(i + 1, len(self._colliders)):
@@ -69,6 +81,9 @@ class GameWorld:
                     collider1.collision_check(collider2)
 
             self._gameObjects = [obj for obj in self._gameObjects if not obj.is_destroyed]
+
+
+            self.score_manager.draw(self._screen)
 
             pygame.display.flip()
             self._clock.tick(60)
