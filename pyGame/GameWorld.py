@@ -23,9 +23,10 @@ class GameWorld:
         self._gameObjects.append(builder.get_gameObject())
         builder.build("Scout")
         self._gameObjects.append(builder.get_gameObject())
-        
-
-
+        builder.build("Frigate")
+        self._gameObjects.append(builder.get_gameObject())
+        builder.build("Bomber")
+        self._gameObjects.append(builder.get_gameObject())
 
         self._running = True
         self._clock = pygame.time.Clock()
