@@ -6,6 +6,7 @@ from Player import Player
 from Enemy import Enemy
 from PowerUps import BasePowerUp
 from PowerUps import FireballPowerUp
+from PowerUps import MultiShot
 from Components import Collider
 import pygame
 import random
@@ -25,8 +26,9 @@ class PlayerBuilder(Builder):
     def build(self):
         self._gameObject = GameObject(pygame.math.Vector2(0, 0))
         self._gameObject.add_component(Player())
-        self._gameObject.add_component(BasePowerUp(pygame.math.Vector2(0, 0), 25, 500, "laser.png"))
-        self._gameObject.add_component(FireballPowerUp(pygame.math.Vector2(0, 0), 51, 1501, "shield.png"))
+        self._gameObject.add_component(BasePowerUp(pygame.math.Vector2(0, 0), 25, 1, 500, 0, "laser.png"))
+        self._gameObject.add_component(FireballPowerUp(pygame.math.Vector2(0, 0), 51, 1, 1501, 0, "shield.png"))
+        self._gameObject.add_component(MultiShot(pygame.math.Vector2(0, 0), 8, 3, 120, 30, "player_fire-spaceship.png"))
         self._gameObject.add_component(SpriteRenderer("player08.png"))
         animator = self._gameObject.add_component(Animator())
         animator.add_animation("Idle","player02.png",

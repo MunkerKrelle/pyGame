@@ -49,6 +49,8 @@ class Player(Component):
             self.shoot()
         if keys[pygame.K_g]:
             self.aqquire_power_up()
+        if keys[pygame.K_h]:
+            self.aqquire_multi_shot()
 
         self._gameObject.transform.translate(movement*delta_time)
 
@@ -67,25 +69,52 @@ class Player(Component):
         global bullet_sprite
 
         if self._time_since_last_shot >= self._shoot_dealy:
-            projectile = GameObject(None)
-            sr = projectile.add_component(SpriteRenderer(self.bullet_sprite))
+            # projectile = GameObject(None)
+            # sr = projectile.add_component(SpriteRenderer(self.bullet_sprite))
             global power
             print(power.damage)
-            projectile.add_component(Laser(power.proj_speed))
+            # projectile.add_component(Laser(power.proj_speed))
             print(power.proj_speed)
 
-            projectile_position = pygame.math.Vector2(self._gameObject.transform.position.x+(self._sprite_size.x/2)-sr.sprite_image.get_width()/2
-                                                    ,self._gameObject.transform.position.y-40)
+            # power.unique_shoot(sr)
+
+            # projectile_position = pygame.math.Vector2(self._gameObject.transform.position.x+(self._sprite_size.x/2)-sr.sprite_image.get_width()/2
+            #                                         ,self._gameObject.transform.position.y-40)
+            print(power.proj_spread_angle)
+
+            for i in range(power.proj_amount):
+                projectile = GameObject(None)
+                sr = projectile.add_component(SpriteRenderer(self.bullet_sprite))
+                print(power.damage)
+                projectile.add_component(Laser(power.proj_speed))
+                print(power.proj_speed)
+                projectile_position = power.unique_shoot(sr, self._sprite_size.x / 2, i, power.proj_spread_angle)
+                projectile.transform.position = projectile_position
+
+                self._game_world.instantiate(projectile)
+
+            # projectile_position = power.unique_shoot(sr, self._sprite_size.x/2)
+
+            # projectile.transform.position = projectile_position
             
-            projectile.transform.position = projectile_position
-            
-            self._game_world.instantiate(projectile)
+            # self._game_world.instantiate(projectile)
             
             self._time_since_last_shot = 0
     
     def aqquire_power_up(self):
         global name
         name = "FireballPowerUp"
+        
+        global power
+        power = self._gameObject.get_component(name)
+        power.power_change()
+
+        global bullet_sprite
+        self.bullet_sprite = power.shoot_projectile_sprite()
+
+    def aqquire_multi_shot(self):
+        global name
+        name = "MultiShot"
         
         global power
         power = self._gameObject.get_component(name)
