@@ -7,6 +7,8 @@ from Enemy import Enemy
 from PowerUps import BasePowerUp
 from PowerUps import FireballPowerUp
 from PowerUps import MultiShot
+from PowerUps import SpeedPowerUp
+from PowerUps import MoreLivesPowerUp
 from Components import Collider
 from State import Battlecruiser, Bomber, Dreadnought, Fighter, Frigate, Scout, State, Torpedo_Ship
 import pygame
@@ -30,6 +32,8 @@ class PlayerBuilder(Builder):
         self._gameObject.add_component(BasePowerUp(pygame.math.Vector2(0, 0), 25, 1, 500, 0, "laser.png"))
         self._gameObject.add_component(FireballPowerUp(pygame.math.Vector2(0, 0), 51, 1, 1501, 0, "shield.png"))
         self._gameObject.add_component(MultiShot(pygame.math.Vector2(0, 0), 8, 6, 1200, 30, "player_fire-spaceship.png"))
+        self._gameObject.add_component(SpeedPowerUp(pygame.math.Vector2(0, 0),800))
+        self._gameObject.add_component(MoreLivesPowerUp(pygame.math.Vector2(0, 0),5))
         self._gameObject.add_component(SpriteRenderer("player08.png"))
         animator = self._gameObject.add_component(Animator())
         animator.add_animation("Idle","player02.png",

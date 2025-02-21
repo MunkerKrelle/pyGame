@@ -14,19 +14,21 @@ class BasePowerUp(Component):
         self.proj_amount = proj_amount
         self.proj_spread_angle = proj_spread_angle
         self.sprite = sprite
-        print("power up has been constructed")
+        # print("power up has been constructed")
 
     def awake(self, game_world):
-        print("power up has awoken")
+        pass
+        # print("power up has awoken")
 
     def start(self):
-        print("power up has started")
+        pass
+        # print("power up has started")
 
     def update(self, delta_time):
         pass
 
     def power_change(self):
-        print("new power aqquired...")
+        # print("new power aqquired...")
         # self.damage = 200
         return self.damage
     
@@ -49,7 +51,7 @@ class BasePowerUp(Component):
             self._gameObject.transform.position.y - 40
         )
         
-        print(f"A unique shot was fired at position {projectile_position}")
+        # print(f"A unique shot was fired at position {projectile_position}")
         return projectile_position
 
 class FireballPowerUp(Component):
@@ -61,21 +63,23 @@ class FireballPowerUp(Component):
         self.proj_amount = proj_amount
         self.proj_spread_angle = proj_spread_angle
         self.sprite = sprite
-        print("fireball has been constructed")
+        # print("fireball has been constructed")
 
     def awake(self, game_world):
-        print("fireball up has awoken")
+        pass
+        # print("fireball up has awoken")
 
     def start(self):
-        print("fireball up has started")
+        pass
+        # print("fireball up has started")
 
     def update(self, delta_time):
         pass
 
     def power_change(self):
-        print("new power aqquired...")
+        # print("new power aqquired...")
         # self.damage = 333
-        return self.damage, self.proj_speed
+        return self.damage
 
     def shoot_projectile_sprite(self):
         sprite = "shield.png"
@@ -89,7 +93,7 @@ class FireballPowerUp(Component):
             self._gameObject.transform.position.y - 40
         )
         
-        print(f"A unique fireball was fired at position {projectile_position}")
+        # print(f"A unique fireball was fired at position {projectile_position}")
         return projectile_position
 
 class MultiShot(Component):
@@ -102,19 +106,21 @@ class MultiShot(Component):
         self.proj_spread_angle = proj_spread_angle
         self.sprite = sprite
         
-        print("multishot has been constructed")
+        # print("multishot has been constructed")
 
     def awake(self, game_world):
-        print("multishot has awoken")
+        pass
+        # print("multishot has awoken")
 
     def start(self):
-        print("multishot has started")
+        pass
+        # print("multishot has started")
 
     def update(self, delta_time):
         pass
 
     def power_change(self):
-        print("new power aqquired...")
+        # print("new power aqquired...")
         # self.damage = 200
         return self.damage
     
@@ -130,5 +136,49 @@ class MultiShot(Component):
             self._gameObject.transform.position.y - 40
         )
         
-        print(f"A unique multi shot was fired at position {projectile_position}")
+        # print(f"A unique multi shot was fired at position {projectile_position}")
         return projectile_position
+
+class SpeedPowerUp(Component):
+    def __init__(self,player_pos, speed) -> None:
+        self._gameObject = GameObject(pygame.math.Vector2(0, 0))
+        self.player_pos = player_pos
+        self.speed = speed
+        # print("speed up has been constructed")
+
+    def awake(self, game_world):
+        pass
+        # print("speed up has awoken")
+
+    def start(self):
+        pass
+        # print("speed up has started")
+
+    def update(self, delta_time):
+        pass
+
+    def power_change(self):
+        # print("speed has been buffed..")
+        # print(self.speed)
+        return self.speed
+    
+class MoreLivesPowerUp(Component):
+    def __init__(self,player_pos, lives) -> None:
+        self._gameObject = GameObject(pygame.math.Vector2(0, 0))
+        self.player_pos = player_pos
+        self.lives = lives
+        print("lives up has been constructed")
+
+    def awake(self, game_world):
+        print("lives up has awoken")
+
+    def start(self):
+        print("lives up has started")
+
+    def update(self, delta_time):
+        pass
+
+    def power_change(self):
+        print("lives has been buffed..")
+        # print(self.lives)
+        return self.lives
