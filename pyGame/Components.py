@@ -64,12 +64,7 @@ class SpriteRenderer(Component):
     def __init__(self, sprite_name) -> None:
         super().__init__()
 
-<<<<<<< Updated upstream
         self._sprite_image = pygame.image.load(f"Assets\\{sprite_name}")
-=======
-        self._sprite_image = pygame.image.load(f"pygame\\Assets\\{sprite_name}") # Jeres version
-        #self._sprite_image = pygame.image.load(f"C:/AxP/Githubrepositories/Semester4/pyGame/pyGame/Assets/{sprite_name}") # Sargons Version
->>>>>>> Stashed changes
         self._sprite = pygame.sprite.Sprite()
         self._sprite.rect = self._sprite_image.get_rect()
         self._sprite_mask = pygame.mask.from_surface(self.sprite_image)
@@ -122,15 +117,9 @@ class Animator(Component):
     def add_animation(self, name, *args):
         frames = []
         for arg in args:
-<<<<<<< Updated upstream
             # Load each frame from PNG sequence
             sprite_image = pygame.image.load(f"Assets\\{arg}")
             frames.append(sprite_image) 
-=======
-            sprite_image = pygame.image.load(f"pygame\\Assets\\{arg}") # Jeres version
-            #sprite_image = pygame.image.load(f"C:/AxP/Githubrepositories/Semester4/pyGame/pyGame/Assets/{arg}") # SARGONS VERSION
-            frames.append(sprite_image)
->>>>>>> Stashed changes
         
         self._animations[name] = frames
 
