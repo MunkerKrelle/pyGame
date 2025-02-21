@@ -65,6 +65,8 @@ class SpriteRenderer(Component):
         super().__init__()
 
         self._sprite_image = pygame.image.load(f"Assets\\{sprite_name}")
+        #self._sprite_image = pygame.image.load(f"pygame\\Assets\\{sprite_name}") # Jeres version
+        #self._sprite_image = pygame.image.load(f"C:/AxP/Githubrepositories/Semester4/pyGame/pyGame/Assets/{sprite_name}") # Sargons Version
         self._sprite = pygame.sprite.Sprite()
         self._sprite.rect = self._sprite_image.get_rect()
         self._sprite_mask = pygame.mask.from_surface(self.sprite_image)
@@ -117,9 +119,10 @@ class Animator(Component):
     def add_animation(self, name, *args):
         frames = []
         for arg in args:
-            # Load each frame from PNG sequence
             sprite_image = pygame.image.load(f"Assets\\{arg}")
-            frames.append(sprite_image) 
+            #sprite_image = pygame.image.load(f"pygame\\Assets\\{arg}") # Jeres version
+            #sprite_image = pygame.image.load(f"C:/AxP/Githubrepositories/Semester4/pyGame/pyGame/Assets/{arg}") # SARGONS VERSION
+            frames.append(sprite_image)
         
         self._animations[name] = frames
 
@@ -175,7 +178,7 @@ class Laser(Component):
         movement = pygame.math.Vector2(0,-speed)
         
         if self.gameObject.tag == "EnemyProjectile":
-            movement.y = speed  # Fjendens skud skal bevæge sig nedad
+             movement.y = self.speed  # Fjendens skud skal bevæge sig nedad
 
         self._gameObject.transform.translate(movement*delta_time)
 
