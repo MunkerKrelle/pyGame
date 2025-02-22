@@ -66,12 +66,10 @@ class FireballPowerUp(Component):
         # print("fireball has been constructed")
 
     def awake(self, game_world):
-        pass
-        # print("fireball up has awoken")
+        print("fireball up has awoken")
 
     def start(self):
-        pass
-        # print("fireball up has started")
+        print("fireball up has started")
 
     def update(self, delta_time):
         pass
@@ -167,18 +165,20 @@ class MoreLivesPowerUp(Component):
         self._gameObject = GameObject(pygame.math.Vector2(0, 0))
         self.player_pos = player_pos
         self.lives = lives
-        print("lives up has been constructed")
+        # print("lives up has been constructed")
 
     def awake(self, game_world):
-        print("lives up has awoken")
+        pass
+        # print("lives up has awoken")
 
     def start(self):
-        print("lives up has started")
+        pass
+        # print("lives up has started")
 
     def update(self, delta_time):
         pass
 
     def power_change(self):
-        print("lives has been buffed..")
+        # print("lives has been buffed..")
         # print(self.lives)
         return self.lives

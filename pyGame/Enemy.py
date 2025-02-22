@@ -39,7 +39,6 @@ class Enemy(Component):
         movement = pygame.math.Vector2(0,speed)
 
         self.gameObject.transform.translate(movement * delta_time)
-
         
         bottom_limit = self._screen_size.y
         if self.gameObject.transform.position.y > bottom_limit:
@@ -66,8 +65,8 @@ class Enemy(Component):
         projectile.transform.position = projectile_position
 
         
-        collider = projectile.add_component(Collider())
-        projectile.tag = "EnemyProjectile"  
+        projectile.add_component(Collider())
+        projectile.tag = "EnemyProjectile"
 
         self._game_world.instantiate(projectile)
 

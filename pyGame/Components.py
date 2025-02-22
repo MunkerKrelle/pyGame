@@ -184,8 +184,8 @@ class Laser(Component):
         movement = pygame.math.Vector2(0, - self.speed)
         self._gameObject.transform.translate(movement * delta_time)
         
-        # if self.gameObject.tag == "EnemyProjectile":
-        #     movement.y = self.speed  # Fjendens skud skal bevæge sig nedad
+        if self.gameObject.tag == "EnemyProjectile":
+            movement.y = self.speed *2 # Fjendens skud skal bevæge sig nedad
 
         self._gameObject.transform.translate(movement*delta_time)
 
@@ -221,11 +221,13 @@ class Collider(Component):
     def collision_check(self, other):
         is_rect_colliding = self._collision_box.colliderect(other.collision_box)
         is_already_colliding = other in self._other_colliders
-
+            
         if is_rect_colliding:
+            
             if not is_already_colliding:
                 self.collision_enter(other)
                 other.collision_enter(self)
+
             if self.check_pixel_collision(self._collision_box, other.collision_box, self._sprite_mask, other.sprite_mask):
                 if other not in self._other_masks:
                     self.pixel_collision_enter(other)
@@ -238,6 +240,7 @@ class Collider(Component):
             if is_already_colliding:
                 self.collision_exit(other)
                 other.collision_exit(self)
+
 
     def check_pixel_collision(self, collision_box1, collision_box2, mask1, mask2):
         offset_x = collision_box2.x - collision_box1.x
@@ -253,23 +256,28 @@ class Collider(Component):
     def collision_enter(self, other):
         self._other_colliders.append(other)
 
-        
         if self.gameObject.tag == "Player" and other.gameObject.tag == "EnemyProjectile":
-            player = self.gameObject.get_component("Player")  
-            if player:
-                player.take_damage()  
-                other.gameObject.destroy()  
-        
+            print("player is hit")
+            # player = self.gameObject.get_component("Player")  
+            # if player:
+            #     player.take_damage()  
+            #     other.gameObject.destroy()
+            #     print("player is hit")
         
         if self.gameObject.tag == "Enemy" and other.gameObject.tag == "PlayerProjectile":
-            self.gameObject.destroy()  
-            other.gameObject.destroy() 
+            other.gameObject.destroy()
+            self.gameObject.destroy()
+
+            # for component_name, component in self.gameObject._components.items():
+            #     print(f"{component_name}: {component}")         
 
         if self.gameObject.tag == "Player" and other.gameObject.tag == "Enemy":
-            player = self.gameObject.get_component("Player")  
-            if player:
-                player.take_damage()  
-                other.gameObject.destroy()  
+            print("player flew into enemy")
+            # player = self.gameObject.get_component("Player")  
+            # if player:
+            #     player.take_damage()  
+            #     other.gameObject.destroy()
+            #     print("player flew into enemy")
         
 
         if "collision_enter" in self._listeners:
