@@ -10,7 +10,6 @@ class Menu():
         #CREATE GAME WINDOW
         self.screen = pygame.display.set_mode((400, 300))
 
-
         #CREATE UIMANAGER INSTANCE
         self.ui_manager = UIManager()
 
@@ -40,7 +39,7 @@ class Menu():
         pygame.quit()
 
     def start_game(self):
-        print("Starting Game...")
+        print("Starter spillet")
         self.running = False
         
 
