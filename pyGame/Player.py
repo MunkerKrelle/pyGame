@@ -6,6 +6,9 @@ from Components import SpriteRenderer
 
 class Player(Component):
 
+    def __init__(self):
+        self._lives = 3
+
     def awake(self, game_world):  
         self._time_since_last_shot = 1
         self._shoot_dealy = 1 
@@ -15,6 +18,14 @@ class Player(Component):
         self._sprite_size = pygame.math.Vector2(sr.sprite_image.get_width(),sr.sprite_image.get_height())
         self._gameObject.transform.position.x = (self._screen_size.x/2) - (self._sprite_size.x/2)
         self._gameObject.transform.position.y = (self._screen_size.y) - (self._sprite_size.y)
+
+    @property
+    def lives(self):
+        return self._lives
+    
+    @lives.setter
+    def lives(self, value):
+        self._lives = value
 
 
     def start(self):

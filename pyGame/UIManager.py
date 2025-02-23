@@ -1,11 +1,13 @@
 import pygame
 from Button import Button
 from GameWorld import GameWorld
+from Player import Player
 
 class UIManager:
     def __init__(self):
         #LOAD A FONT FOR UI ELEMENTS
         self.font = pygame.font.Font(None,36)
+        self.player = Player()
 
         #CREATE A LIST OF UI ELEMENTS
         self.buttons = [

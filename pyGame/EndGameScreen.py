@@ -32,6 +32,9 @@ class CompletedLevelScreen():
         print("Loader næste level")
         self.running = False
 
+if __name__ == "__main__":
+    CompletedLevelScreen().run()
+
 ############################################################
 
 
@@ -66,6 +69,6 @@ class GameOverScreen():
         self.running = False
 
 if __name__ == "__main__":  
-    CompletedLevelScreen().run()
+    GameOverScreen().run()
 
 
