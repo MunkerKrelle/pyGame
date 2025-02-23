@@ -9,7 +9,7 @@ class CompletedLevelScreen():
         self.running = True
     
     def run(self):
-        while self.running:
+        while self.running: 
             #FILL SCREEN WITH BACKGROUND COLOR
             self.screen.fill((30, 30, 30))
             #HANDLE EVENTS
@@ -21,7 +21,7 @@ class CompletedLevelScreen():
                 #HANDLE UI EVENTS
                 self.UIManager.handle_event(event)
 
-            #self.UIManager.dra(self.screen)
+            self.UIManager.draw_completedlevel_buttons(self.screen)
 
             pygame.display.flip()
 
@@ -66,6 +66,6 @@ class GameOverScreen():
         self.running = False
 
 if __name__ == "__main__":  
-    GameOverScreen().run()
+    CompletedLevelScreen().run()
 
 

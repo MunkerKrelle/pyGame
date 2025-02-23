@@ -125,6 +125,10 @@ class UIManager:
         for button in self.game_over_buttons:
             button.draw(screen)
 
+    def draw_completedlevel_buttons(self, screen):
+        for button in self.completed_level_buttons:
+            button.draw(screen)
+
     def handle_event(self, event):
         #CHECK BUTTON CLICKS
         for button in self.buttons + self.completed_level_buttons + self.game_over_buttons :
