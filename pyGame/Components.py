@@ -205,8 +205,9 @@ class Collider(Component):
         sr = self.gameObject.get_component("SpriteRenderer")
         self._collision_box = sr.sprite.rect
         self._sprite_mask = sr.sprite_mask
+        print(self._collision_box)
         game_world.colliders.append(self)
-
+        
     @property
     def collision_box(self):
         return self._collision_box
@@ -255,14 +256,14 @@ class Collider(Component):
 
     def collision_enter(self, other):
         self._other_colliders.append(other)
-
+        
         if self.gameObject.tag == "Player" and other.gameObject.tag == "EnemyProjectile":
-            print("player is hit")
-            # player = self.gameObject.get_component("Player")  
-            # if player:
-            #     player.take_damage()  
-            #     other.gameObject.destroy()
-            #     print("player is hit")
+            # print("player is hit")
+            player = self.gameObject.get_component("Player")  
+            if player:
+                player.take_damage()  
+                other.gameObject.destroy()
+                print("player is hit")
         
         if self.gameObject.tag == "Enemy" and other.gameObject.tag == "PlayerProjectile":
             other.gameObject.destroy()
@@ -284,16 +285,19 @@ class Collider(Component):
             self._listeners["collision_enter"](other)
 
     def collision_exit(self, other):
+        # print(other)
         self._other_colliders.remove(other)
         if "collision_exit" in self._listeners:
             self._listeners["collision_exit"](other)
 
     def pixel_collision_enter(self, other):
+        # print(other)
         self._other_masks.append(other)
         if "pixel_collision_enter" in self._listeners:
             self._listeners["pixel_collision_enter"](other)
 
     def pixel_collision_exit(self, other):
+        # print(other)
         self._other_masks.remove(other)
         if "pixel_collision_exit" in self._listeners:
             self._listeners["pixel_collision_exit"](other)

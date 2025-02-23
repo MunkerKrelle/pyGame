@@ -14,7 +14,7 @@ class Player(Component):
 
     def awake(self, game_world): 
         self._lives = 3
-        self.gameObject.add_component(Collider())
+        # self.gameObject.add_component(Collider())
         self.gameObject.tag = "Player" 
 
         self._time_since_last_shot = 1
@@ -76,6 +76,8 @@ class Player(Component):
             self._gameObject.transform.position.y = bottom_limit
         elif self._gameObject.transform.position.y < 0:
             self._gameObject.transform.position.y = 0
+        
+        # print(f" player pos is: {self.gameObject.transform.position}")
     
     def shoot(self):
         global bullet_sprite
