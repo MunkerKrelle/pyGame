@@ -14,10 +14,8 @@ class Player(Component):
 
     def awake(self, game_world): 
         self._lives = 3
-        print(self._lives)  
-        self.gameObject.add_component(Collider())
-        
-        self.gameObject.tag = "Player"
+        # self.gameObject.add_component(Collider())
+        self.gameObject.tag = "Player" 
 
         self._time_since_last_shot = 1
         self._shoot_dealy = 1 
@@ -62,9 +60,10 @@ class Player(Component):
         if keys[pygame.K_f]:
             self.aqquire_speed_up()
         if keys[pygame.K_v]:
+            # self.remove_colliders()
             self.aqquire_lives_up()
 
-
+        
         self._gameObject.transform.translate(movement*delta_time)
 
         if self._gameObject.transform.position.x < -self._sprite_size.x:
@@ -77,6 +76,8 @@ class Player(Component):
             self._gameObject.transform.position.y = bottom_limit
         elif self._gameObject.transform.position.y < 0:
             self._gameObject.transform.position.y = 0
+        
+        # print(f" player pos is: {self.gameObject.transform.position}")
     
     def shoot(self):
         global bullet_sprite
@@ -90,26 +91,17 @@ class Player(Component):
                 # print(power.proj_speed)
                 projectile_position = power.unique_shoot(sr, self._sprite_size.x / 2, i, power.proj_amount, power.proj_spread_angle)
                 projectile.transform.position = projectile_position
-                
-                collider = projectile.add_component(Collider())
+               
+                projectile.add_component(Collider())
+
+                # for component_name, component in projectile._components.items():
+                #     print(f"{component_name}: {component}")
+                #     self.gameObject.remove_component(component_name)
+
                 projectile.tag = "PlayerProjectile" 
                 
                 self._game_world.instantiate(projectile)
 
-            # projectile = GameObject(None)
-            # sr = projectile.add_component(SpriteRenderer("laser.png"))
-            # projectile.add_component(Laser(power.proj_speed))
-
-            # projectile_position = pygame.math.Vector2(self._gameObject.transform.position.x+(self._sprite_size.x/2)-sr.sprite_image.get_width()/2
-            #                                         ,self._gameObject.transform.position.y-40)
-            
-            # projectile.transform.position = projectile_position
-
-            # collider = projectile.add_component(Collider())
-            # projectile.tag = "PlayerProjectile"  
-
-            # self._game_world.instantiate(projectile)
-            
             self._time_since_last_shot = 0
     
     def aqquire_fireball(self):     
@@ -134,7 +126,15 @@ class Player(Component):
         print(temp)
         self._lives += temp
         print(self._lives)
-        
+    
+    def remove_colliders(self):
+        pass
+        # global collider_list
+        # self.gameObject.remove_component(self.collider_list[0])
+        # projectile = self.gameObject.get_component("Collider")
+        # if projectile:
+            # self.gameObject.remove_component(projectile)
+
     def take_damage(self):
         self._lives -= 1
         print(f"Player hit! Lives left: {self._lives}")
