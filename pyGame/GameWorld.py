@@ -27,6 +27,12 @@ class GameWorld:
         self._gameObjects.append(builder.get_gameObject())
         builder.build("Bomber")
         self._gameObjects.append(builder.get_gameObject())
+        builder.build("Battlecruiser")
+        self._gameObjects.append(builder.get_gameObject())
+        builder.build("Fighter")
+        self._gameObjects.append(builder.get_gameObject())
+        builder.build("Torpedo_Ship")
+        self._gameObjects.append(builder.get_gameObject())
 
         self._running = True
         self._clock = pygame.time.Clock()
