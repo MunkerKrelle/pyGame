@@ -17,6 +17,9 @@ class Enemy(Component):
         self._game_world = game_world
         sr = self.gameObject.get_component("SpriteRenderer")
         
+        self.set_enemy_health(sr)
+        # print(sr.sprite_name)  
+
         random_x = random.randint(0, game_world.screen.get_width() - sr.sprite_image.get_width())
         self._screen_size = pygame.math.Vector2(game_world.screen.get_width(), game_world.screen.get_height())
         self.gameObject.transform.position = pygame.math.Vector2(random_x, 0)
@@ -61,3 +64,37 @@ class Enemy(Component):
         self.projectile.transform.position = projectile_position
 
         self._game_world.instantiate(self.projectile)
+    
+    def take_damage(self, damage_taken):
+        self._lives -= damage_taken
+        print(f"Enemy was hit! Lives left: {self._lives}")
+        
+        if self._lives <= 0:
+            self.game_over()
+
+    def game_over(self):
+        print("Game Over!")
+        # self._game_world.destroy(self._gameObject)  # Fjerner spilleren fra spillet
+        self.gameObject.destroy()
+    
+    def set_enemy_health(self, sr):
+        if sr.sprite_name == "/EnemyShips/Designs - Base/pngs/Nairan - Dreadnought - Base.png":
+            self._lives = 5
+
+        elif sr.sprite_name == "/EnemyShips/Designs - Base/pngs/Nairan - Scout - Base.png":
+            self._lives = 1
+
+        elif sr.sprite_name == "/EnemyShips/Designs - Base/pngs/Nairan - Frigate - Base.png":
+            self._lives = 1
+
+        elif sr.sprite_name == "/EnemyShips/Designs - Base/pngs/Nairan - Bomber - Base.png":
+            self._lives = 2
+
+        elif sr.sprite_name == "/EnemyShips/Designs - Base/pngs/Nairan - Battlecruiser - Base.png":
+            self._lives = 3
+
+        elif sr.sprite_name == "/EnemyShips/Designs - Base/pngs/Nairan - Fighter - Base.png":
+            self._lives = 2
+
+        elif sr.sprite_name == "/EnemyShips/Designs - Base/pngs/Nairan - Torpedo Ship - Base.png":
+            self._lives = 1

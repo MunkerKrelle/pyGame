@@ -19,7 +19,7 @@ class GameWorld:
         self._gameObjects.append(builder.get_gameObject())
 
         builder = EnemyBuilder()
-        builder.build("Dreadnought")
+        builder.build("Dreadnought") 
         self._gameObjects.append(builder.get_gameObject())        
         builder.build("Scout")
         self._gameObjects.append(builder.get_gameObject())
