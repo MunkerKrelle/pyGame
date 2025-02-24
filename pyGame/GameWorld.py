@@ -20,7 +20,7 @@ class GameWorld:
 
         builder = EnemyBuilder()
         builder.build("Dreadnought")
-        self._gameObjects.append(builder.get_gameObject())
+        self._gameObjects.append(builder.get_gameObject())        
         builder.build("Scout")
         self._gameObjects.append(builder.get_gameObject())
         builder.build("Frigate")
@@ -74,6 +74,7 @@ class GameWorld:
                     collider1.collision_check(collider2)
 
             self._gameObjects = [obj for obj in self._gameObjects if not obj.is_destroyed]
+            self._colliders = [col for col in self._colliders if not col.gameObject.is_destroyed]
 
             pygame.display.flip()
             self._clock.tick(60)
