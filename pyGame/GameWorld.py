@@ -14,7 +14,7 @@ class GameWorld:
         pygame.init()
 
         # 🎶 Indlæs baggrundsmusik (MP3 eller OGG)
-        pygame.mixer.music.load("assets/BackGroundMusic.mp3")
+        pygame.mixer.music.load("Assets/BackGroundMusic.mp3")
 
         # 🔁 Afspil musikken i et uendeligt loop (-1 betyder "loop for evigt")
         pygame.mixer.music.play(-1)
@@ -27,7 +27,7 @@ class GameWorld:
         self._gameObjects.append(builder.get_gameObject())
 
         # Tilføj en scrollende baggrund
-        self._background = Background("assets/Space1.jpg", self._screen, speed=2)
+        self._background = Background("Assets/Space1.jpg", self._screen, speed=2)
 
         builder = EnemyBuilder()
         builder.build("Dreadnought")
