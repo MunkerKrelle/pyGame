@@ -78,7 +78,11 @@ class GameWorld:
                 if event.type == pygame.QUIT:
                     self._running =False
 
-            self._screen.fill("cornflowerblue")
+
+
+            # Tegn baggrunden først
+            self._screen.blit(self._background_image, (0, 0))  # Tegner baggrunden
+
 
             delta_time = self._clock.tick(60) / 1000.0
 
