@@ -36,6 +36,7 @@ class GameWorld:
 
         builder = BossBuilder()
         builder.build()
+        self._gameObjects.append(builder.get_gameObject())
 
         self._running = True
         self._clock = pygame.time.Clock()

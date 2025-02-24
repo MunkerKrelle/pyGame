@@ -13,6 +13,7 @@ from Components import Collider
 from Strategy import Battlecruiser, Bomber, Dreadnought, Fighter, Frigate, Scout, Strategy, Torpedo_Ship
 import pygame
 import random
+from Boss import Boss
 
 class Builder(ABC):
     
@@ -141,10 +142,10 @@ class BossBuilder(Builder):
     def build(self):
         self._gameObject = GameObject(pygame.math.Vector2(0, 0))
         self._gameObject.add_component(Collider())
-        self._gameObject.add_component(SpriteRenderer("BossBase.png"))
-        self._gameObject.add_component(Enemy())
+        self._gameObject.add_component(SpriteRenderer("/BossShip/BossBase.png"))
+        self._gameObject.add_component(Boss())
         animator = self._gameObject.add_component(Animator())
-        animator.add_spritesheet_animation("Attack", "Boss.png", 560, 208, 4)
+        animator.add_spritesheet_animation("Attack", "pyGame/Assets/BossShip/Boss.png", 560, 208, 4)
         animator.play_animation("Attack")
     
     def get_gameObject(self) -> GameObject:
