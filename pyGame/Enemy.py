@@ -44,6 +44,7 @@ class Enemy(Component):
             self.shoot()
             self._time_since_last_shot = 0
 
+    def shoot(self):
         """Fjenden skyder et projektil mod spilleren."""
         self.projectile = GameObject(None)
         sr = self.projectile.add_component(SpriteRenderer("laser.png"))  
