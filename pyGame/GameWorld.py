@@ -3,6 +3,7 @@ from GameObject import GameObject
 from Components import Animator
 from Components import SpriteRenderer
 from Player import Player
+from Background import Background
 from Builder import PlayerBuilder
 from Builder import EnemyBuilder
 class GameWorld:
@@ -24,6 +25,9 @@ class GameWorld:
         builder.build()
 
         self._gameObjects.append(builder.get_gameObject())
+
+        # Tilføj en scrollende baggrund
+        self._background = Background("assets/Space1.jpg", self._screen, speed=2)
 
         builder = EnemyBuilder()
         builder.build("Dreadnought")
