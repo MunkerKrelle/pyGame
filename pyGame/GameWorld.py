@@ -13,6 +13,7 @@ class GameWorld:
     def __init__(self) -> None:
         pygame.init()
 
+        self._screen = pygame.display.set_mode((1280,720))
         self._gameObjects = []
         self._colliders = []
         builder = PlayerBuilder()
@@ -21,11 +22,21 @@ class GameWorld:
         self._gameObjects.append(builder.get_gameObject())
 
         builder = EnemyBuilder()
-        builder.build()
+        builder.build("Dreadnought")
+        self._gameObjects.append(builder.get_gameObject())        
+        builder.build("Scout")
+        self._gameObjects.append(builder.get_gameObject())
+        builder.build("Frigate")
+        self._gameObjects.append(builder.get_gameObject())
+        builder.build("Bomber")
+        self._gameObjects.append(builder.get_gameObject())
+        builder.build("Battlecruiser")
+        self._gameObjects.append(builder.get_gameObject())
+        builder.build("Fighter")
+        self._gameObjects.append(builder.get_gameObject())
+        builder.build("Torpedo_Ship")
         self._gameObjects.append(builder.get_gameObject())
 
-
-        self._screen = pygame.display.set_mode((1280,720))
         self._running = True
         self._clock = pygame.time.Clock()
 
@@ -47,11 +58,11 @@ class GameWorld:
         self._gameObjects.append(gameObject)
 
 
-    def Awake(self):
+    def Awake(self): # needs renamed to awake, lowercase. for consistency
         for gameObject in self._gameObjects[:]:
             gameObject.awake(self)
     
-    def Start(self):
+    def Start(self): # needs renamed to start, lowercase for consistency
         for gameObject in self._gameObjects[:]:
             gameObject.start()
 
@@ -99,6 +110,7 @@ class GameWorld:
                     collider1.collision_check(collider2)
 
             self._gameObjects = [obj for obj in self._gameObjects if not obj.is_destroyed]
+            self._colliders = [col for col in self._colliders if not col.gameObject.is_destroyed]
 
 
             self.score_manager.draw(self._screen)
