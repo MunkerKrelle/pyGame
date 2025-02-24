@@ -12,6 +12,9 @@ from PowerUps import MoreLivesPowerUp
 class Player(Component):
     bullet_sprite = "blank"
 
+    def __init__(self):
+        self._lives = 3
+
     def awake(self, game_world): 
         self._lives = 3
         # self.gameObject.add_component(Collider())
@@ -37,6 +40,14 @@ class Player(Component):
         speed = self._gameObject.get_component(SpeedPowerUp.__name__)
         speed = 300 
         # print(speed) 
+    @property
+    def lives(self):
+        return self._lives
+    
+    @lives.setter
+    def lives(self, value):
+        self._lives = value
+
 
     def start(self):
         pass
