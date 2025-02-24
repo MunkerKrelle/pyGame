@@ -37,9 +37,14 @@ class GameWorld:
 
         # Byg fjender
         builder = EnemyBuilder()
-        for enemy_type in ["Dreadnought", "Scout", "Frigate", "Bomber"]:
-            builder.build(enemy_type)
-            self._gameObjects.append(builder.get_gameObject())
+        builder.build("Dreadnought")
+        self._gameObjects.append(builder.get_gameObject())        
+        builder.build("Scout")
+        self._gameObjects.append(builder.get_gameObject())
+        builder.build("Frigate")
+        self._gameObjects.append(builder.get_gameObject())
+        builder.build("Bomber")
+        self._gameObjects.append(builder.get_gameObject())
 
     @property
     def screen(self):
@@ -90,6 +95,7 @@ class GameWorld:
 
             # Fjern ødelagte objekter
             self._gameObjects = [obj for obj in self._gameObjects if not obj.is_destroyed]
+            self._colliders = [col for col in self._colliders if not col.gameObject.is_destroyed]
 
             pygame.display.flip()
             self._clock.tick(60)
