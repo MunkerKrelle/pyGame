@@ -166,6 +166,8 @@ class Animator(Component):
 
 
 class Laser(Component):
+    def init(self, speed):
+        self.speed = speed
 
     def awake(self, game_world):
         pass
@@ -174,13 +176,13 @@ class Laser(Component):
         pass
 
     def update(self, delta_time):
-        speed = 500
-        movement = pygame.math.Vector2(0,-speed)
-        
-        if self.gameObject.tag == "EnemyProjectile":
-            movement.y = self.speed *2 # Fjendens skud skal bevæge sig nedad
+        movement = pygame.math.Vector2(0, - self.speed)
+        self._gameObject.transform.translate(movement * delta_time)
 
-        self._gameObject.transform.translate(movement*delta_time)
+        if self.gameObject.tag == "EnemyProjectile":
+            movement.y = self.speed * 2 # Fjendens skud skal bevæge sig nedad
+
+        self._gameObject.transform.translate(movement * delta_time)
 
         if self._gameObject.transform.position.y < 0:
             self._gameObject.destroy()
