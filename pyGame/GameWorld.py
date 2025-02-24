@@ -27,7 +27,8 @@ class GameWorld:
         self._gameObjects.append(builder.get_gameObject())
 
         # Tilføj en scrollende baggrund
-        self._background = Background("assets/Space1.jpg", self._screen, speed=2)
+        #self._background = Background("assets/Space1.jpg", self._screen, speed=2)
+        self._background_image = pygame.image.load("pygame\\Assets\\Space1.jpg").convert()
 
         builder = EnemyBuilder()
         builder.build("Dreadnought")
