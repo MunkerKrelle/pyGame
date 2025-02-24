@@ -3,7 +3,7 @@ from GameObject import GameObject
 from Components import Animator
 from Components import SpriteRenderer
 from Player import Player
-from Builder import PlayerBuilder
+from Builder import BossBuilder, PlayerBuilder
 from Builder import EnemyBuilder
 class GameWorld:
 
@@ -18,21 +18,24 @@ class GameWorld:
 
         self._gameObjects.append(builder.get_gameObject())
 
-        builder = EnemyBuilder()
-        builder.build("Dreadnought")
-        self._gameObjects.append(builder.get_gameObject())        
-        builder.build("Scout")
-        self._gameObjects.append(builder.get_gameObject())
-        builder.build("Frigate")
-        self._gameObjects.append(builder.get_gameObject())
-        builder.build("Bomber")
-        self._gameObjects.append(builder.get_gameObject())
-        builder.build("Battlecruiser")
-        self._gameObjects.append(builder.get_gameObject())
-        builder.build("Fighter")
-        self._gameObjects.append(builder.get_gameObject())
-        builder.build("Torpedo_Ship")
-        self._gameObjects.append(builder.get_gameObject())
+        # builder = EnemyBuilder()
+        # builder.build("Dreadnought")
+        # self._gameObjects.append(builder.get_gameObject())        
+        # builder.build("Scout")
+        # self._gameObjects.append(builder.get_gameObject())
+        # builder.build("Frigate")
+        # self._gameObjects.append(builder.get_gameObject())
+        # builder.build("Bomber")
+        # self._gameObjects.append(builder.get_gameObject())
+        # builder.build("Battlecruiser")
+        # self._gameObjects.append(builder.get_gameObject())
+        # builder.build("Fighter")
+        # self._gameObjects.append(builder.get_gameObject())
+        # builder.build("Torpedo_Ship")
+        # self._gameObjects.append(builder.get_gameObject())
+
+        builder = BossBuilder()
+        builder.build()
 
         self._running = True
         self._clock = pygame.time.Clock()
