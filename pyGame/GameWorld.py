@@ -28,7 +28,7 @@ class GameWorld:
 
         # Tilføj en scrollende baggrund
         #self._background = Background("assets/Space1.jpg", self._screen, speed=2)
-        self._background_image = pygame.image.load("pygame\\Assets\\Space1.jpg").convert()
+        self._background = Background("pygame\\Assets\\Space1.jpg", self._screen, speed=2)
 
         builder = EnemyBuilder()
         builder.build("Dreadnought")
@@ -80,8 +80,12 @@ class GameWorld:
 
 
 
-            # Tegn baggrunden først
-            self._screen.blit(self._background_image, (0, 0))  # Tegner baggrunden
+           # 🎆 Opdater scrolling baggrund
+            self._background.update()
+
+            # 🎆 Tegn scrolling baggrund
+            self._screen.fill("black")
+            self._background.draw()
 
 
             delta_time = self._clock.tick(60) / 1000.0

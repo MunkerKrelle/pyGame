@@ -27,6 +27,9 @@ class Enemy(Component):
         self._time_since_last_shot = 0
         self._shoot_delay = 2  # Seconds between shots
 
+         # 🎵 Load eksplosionseffekt
+        self._explosion_sound = pygame.mixer.Sound("pygame\\Assets\\Explode.mp3")
+
 
     def start(self) -> None:
         pass
@@ -44,19 +47,21 @@ class Enemy(Component):
             self.shoot()
             self._time_since_last_shot = 0
 
+    def shoot(self):
         """Fjenden skyder et projektil mod spilleren."""
         self.projectile = GameObject(None)
-        sr = self.projectile.add_component(SpriteRenderer("laser.png"))  
-        self.projectile.add_component(Laser(500))  
-
+        sr = self.projectile.add_component(SpriteRenderer("laser.png"))
+        self.projectile.add_component(Laser(500))
 
         projectile_position = pygame.math.Vector2(
             self.gameObject.transform.position.x + (self.gameObject.get_component("SpriteRenderer").sprite_image.get_width() / 2) - (sr.sprite_image.get_width() / 2),
             self.gameObject.transform.position.y + 40
         )
-
         self.projectile.add_component(Collider())
         self.projectile.tag = "EnemyProjectile" 
         self.projectile.transform.position = projectile_position
 
-        self._game_world.instantiate(self.projectile)
+    def destroy(self):
+        """Spil eksplosionseffekten, når fjenden dør"""
+        self._explosion_sound.play()
+        self.gameObject.destroy()

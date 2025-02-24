@@ -267,12 +267,15 @@ class Collider(Component):
                 other.gameObject.destroy()
                 print("player is hit")
         
-        if self.gameObject.tag == "Enemy" and other.gameObject.tag == "PlayerProjectile":
-            other.gameObject.destroy()
-            self.gameObject.destroy()
+    def collision_enter(self, other):
+        self._other_colliders.append(other)
 
-            # for component_name, component in self.gameObject._components.items():
-            #     print(f"{component_name}: {component}")         
+        if self.gameObject.tag == "Enemy" and other.gameObject.tag == "PlayerProjectile":
+            enemy = self.gameObject.get_component("Enemy")
+            if enemy:
+                enemy.destroy()  # 🎵 Spiller eksplosionseffekt her
+            other.gameObject.destroy()
+        
 
         if self.gameObject.tag == "Player" and other.gameObject.tag == "Enemy":
             print("player flew into enemy")
