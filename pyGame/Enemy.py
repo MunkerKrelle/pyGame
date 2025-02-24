@@ -29,6 +29,7 @@ class Enemy(Component):
 
          # 🎵 Load eksplosionseffekt
         self._explosion_sound = pygame.mixer.Sound("pygame\\Assets\\Explode.mp3")
+        self._laser_sound = pygame.mixer.Sound("pygame\\Assets\\LaserSound.mp3")
 
 
     def start(self) -> None:
@@ -60,6 +61,12 @@ class Enemy(Component):
         self.projectile.add_component(Collider())
         self.projectile.tag = "EnemyProjectile" 
         self.projectile.transform.position = projectile_position
+
+            # 🎵 Spil laserlyd
+        self._laser_sound.play()
+
+            # 🔥 Tilføj projektilet til spillet
+        self._game_world.instantiate(self.projectile)
 
     def destroy(self):
         """Spil eksplosionseffekten, når fjenden dør"""
