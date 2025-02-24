@@ -8,8 +8,15 @@ from Builder import EnemyBuilder
 class GameWorld:
 
     def __init__(self) -> None:
+        # 🎵 Initialiser lydsystemet
+        pygame.mixer.init()
         pygame.init()
 
+        # 🎶 Indlæs baggrundsmusik (MP3 eller OGG)
+        pygame.mixer.music.load("assets/BackGroundMusic.mp3")
+
+        # 🔁 Afspil musikken i et uendeligt loop (-1 betyder "loop for evigt")
+        pygame.mixer.music.play(-1)
         self._screen = pygame.display.set_mode((1280,720))
         self._gameObjects = []
         self._colliders = []
