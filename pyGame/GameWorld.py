@@ -14,8 +14,8 @@ class GameWorld:
         pygame.init()
 
         
-        pygame.mixer.music.load("Pygame//assets/BackGroundMusic.mp3")
-
+        #pygame.mixer.music.load("Pygame//assets/BackGroundMusic.mp3")
+        pygame.mixer.music.load("assets/BackGroundMusic.mp3")
         
         pygame.mixer.music.play(-1)
         self._screen = pygame.display.set_mode((1280,720))
@@ -27,7 +27,8 @@ class GameWorld:
         self._gameObjects.append(builder.get_gameObject())
 
         
-        self._background = Background("pygame\\Assets\\Space1.jpg", self._screen, speed=2)
+        # self._background = Background("pygame\\Assets\\Space1.jpg", self._screen, speed=2)
+        self._background = Background("Assets\\Space1.jpg", self._screen, speed=2)
 
         builder = EnemyBuilder()
         builder.build("Dreadnought") 
