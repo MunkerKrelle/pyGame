@@ -53,16 +53,13 @@ class Enemy(Component):
         sr = self.projectile.add_component(SpriteRenderer("laser.png"))  
         self.projectile.add_component(Laser(500))  
 
-
         projectile_position = pygame.math.Vector2(
-            self.gameObject.transform.position.x + (self.gameObject.get_component("SpriteRenderer").sprite_image.get_width() / 2) - (sr.sprite_image.get_width() / 2),
-            self.gameObject.transform.position.y + 40
-        )
-
+                self.gameObject.transform.position.x + (self.gameObject.get_component("SpriteRenderer").sprite_image.get_width() / 2) - (sr.sprite_image.get_width() / 2),
+                self.gameObject.transform.position.y + 40
+            )
         self.projectile.add_component(Collider())
         self.projectile.tag = "EnemyProjectile" 
         self.projectile.transform.position = projectile_position
-
         self._game_world.instantiate(self.projectile)
     
     def take_damage(self, damage_taken):
