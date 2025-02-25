@@ -76,9 +76,6 @@ class GameWorld:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self._running =False
-
-
-
            
             self._background.update()
 
