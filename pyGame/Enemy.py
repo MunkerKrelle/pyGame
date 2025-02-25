@@ -27,7 +27,7 @@ class Enemy(Component):
         self._time_since_last_shot = 0
         self._shoot_delay = 2  # Seconds between shots
 
-         # 🎵 Load eksplosionseffekt
+         
         self._explosion_sound = pygame.mixer.Sound("pygame\\Assets\\Explode.mp3")
         self._laser_sound = pygame.mixer.Sound("pygame\\Assets\\LaserSound.mp3")
 
@@ -62,10 +62,10 @@ class Enemy(Component):
         self.projectile.tag = "EnemyProjectile" 
         self.projectile.transform.position = projectile_position
 
-            # 🎵 Spil laserlyd
+            
         self._laser_sound.play()
 
-            # 🔥 Tilføj projektilet til spillet
+            
         self._game_world.instantiate(self.projectile)
 
     def destroy(self):

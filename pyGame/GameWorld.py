@@ -9,14 +9,14 @@ from Builder import EnemyBuilder
 class GameWorld:
 
     def __init__(self) -> None:
-        # 🎵 Initialiser lydsystemet
+        
         pygame.mixer.init()
         pygame.init()
 
-        # 🎶 Indlæs baggrundsmusik (MP3 eller OGG)
+        
         pygame.mixer.music.load("Pygame//assets/BackGroundMusic.mp3")
 
-        # 🔁 Afspil musikken i et uendeligt loop (-1 betyder "loop for evigt")
+        
         pygame.mixer.music.play(-1)
         self._screen = pygame.display.set_mode((1280,720))
         self._gameObjects = []
@@ -26,8 +26,7 @@ class GameWorld:
 
         self._gameObjects.append(builder.get_gameObject())
 
-        # Tilføj en scrollende baggrund
-        #self._background = Background("assets/Space1.jpg", self._screen, speed=2)
+        
         self._background = Background("pygame\\Assets\\Space1.jpg", self._screen, speed=2)
 
         builder = EnemyBuilder()
@@ -63,11 +62,11 @@ class GameWorld:
         self._gameObjects.append(gameObject)
 
 
-    def Awake(self): # needs renamed to awake, lowercase. for consistency
+    def Awake(self): 
         for gameObject in self._gameObjects[:]:
             gameObject.awake(self)
     
-    def Start(self): # needs renamed to start, lowercase for consistency
+    def Start(self): 
         for gameObject in self._gameObjects[:]:
             gameObject.start()
 
@@ -80,17 +79,17 @@ class GameWorld:
 
 
 
-           # 🎆 Opdater scrolling baggrund
+           
             self._background.update()
 
-            # 🎆 Tegn scrolling baggrund
+            
             self._screen.fill("black")
             self._background.draw()
 
 
             delta_time = self._clock.tick(60) / 1000.0
 
-            #draw your game
+            
             for gameObject in self._gameObjects[:]:
                 gameObject.update(delta_time)
 
