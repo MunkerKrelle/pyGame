@@ -30,7 +30,7 @@ class GameWorld:
         self._background = Background("pygame\\Assets\\Space1.jpg", self._screen, speed=2)
 
         builder = EnemyBuilder()
-        builder.build("Dreadnought")
+        builder.build("Dreadnought") 
         self._gameObjects.append(builder.get_gameObject())        
         builder.build("Scout")
         self._gameObjects.append(builder.get_gameObject())

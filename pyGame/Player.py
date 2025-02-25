@@ -11,14 +11,13 @@ from PowerUps import MoreLivesPowerUp
 
 class Player(Component):
     bullet_sprite = "blank"
-
+    
     def awake(self, game_world): 
         self._lives = 3
-        # self.gameObject.add_component(Collider())
         self.gameObject.tag = "Player" 
 
         self._time_since_last_shot = 1
-        self._shoot_dealy = 1 
+        self._shoot_dealy = 0.1 
         self._game_world = game_world
         
         self._shoot_sound = pygame.mixer.Sound("pygame\\Assets\\LaserSound.mp3")
@@ -31,12 +30,16 @@ class Player(Component):
         global name
         name = "BasePowerUp"
 
+        global damage
+        damage = 0
+      
         global power
         power = self._gameObject.get_component(name)
-        power.power_change()
+        damage = power.power_change()
+        print(damage)
 
         global speed
-        speed = self._gameObject.get_component(SpeedPowerUp.__name__)
+        # speed = self._gameObject.get_component(SpeedPowerUp.__name__)
         speed = 300 
          
 
@@ -65,7 +68,6 @@ class Player(Component):
             # self.remove_colliders()
             self.aqquire_lives_up()
 
-        
         self._gameObject.transform.translate(movement*delta_time)
 
         if self._gameObject.transform.position.x < -self._sprite_size.x:
@@ -79,11 +81,16 @@ class Player(Component):
         elif self._gameObject.transform.position.y < 0:
             self._gameObject.transform.position.y = 0
         
-        
+        # print(f" player pos is: {self.gameObject.transform.position}")
     
+    @property
+    def damage(self):
+        return self.damage
+
+
     def shoot(self):
-        global bullet_sprite
-        global power
+        # global bullet_sprite
+        # global power
         if self._time_since_last_shot >= self._shoot_dealy:
             for i in range(power.proj_amount):
                 projectile = GameObject(None)
@@ -99,7 +106,8 @@ class Player(Component):
                 
 
                 projectile.tag = "PlayerProjectile" 
-                
+                projectile.damage = power.damage 
+                # print(projectile.damage)
                 self._game_world.instantiate(projectile)
                 
                 self._shoot_sound.play()
@@ -109,12 +117,14 @@ class Player(Component):
     def aqquire_fireball(self):     
         global power
         power = self._gameObject.get_component(FireballPowerUp.__name__)
-        # power.power_change()
+        damage = power.power_change()
+        # print(damage)
 
     def aqquire_multi_shot(self):
         global power
         power = self._gameObject.get_component(MultiShot.__name__)
-        # power.power_change()
+        damage = power.power_change()
+        # print(damage)
 
     def aqquire_speed_up(self):     
         global speed
@@ -128,17 +138,14 @@ class Player(Component):
         print(temp)
         self._lives += temp
         print(self._lives)
-    
-    def remove_colliders(self):
-        pass
-
 
     def take_damage(self):
         self._lives -= 1
         print(f"Player hit! Lives left: {self._lives}")
-        
         if self._lives <= 0:
             self.game_over()
+
     def game_over(self):
         print("Game Over!")
-        self._game_world.destroy(self._gameObject)  
+        # self._game_world.destroy(self._gameObject)  # Fjerner spilleren fra spillet
+        self.gameObject.destroy()

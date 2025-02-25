@@ -63,9 +63,10 @@ class SpriteRenderer(Component):
     def __init__(self, sprite_name) -> None:
         super().__init__()
 
-        #self._sprite_image = pygame.image.load(f"Assets\\{sprite_name}")
-        self._sprite_image = pygame.image.load(f"pygame\\Assets\\{sprite_name}") # Jeres version
+        self._sprite_image = pygame.image.load(f"Assets\\{sprite_name}")
+        #self._sprite_image = pygame.image.load(f"pygame\\Assets\\{sprite_name}") # Jeres version
         #self._sprite_image = pygame.image.load(f"C:/AxP/Githubrepositories/Semester4/pyGame/pyGame/Assets/{sprite_name}") # Sargons Version
+        self._sprite_name = sprite_name
         self._sprite = pygame.sprite.Sprite()
         self._sprite.rect = self._sprite_image.get_rect()
         self._sprite_mask = pygame.mask.from_surface(self.sprite_image)
@@ -86,6 +87,10 @@ class SpriteRenderer(Component):
     @property
     def sprite(self):
         return self._sprite
+    
+    @property
+    def sprite_name(self):
+        return self._sprite_name
     
     # @property
     # def sprite_flip(self):
@@ -118,8 +123,8 @@ class Animator(Component):
     def add_animation(self, name, *args):
         frames = []
         for arg in args:
-            #sprite_image = pygame.image.load(f"Assets\\{arg}")
-            sprite_image = pygame.image.load(f"pygame\\Assets\\{arg}") # Jeres version
+            sprite_image = pygame.image.load(f"Assets\\{arg}")
+            #sprite_image = pygame.image.load(f"pygame\\Assets\\{arg}") # Jeres version
             #sprite_image = pygame.image.load(f"C:/AxP/Githubrepositories/Semester4/pyGame/pyGame/Assets/{arg}") # SARGONS VERSION
             frames.append(sprite_image)
         
@@ -207,7 +212,7 @@ class Collider(Component):
         sr = self.gameObject.get_component("SpriteRenderer")
         self._collision_box = sr.sprite.rect
         self._sprite_mask = sr.sprite_mask
-        print(self._collision_box)
+        # print(self._collision_box)
         game_world.colliders.append(self)
         
     @property
@@ -279,6 +284,9 @@ class Collider(Component):
 
         if self.gameObject.tag == "Player" and other.gameObject.tag == "Enemy":
             print("player flew into enemy")
+            player = self.gameObject.get_component("Player")  
+            if player:
+                player.take_damage()  
             # player = self.gameObject.get_component("Player")  
             # if player:
             #     player.take_damage()  
