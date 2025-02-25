@@ -91,6 +91,10 @@ class GameWorld:
 
         pygame.quit()
     
+    def get_player_position(self):
+        for gameObject in self._gameObjects:
+            if gameObject.tag == "Player":
+                return gameObject.transform.position
 
 gw = GameWorld()
 

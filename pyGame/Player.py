@@ -1,7 +1,7 @@
 from Components import Component
 import pygame
 from GameObject import GameObject
-from Components import Laser
+from Components import Projectile
 from Components import Collider
 from Components import SpriteRenderer
 from PowerUps import FireballPowerUp
@@ -87,7 +87,7 @@ class Player(Component):
                 projectile = GameObject(None)
                 sr = projectile.add_component(SpriteRenderer(power.sprite))
                 # print(power.damage)
-                projectile.add_component(Laser(power.proj_speed))
+                projectile.add_component(Projectile(power.proj_speed, None))
                 # print(power.proj_speed)
                 projectile_position = power.unique_shoot(sr, self._sprite_size.x / 2, i, power.proj_amount, power.proj_spread_angle)
                 projectile.transform.position = projectile_position

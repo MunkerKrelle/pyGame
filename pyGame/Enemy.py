@@ -1,7 +1,7 @@
 from Components import Component
 import random
 import pygame
-from Components import Laser  
+from Components import Projectile  
 from Components import SpriteRenderer
 from Components import Collider
 from GameObject import GameObject
@@ -48,7 +48,7 @@ class Enemy(Component):
             """Fjenden skyder et projektil mod spilleren."""
             self.projectile = GameObject(None)
             sr = self.projectile.add_component(SpriteRenderer("laser.png"))
-            self.projectile.add_component(Laser(500))
+            self.projectile.add_component(Projectile(500, None))
 
             projectile_position = pygame.math.Vector2(
                 self.gameObject.transform.position.x + (self.gameObject.get_component("SpriteRenderer").sprite_image.get_width() / 2) - (sr.sprite_image.get_width() / 2),

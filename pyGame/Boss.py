@@ -1,7 +1,7 @@
 from Components import Animator, Component
 import random
 import pygame
-from Components import Laser  
+from Components import Projectile  
 from Components import SpriteRenderer
 from Components import Collider
 from GameObject import GameObject
@@ -9,7 +9,7 @@ from GameObject import GameObject
 class Boss(Component):
     def __init__(self) -> None:
         super().__init__()
-        self.bullet_offset = [(208, 0), (218, 0), (228, 0), (326, 0), (336, 0), (346, 0)]  # Define bullet offsets relative to the Boss
+        self.bullet_offset = [(208, 0), (218, 0), (228, 0), (326, 0), (336, 0), (346, 0), (166,0), (388,0), (102,0), (452,0)]  # Define bullet offsets relative to the Boss
 
     def awake(self, game_world) -> None:
         self.horizontal_movement = 100  # Initialize horizontal movement
@@ -18,6 +18,7 @@ class Boss(Component):
         self.shoot = False
         self.nextShot = 0
         self.bulletIndex = 0
+        self.nextBomb = 0
 
         # Initialize bullet positions based on the Boss's initial position
         self.update_bullet_positions()
@@ -44,6 +45,7 @@ class Boss(Component):
             self.shoot = True
             movement = pygame.math.Vector2(self.horizontal_movement * delta_time, 0)
             self.gameObject.transform.translate(movement)
+            self.update_bullet_positions()
 
         self._keep_within_bounds(self.gameObject, self._game_world.screen.get_width())
 
@@ -53,38 +55,83 @@ class Boss(Component):
         
         self._time_since_last_shot += delta_time
         self.nextShot += delta_time
-        if self._time_since_last_shot >= self._shoot_delay and self.shoot:
-            if self.nextShot >= 0.1:
-                self.shoot_bullet(self.bulletList[self.bulletIndex])
-                print("Shooting Bullet")
-                self.bulletIndex += 1
-                self.nextShot = 0
-                if self.bulletIndex == 6:
-                    self.bulletIndex = 0
-                    self._time_since_last_shot = 0
+        self.nextBomb += delta_time
+        # if self._time_since_last_shot >= self._shoot_delay and self.shoot:
+        #     if self.nextShot >= 0.1:
+        #         self.shoot_bullet()
+        #         self.bulletIndex += 1
+        #         self.nextShot = 0 
+        #         if self.bulletIndex == 6:
+        #             self.bulletIndex = 0
+        #             self._time_since_last_shot = 0
+        #             self.shoot_missile(self.bulletList[6])    
+        #             self.shoot_missile(self.bulletList[7])   
 
-        # Update bullet positions whenever the Boss moves
-        self.update_bullet_positions()
+        if self.nextBomb >= 2:
+            print("Shooting Bombs")
+            self.shoot_bomb(self.bulletList[8])
+            self.shoot_bomb(self.bulletList[9])
+            self.nextBomb = 0
 
-    def shoot_bullet(self, pos):
-                self.projectile = GameObject(None)
-                self.projectile.add_component(SpriteRenderer("/BossShip/bulletStart.png"))
-                self.projectile.add_component(Laser(500))
-                animator = self.projectile.add_component(Animator())
-                animator.add_spritesheet_animation("Bullet", "pyGame/Assets/BossShip/bullet.png", 8, 32, 4)
+    def shoot_bullet(self):
+            self.projectile = GameObject(None)
+            self.projectile.add_component(SpriteRenderer("/BossShip/bulletStart.png"))
+            self.projectile.add_component(Projectile(500, None))
+            animator = self.projectile.add_component(Animator())
+            animator.add_spritesheet_animation("Bullet", "pyGame/Assets/BossShip/bullet.png", 8, 32, 4)
+        
+            animator.play_animation("Bullet")
+            # self.projectile.add_component(Collider())
+            self.projectile.tag = "EnemyProjectile" 
+            self.projectile.transform.position = self.bulletList[self.bulletIndex]
+
+            self._game_world.instantiate(self.projectile)
+
+    def shoot_missile(self, pos):
+        self.projectile = GameObject(None)
+        self.projectile.add_component(SpriteRenderer("/BossShip/missileStart.png"))
+        self.projectile.add_component(Projectile(500, self._game_world.get_player_position()))
+        animator = self.projectile.add_component(Animator())
+        animator.add_spritesheet_animation("Missile", "pyGame/Assets/BossShip/missile.png", 22, 64, 3)
+
+        animator.play_animation("Missile")
+        # self.projectile.add_component(Collider())
+        self.projectile.tag = "MissileProjectile" 
+        self.projectile.transform.position = pos
+
+        self._game_world.instantiate(self.projectile)
+
+    def shoot_bomb(self, pos):
+        self.projectile = GameObject(None)
+        self.projectile.add_component(SpriteRenderer("/BossShip/bomb animation/shot6_asset.png"))
+        self.projectile.add_component(Projectile(250, None))
+        animator = self.projectile.add_component(Animator())
+        animator.add_animation("BombShot","/BossShip/bomb animation/shot6_1.png",
+                               "/BossShip/bomb animation/shot6_2.png",
+                               "/BossShip/bomb animation/shot6_3.png",
+                               "/BossShip/bomb animation/shot6_4.png"
+        )
+
+        animator.add_animation("BombExp","/BossShip/bomb animation/shot6_exp1.png",
+                               "/BossShip/bomb animation/shot6_exp2.png",
+                               "/BossShip/bomb animation/shot6_exp3.png",
+                               "/BossShip/bomb animation/shot6_exp4.png",
+                               "/BossShip/bomb animation/shot6_exp5.png",
+                               "/BossShip/bomb animation/shot6_exp6.png",
+                               "/BossShip/bomb animation/shot6_exp7.png",
+                               "/BossShip/bomb animation/shot6_exp8.png",
+                               "/BossShip/bomb animation/shot6_exp9.png",
+                               "/BossShip/bomb animation/shot6_exp10.png"          
+        )
+        
+        animator.play_animation("BombShot")
             
-                animator.play_animation("Bullet")
-                # self.projectile.add_component(Collider())
-                self.projectile.tag = "EnemyProjectile" 
-                self.projectile.transform.position = pos
+        # self.projectile.add_component(Collider())
+        self.projectile.tag = "BombProjectile" 
+        self.projectile.transform.position = pos
 
-                self._game_world.instantiate(self.projectile)
+        self._game_world.instantiate(self.projectile)
 
-    def shoot_missile(self):
-        pass
-
-    def shoot_bomb(self):
-        pass
 
     def _keep_within_bounds(self, game_object, screen_width):
         # Ensure the game object stays within the screen bounds on the x-axis and change direction if needed
@@ -101,4 +148,3 @@ class Boss(Component):
             (self.gameObject.transform.position.x + offset[0], self.gameObject.transform.position.y + offset[1] + 158)
             for offset in self.bullet_offset
         ]
-        print(f"{self.gameObject.transform.position}")

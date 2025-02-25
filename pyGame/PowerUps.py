@@ -2,7 +2,7 @@ import pygame
 from Components import Component
 from GameObject import GameObject
 from Components import SpriteRenderer
-from Components import Laser
+from Components import Projectile
 
 
 class BasePowerUp(Component):
