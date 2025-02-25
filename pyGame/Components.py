@@ -203,7 +203,7 @@ class Projectile(Component):
 
             if self._gameObject.transform.position.y >= 500:
                 self.speed = 0
-                animator = self.gameObject.get_component(Animator())
+                animator = self.gameObject.get_component("Animator")
                 if animator:
                     animator.play_animation("BombExp")
 
