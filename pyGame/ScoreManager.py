@@ -16,10 +16,10 @@ class ScoreManager:
             self._initialized = True
 
     def increase_score(self):
-        self.score += 1
+        self.score += 10
 
     def decrease_score(self):
-        self.score = max(0, self.score - 1)
+        self.score = max(0, self.score - 10)
 
     def draw(self, screen):
         score_text = f"Score: {self.score}"
