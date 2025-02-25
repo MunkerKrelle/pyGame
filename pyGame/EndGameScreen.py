@@ -5,7 +5,6 @@ class CompletedLevelScreen():
     def __init__(self):
         pygame.init()
         self.screen = pygame.display.set_mode((400, 300))
-        self.UIManager = UIManager()
         self.running = True
     
     def run(self):
@@ -19,9 +18,9 @@ class CompletedLevelScreen():
                     self.running = False
 
                 #HANDLE UI EVENTS
-                self.UIManager.handle_event(event)
+                UIManager().handle_event(event)
 
-            self.UIManager.draw_completedlevel_buttons(self.screen)
+            UIManager().draw_completedlevel_buttons(self.screen)
 
             pygame.display.flip()
 
@@ -42,7 +41,6 @@ class GameOverScreen():
     def __init__(self):
         pygame.init()
         self.screen = pygame.display.set_mode((400, 300))
-        self.UIManager = UIManager()
         self.running = True
 
     def run(self):
@@ -56,9 +54,9 @@ class GameOverScreen():
                     self.running = False
 
                 #HANDLE UI EVENTS
-                self.UIManager.handle_event(event)
+                UIManager().handle_event(event)
 
-            self.UIManager.draw_gameover_buttons(self.screen)
+            UIManager().draw_gameover_buttons(self.screen)
 
             pygame.display.flip()
 
