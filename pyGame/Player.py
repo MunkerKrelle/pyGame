@@ -14,6 +14,8 @@ class Player(Component):
 
     def __init__(self):
         self._lives = 3
+        self.font = pygame.font.Font(None, 36)
+
     
     def awake(self, game_world): 
         self._lives = 3
@@ -160,3 +162,8 @@ class Player(Component):
         print("Game Over!")
         # self._game_world.destroy(self._gameObject)  # Fjerner spilleren fra spillet
         self.gameObject.destroy()
+
+    def draw(self, screen):
+        score_text = f"Lives: {self._lives}"
+        text_surface = self.font.render(score_text, True, (255, 255, 255))
+        screen.blit(text_surface, (10, 40))

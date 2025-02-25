@@ -107,7 +107,12 @@ class GameWorld:
 
             self._background.draw()
 
-            self.draw_lives()
+            #self.draw_lives()
+
+            self.score_manager.draw(self._screen)
+
+            self.player.draw(self._screen)
+
 
             delta_time = self._clock.tick(60) / 1000.0
 
