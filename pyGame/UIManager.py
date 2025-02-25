@@ -8,7 +8,8 @@ class UIManager:
         #LOAD A FONT FOR UI ELEMENTS
         self.font = pygame.font.Font(None,36)
         self.player = Player()
-
+        global test
+        test = 14
         #CREATE A LIST OF UI ELEMENTS
         self.buttons = [
             Button(
@@ -143,17 +144,20 @@ class UIManager:
             button.draw(screen)
 
     def handle_event(self, event):
-        global game
-        
-
         #CHECK BUTTON CLICKS
         for button in self.buttons + self.completed_level_buttons + self.game_over_buttons :
             if button.is_clicked(event):
                 if button.text == "PLAY":
                     print("Starting Game")
+                    global game
                     game = GameWorld()
-                    #game.run()
-                
+                    # global test
+                    # test = test * 10
+                    # print(test)
+                    
+                    game.run()
+                    
+                    
                 elif button.text == "OPTIONS":
                     print("Options are for pussies and color blind people")
                     break
@@ -175,9 +179,15 @@ class UIManager:
                     
                 
                 elif button.text == "FIREBALL":
-                    
+                    # test = test * 3
                     # print(mybob)
                     # self.player.aqquire_fireball()
+
+                    my_player = game.test_returner()
+                    # print(my_player)
+                    for component_name, component in my_player.gameObject._components.items():
+                        print(f"{component_name}: {component}")
+
 
                     print("you have been granted the power of balls of great fire!")
                     break

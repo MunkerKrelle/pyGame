@@ -29,9 +29,10 @@ class GameWorld:
         self._colliders = []
         builder = PlayerBuilder()
         self.bob = builder.build()
+        if self.bob is None:
+            print("Error: self.bob is None after PlayerBuilder.build()")
 
         self._gameObjects.append(builder.get_gameObject())
-
         
         # self._background = Background("pygame\\Assets\\Space1.jpg", self._screen, speed=2)
         self._background = Background("Assets\\Space1.jpg", self._screen, speed=2)
@@ -55,8 +56,13 @@ class GameWorld:
         self._running = True
         self._clock = pygame.time.Clock()
 
-    @property
+    @property #sargon testing
     def game_object(self):
+        return self.bob
+
+    def test_returner(self): #sargon testing
+        print("this works")
+        
         return self.bob
 
     @property

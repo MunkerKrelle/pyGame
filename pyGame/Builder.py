@@ -51,7 +51,7 @@ class PlayerBuilder(Builder):
                             "player03.png",)
         
         animator.play_animation("Idle")
-
+        
 
     def get_gameObject(self):
         return self._gameObject

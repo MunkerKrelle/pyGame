@@ -15,7 +15,7 @@ class Player(Component):
     def __init__(self):
         self._lives = 3
         self.font = pygame.font.Font(None, 36)
-
+        
     
     def awake(self, game_world): 
         self._lives = 300
@@ -115,9 +115,7 @@ class Player(Component):
                 projectile_position = power.unique_shoot(sr, self._sprite_size.x / 2, i, power.proj_amount, power.proj_spread_angle)
                 projectile.transform.position = projectile_position
                
-                projectile.add_component(Collider())
-
-                
+                projectile.add_component(Collider())                
 
                 projectile.tag = "PlayerProjectile" 
                 projectile.damage = power.damage 
