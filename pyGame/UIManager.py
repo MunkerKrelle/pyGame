@@ -10,6 +10,12 @@ class UIManager:
         self.player = Player()
         global test
         test = 14
+        global game
+        # game = GameWorld()
+        # global my_player
+        # my_player = None
+        # global component
+        # component = None
         #CREATE A LIST OF UI ELEMENTS
         self.buttons = [
             Button(
@@ -23,34 +29,34 @@ class UIManager:
                 text_color = (255, 255, 255),
                 font = self.font
             ),
-            Button(
-                x = 150,
-                y = 150,
-                width  = 100,
-                height = 50,
-                text = "OPTIONS",
-                color = (0, 200, 255),
-                hover_color = (0, 200, 255),
-                text_color = (255, 255, 255),
-                font = self.font
-            ),
-            Button(
-                x = 150,
-                y = 250,
-                width  = 100,
-                height = 50,
-                text = "QUIT",
-                color = (0, 200, 255),
-                hover_color = (0, 200, 255),
-                text_color = (255, 255, 255),
-                font = self.font
-            )
+            # Button(
+            #     x = 150,
+            #     y = 150,
+            #     width  = 100,
+            #     height = 50,
+            #     text = "OPTIONS",
+            #     color = (0, 200, 255),
+            #     hover_color = (0, 200, 255),
+            #     text_color = (255, 255, 255),
+            #     font = self.font
+            # ),
+            # Button(
+            #     x = 150,
+            #     y = 250,
+            #     width  = 100,
+            #     height = 50,
+            #     text = "QUIT",
+            #     color = (0, 200, 255),
+            #     hover_color = (0, 200, 255),
+            #     text_color = (255, 255, 255),
+            #     font = self.font
+            # )
         ]
 
         self.completed_level_buttons = [
             Button(
-                x = 150,
-                y = 50,
+                x = 50,
+                y = 250,
                 width  = 100,
                 height = 50,
                 text = "NEXT LEVEL",
@@ -59,28 +65,28 @@ class UIManager:
                 text_color = (255, 255, 255),
                 font = self.font
             ),
-            Button(
-                x = 150,
-                y = 150,
-                width  = 100,
-                height = 50,
-                text = "OPTIONS",
-                color = (0, 200, 255),
-                hover_color = (0, 200, 255),
-                text_color = (255, 255, 255),
-                font = self.font
-            ),
-            Button(
-                x = 150,
-                y = 250,
-                width  = 100,
-                height = 50,
-                text = "QUIT",
-                color = (0, 200, 255),
-                hover_color = (0, 200, 255),
-                text_color = (255, 255, 255),
-                font = self.font
-            ),
+            # Button(
+            #     x = 150,
+            #     y = 150,
+            #     width  = 100,
+            #     height = 50,
+            #     text = "OPTIONS",
+            #     color = (0, 200, 255),
+            #     hover_color = (0, 200, 255),
+            #     text_color = (255, 255, 255),
+            #     font = self.font
+            # ),
+            # Button(
+            #     x = 150,
+            #     y = 250,
+            #     width  = 100,
+            #     height = 50,
+            #     text = "QUIT",
+            #     color = (0, 200, 255),
+            #     hover_color = (0, 200, 255),
+            #     text_color = (255, 255, 255),
+            #     font = self.font
+            # ),
             Button( # sargons buttons for power up
                 x = 300,
                 y = 50,
@@ -94,39 +100,39 @@ class UIManager:
             ),
         ]
         self.game_over_buttons = [
-            Button(
-                x = 150,
-                y = 50,
-                width  = 100,
-                height = 50,
-                text = "START OVER",
-                color = (0, 200, 255),
-                hover_color = (0, 200, 255),
-                text_color = (255, 255, 255),
-                font = self.font
-            ),
-            Button(
-                x = 150,
-                y = 150,
-                width  = 100,
-                height = 50,
-                text = "OPTIONS",
-                color = (0, 200, 255),
-                hover_color = (0, 200, 255),
-                text_color = (255, 255, 255),
-                font = self.font
-            ),
-            Button(
-                x = 150,
-                y = 250,
-                width  = 100,
-                height = 50,
-                text = "QUIT",
-                color = (0, 200, 255),
-                hover_color = (0, 200, 255),
-                text_color = (255, 255, 255),
-                font = self.font
-            )
+            # Button(
+            #     x = 150,
+            #     y = 50,
+            #     width  = 100,
+            #     height = 50,
+            #     text = "START OVER",
+            #     color = (0, 200, 255),
+            #     hover_color = (0, 200, 255),
+            #     text_color = (255, 255, 255),
+            #     font = self.font
+            # ),
+            # Button(
+            #     x = 150,
+            #     y = 150,
+            #     width  = 100,
+            #     height = 50,
+            #     text = "OPTIONS",
+            #     color = (0, 200, 255),
+            #     hover_color = (0, 200, 255),
+            #     text_color = (255, 255, 255),
+            #     font = self.font
+            # ),
+            # Button(
+            #     x = 150,
+            #     y = 250,
+            #     width  = 100,
+            #     height = 50,
+            #     text = "QUIT",
+            #     color = (0, 200, 255),
+            #     hover_color = (0, 200, 255),
+            #     text_color = (255, 255, 255),
+            #     font = self.font
+            # )
         ]
 
     
@@ -156,6 +162,7 @@ class UIManager:
                     # print(test)
                     
                     game.run()
+                    break
                     
                     
                 elif button.text == "OPTIONS":
@@ -170,12 +177,16 @@ class UIManager:
 
                 elif button.text == "NEXT LEVEL":
                     #Still Need Method for this
+                    print("you didnt click on me, but im here")
+                    game.run2()
+                    
                     break
 
-                elif button.text == "START OVER":
-                    print("Restarting...")
-                    game = GameWorld()
-                    game.run()
+                # elif button.text == "START OVER":
+                #     print("Restarting...")
+                #     game = GameWorld()
+                #     game.run()
+                #     pass
                     
                 
                 elif button.text == "FIREBALL":
@@ -184,10 +195,13 @@ class UIManager:
                     # self.player.aqquire_fireball()
 
                     my_player = game.test_returner()
+                    component = my_player.get_component("Player")
+                    print("fireball component was called.....")
+                    component.aqquire_fireball()
                     # print(my_player)
-                    for component_name, component in my_player.gameObject._components.items():
-                        print(f"{component_name}: {component}")
+                    # for component_name, component in my_player._components.items():
+                        # print(f"{component_name}: {component}")
 
 
-                    print("you have been granted the power of balls of great fire!")
+                    # print("you have been granted the power of balls of great fire!")
                     break

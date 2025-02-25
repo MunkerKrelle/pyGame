@@ -28,9 +28,8 @@ class GameWorld:
         self._gameObjects = []
         self._colliders = []
         builder = PlayerBuilder()
-        self.bob = builder.build()
-        if self.bob is None:
-            print("Error: self.bob is None after PlayerBuilder.build()")
+        builder.build()
+        self.bob = builder.get_gameObject()
 
         self._gameObjects.append(builder.get_gameObject())
         
@@ -61,8 +60,7 @@ class GameWorld:
         return self.bob
 
     def test_returner(self): #sargon testing
-        print("this works")
-        
+        print("test returner was called....")        
         return self.bob
 
     @property
@@ -166,6 +164,16 @@ class GameWorld:
         gw.Awake()
         gw.Start()
 
+        while self._running:
+            gw.update()
+
+        pygame.quit()
+    
+    def run2(self):
+        # gw.Awake()
+        # gw.Start()
+        self._screen = pygame.display.set_mode((1280,720))
+        
         while self._running:
             gw.update()
 

@@ -42,7 +42,8 @@ class Player(Component):
         global power
         power = self._gameObject.get_component(name)
         damage = power.power_change()
-        print(damage)
+        # print(damage)
+        print("i am awake, call me")
 
         global speed
         # speed = self._gameObject.get_component(SpeedPowerUp.__name__)
@@ -105,10 +106,12 @@ class Player(Component):
     def shoot(self):
         # global bullet_sprite
         # global power
+        print(power)
         if self._time_since_last_shot >= self._shoot_dealy:
             for i in range(power.proj_amount):
                 projectile = GameObject(None)
                 sr = projectile.add_component(SpriteRenderer(power.sprite))
+                # sr = projectile.add_component(SpriteRenderer(power.shoot_projectile_sprite()))
                 
                 projectile.add_component(Laser(power.proj_speed))
                 
@@ -129,8 +132,9 @@ class Player(Component):
     def aqquire_fireball(self):     
         global power
         power = self._gameObject.get_component(FireballPowerUp.__name__)
+        # print(power)
         damage = power.power_change()
-        # print(damage)
+        print("OVERWHELMING POWER....", damage)
 
     def aqquire_multi_shot(self):
         global power
