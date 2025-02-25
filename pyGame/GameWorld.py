@@ -28,7 +28,7 @@ class GameWorld:
         self._gameObjects = []
         self._colliders = []
         builder = PlayerBuilder()
-        builder.build()
+        self.bob = builder.build()
 
         self._gameObjects.append(builder.get_gameObject())
 
@@ -54,6 +54,10 @@ class GameWorld:
 
         self._running = True
         self._clock = pygame.time.Clock()
+
+    @property
+    def game_object(self):
+        return self.bob
 
     @property
     def screen(self):

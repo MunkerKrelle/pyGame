@@ -79,7 +79,18 @@ class UIManager:
                 hover_color = (0, 200, 255),
                 text_color = (255, 255, 255),
                 font = self.font
-            )
+            ),
+            Button( # sargons buttons for power up
+                x = 300,
+                y = 50,
+                width  = 100,
+                height = 50,
+                text = "FIREBALL",
+                color = (0, 200, 255),
+                hover_color = (0, 200, 255),
+                text_color = (255, 255, 255),
+                font = self.font
+            ),
         ]
         self.game_over_buttons = [
             Button(
@@ -132,13 +143,16 @@ class UIManager:
             button.draw(screen)
 
     def handle_event(self, event):
+        global game
+        
+
         #CHECK BUTTON CLICKS
         for button in self.buttons + self.completed_level_buttons + self.game_over_buttons :
             if button.is_clicked(event):
                 if button.text == "PLAY":
                     print("Starting Game")
                     game = GameWorld()
-                    game.run()
+                    #game.run()
                 
                 elif button.text == "OPTIONS":
                     print("Options are for pussies and color blind people")
@@ -158,3 +172,12 @@ class UIManager:
                     print("Restarting...")
                     game = GameWorld()
                     game.run()
+                    
+                
+                elif button.text == "FIREBALL":
+                    
+                    # print(mybob)
+                    # self.player.aqquire_fireball()
+
+                    print("you have been granted the power of balls of great fire!")
+                    break

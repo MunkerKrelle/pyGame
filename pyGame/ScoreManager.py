@@ -6,10 +6,10 @@ class ScoreManager:
         self.font = pygame.font.Font(None, 36)
 
     def increase_score(self):
-        self.score += 1
+        self.score += 10
 
     def decrease_score(self):
-        self.score = max(0, self.score - 1)
+        self.score = max(0, self.score - 10)
 
     def draw(self, screen):
         score_text = f"Score: {self.score}"
