@@ -15,7 +15,6 @@ class GameWorld:
         pygame.mixer.init()
         pygame.init()
 
-        self.score_manager = ScoreManager()
         self.player = Player()
         self.font = pygame.font.SysFont("Arial", 30)
         
@@ -84,12 +83,12 @@ class GameWorld:
            
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_o:
-                        self.score_manager.increase_score()
+                        ScoreManager().increase_score()
 
                     if event.key == pygame.K_p:
-                        self.score_manager.decrease_score()
+                        ScoreManager().decrease_score()
 
-                    if self.score_manager.score >= 10:
+                    if ScoreManager().score >= 10:
                         self.show_endgame_screens()
                         #Virker ikke, but who cares? --> self.score_manager.score = 0
 
@@ -107,9 +106,7 @@ class GameWorld:
 
             self._background.draw()
 
-            #self.draw_lives()
-
-            self.score_manager.draw(self._screen)
+            ScoreManager().draw(self._screen)
 
             self.player.draw(self._screen)
 
