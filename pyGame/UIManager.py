@@ -1,6 +1,6 @@
 import pygame
 from Button import Button
-from GameWorld import GameWorld
+# from GameWorld import GameWorld
 from Player import Player
 
 class UIManager:
@@ -150,8 +150,13 @@ class UIManager:
             if button.is_clicked(event):
                 if button.text == "PLAY":
                     print("Starting Game")
+                    from GameWorld import GameWorld 
                     game = GameWorld()
-                    game.run()
+                    # game.run()
+                    # game.Awake()
+                    # game.Start()
+                    game.update()
+                    break
                 
                 elif button.text == "OPTIONS":
                     print("Options are for pussies and color blind people")
@@ -165,9 +170,17 @@ class UIManager:
 
                 elif button.text == "NEXT LEVEL":
                     #Still Need Method for this
+                    
+                    game = GameWorld()
+                    # game.run()
+                    # game.Awake()
+                    # game.Start()
+                    game.update()
                     break
 
                 elif button.text == "START OVER":
                     print("Restarting...")
-                    game = GameWorld()
-                    game.run()
+                    from GameWorld import GameWorld 
+                    # game = GameWorld()
+                    # game.run()
+                    

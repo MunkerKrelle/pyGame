@@ -1,13 +1,22 @@
 import pygame
 from UIManager import UIManager
 from Button import Button
-from GameWorld import GameWorld
+# from GameWorld import GameWorld
 
-class Menu():
+class Menu:
+    _instance = None  # Class-level variable to hold the single instance
+
+    def __new__(cls, *args, **kwargs):
+        if cls._instance is None:  # Only create an instance if one doesn't exist
+            cls._instance = super(Menu, cls).__new__(cls)
+        return cls._instance  # Always return the same instance
+
     def __init__(self):
-        pygame.init()
-        self.screen = pygame.display.set_mode((400, 300))
-        self.running = True
+        if not hasattr(self, 'initialized'):  # Prevent multiple initializations
+            pygame.init()
+            self.screen = pygame.display.set_mode((400, 300))
+            self.running = True
+            self.initialized = True  # Mark as initialized
 
     def run(self):
         while self.running:
@@ -15,19 +24,17 @@ class Menu():
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.running = False
-
                 UIManager().handle_event(event)
 
             UIManager().draw(self.screen)
-
             pygame.display.flip()
 
         pygame.quit()
 
     def start_game(self):
-        print("Starter spillet")
+        print("Starting game")
         self.running = False
-        
 
-if __name__ == "__main__":  
-    Menu().run()
+# if __name__ == "__main__":
+#     Menu().run()
+    

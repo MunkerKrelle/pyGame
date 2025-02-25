@@ -24,7 +24,7 @@ class Player(Component):
         self._time_since_last_shot = 1
         self._shoot_dealy = 0.1 
         self._game_world = game_world
-        
+        print("i have awoken, called.")
         # self._shoot_sound = pygame.mixer.Sound("pygame\\Assets\\LaserSound.mp3")
         self._shoot_sound = pygame.mixer.Sound("Assets\\LaserSound.mp3")
         sr = self._gameObject.get_component("SpriteRenderer")

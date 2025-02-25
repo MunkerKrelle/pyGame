@@ -7,6 +7,9 @@ from Background import Background
 from Builder import PlayerBuilder
 from Builder import EnemyBuilder
 from ScoreManager import ScoreManager
+from UIManager import UIManager
+from Menu import Menu
+
 
 class GameWorld:
 
@@ -15,13 +18,13 @@ class GameWorld:
         pygame.mixer.init()
         pygame.init()
 
-        self.player = Player()
+        # self.player = Player()
         self.font = pygame.font.SysFont("Arial", 30)
-        
+        print("test")
         # pygame.mixer.music.load("Pygame//assets/BackGroundMusic.mp3")
         pygame.mixer.music.load("assets/BackGroundMusic.mp3")
 
-        
+        # self.gamestate = 1
         # pygame.mixer.music.play(-1)
         self._screen = pygame.display.set_mode((1280,720))
         self._gameObjects = []
@@ -53,6 +56,9 @@ class GameWorld:
 
         self._running = True
         self._clock = pygame.time.Clock()
+        self.Awake()
+        self.Start()
+     
 
     @property
     def screen(self):
@@ -75,8 +81,13 @@ class GameWorld:
     def Start(self): 
         for gameObject in self._gameObjects[:]:
             gameObject.start()
+        
+      
 
     def update(self):
+        # while self.gamestate == 1:
+     
+
 
         while self._running:
             for event in pygame.event.get():
@@ -94,11 +105,11 @@ class GameWorld:
                         self.show_endgame_screens()
                         #Virker ikke, but who cares? --> self.score_manager.score = 0
 
-                    if event.key == pygame.K_q:
-                        self.player._lives -= 1
+                    # if event.key == pygame.K_q:
+                    #     self.player._lives -= 1
 
-                    if self.player._lives <= 0:
-                        self.show_gameover_screen()
+                    # if self.player._lives <= 0:
+                    #     self.show_gameover_screen()
 
             self._background.update()
 
@@ -110,7 +121,7 @@ class GameWorld:
 
             ScoreManager().draw(self._screen)
 
-            self.player.draw(self._screen)
+            # self.player.draw(self._screen)
 
 
             delta_time = self._clock.tick(60) / 1000.0
@@ -149,15 +160,21 @@ class GameWorld:
         lives_text = self.font.render(f"Lives: {self.player.lives}", True, (255,255,255))
         self._screen.blit(lives_text, (x_pos, y_pos))
 
-    def run(self):
-        gw.Awake()
-        gw.Start()
+    # def run(self):
+    #     pass
+        # gw.Awake()
+        # gw.Start()
 
-        while self._running:
-            gw.update()
+        # while self._running:
+        #     gw.update()
 
-        pygame.quit()
+        # pygame.quit()
+# gw = GameWorld()
+# gw.Awake()
+# gw.Start()
 
-
-gw = GameWorld()
-        
+# gw.run()
+menu = Menu()
+menu.run()
+# UI_manager = UIManager()
+# UI_manager.handle_event()       
