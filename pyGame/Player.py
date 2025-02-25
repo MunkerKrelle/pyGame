@@ -131,11 +131,7 @@ class Player(Component):
     
     def remove_colliders(self):
         pass
-        # global collider_list
-        # self.gameObject.remove_component(self.collider_list[0])
-        # projectile = self.gameObject.get_component("Collider")
-        # if projectile:
-            # self.gameObject.remove_component(projectile)
+
 
     def take_damage(self):
         self._lives -= 1
