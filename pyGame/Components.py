@@ -271,9 +271,6 @@ class Collider(Component):
                 player.take_damage()  
                 other.gameObject.destroy()
                 print("player is hit")
-        
-    def collision_enter(self, other):
-        self._other_colliders.append(other)
 
         if self.gameObject.tag == "Enemy" and other.gameObject.tag == "PlayerProjectile":
             enemy = self.gameObject.get_component("Enemy")

@@ -124,7 +124,7 @@ class Player(Component):
                 # print(projectile.damage)
                 self._game_world.instantiate(projectile)
                 
-                self._shoot_sound.play()
+                #self._shoot_sound.play()
 
             self._time_since_last_shot = 0
     

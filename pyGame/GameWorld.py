@@ -23,7 +23,7 @@ class GameWorld:
         pygame.mixer.music.load("assets/BackGroundMusic.mp3")
 
         
-        pygame.mixer.music.play(-1)
+        #pygame.mixer.music.play(-1)
         self._screen = pygame.display.set_mode((1280,720))
         self._gameObjects = []
         self._colliders = []
