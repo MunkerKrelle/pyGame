@@ -25,8 +25,7 @@ class Boss(Component):
         self._screen_size = pygame.math.Vector2(game_world.screen.get_width(), game_world.screen.get_height())
         self.gameObject.transform.position = pygame.math.Vector2((game_world.screen.get_width()/2)-sr.sprite_image.get_width() / 2 , -208)
         
-        self.gameObject.add_component(Collider())
-        self.gameObject.tag = "Enenmy"
+        self.gameObject.tag = "Boss"
         
         self._time_since_last_shot = 0
         self._shoot_delay = 2  # Seconds between shots
