@@ -30,7 +30,7 @@ class PlayerBuilder(Builder):
         self._gameObject = GameObject(pygame.math.Vector2(0, 0))
         self._gameObject.add_component(Player())
         self._gameObject.add_component(Collider())
-        self._gameObject.add_component(BasePowerUp(pygame.math.Vector2(0, 0), 2, 1, 500, 0, "laser.png"))
+        self._gameObject.add_component(BasePowerUp(pygame.math.Vector2(0, 0), 1, 1, 500, 0, "laser.png"))
         self._gameObject.add_component(FireballPowerUp(pygame.math.Vector2(0, 0), 4, 1, 1501, 0, "shield.png"))
         self._gameObject.add_component(MultiShot(pygame.math.Vector2(0, 0), 1, 6, 1200, 30, "player_fire-spaceship.png"))
         self._gameObject.add_component(SpeedPowerUp(pygame.math.Vector2(0, 0),800))
