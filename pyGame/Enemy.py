@@ -30,6 +30,10 @@ class Enemy(Component):
         self._time_since_last_shot = 0
         self._shoot_delay = 2  # Seconds between shots
 
+         
+        self._explosion_sound = pygame.mixer.Sound("pygame\\Assets\\Explode.mp3")
+        self._laser_sound = pygame.mixer.Sound("pygame\\Assets\\LaserSound.mp3")
+
 
     def start(self) -> None:
         pass
@@ -47,6 +51,7 @@ class Enemy(Component):
             self.shoot()
             self._time_since_last_shot = 0
 
+
     def shoot(self):
         """Fjenden skyder et projektil mod spilleren."""
         self.projectile = GameObject(None)
@@ -60,6 +65,11 @@ class Enemy(Component):
         self.projectile.add_component(Collider())
         self.projectile.tag = "EnemyProjectile" 
         self.projectile.transform.position = projectile_position
+
+            
+        self._laser_sound.play()
+
+            
         self._game_world.instantiate(self.projectile)
     
     def take_damage(self, damage_taken):
@@ -95,3 +105,8 @@ class Enemy(Component):
 
         elif sr.sprite_name == "/EnemyShips/Designs - Base/pngs/Nairan - Torpedo Ship - Base.png":
             self._lives = 1
+
+    def destroy(self):
+        """Spil eksplosionseffekten, når fjenden dør"""
+        self._explosion_sound.play()
+        self.gameObject.destroy()

@@ -63,8 +63,8 @@ class SpriteRenderer(Component):
     def __init__(self, sprite_name) -> None:
         super().__init__()
 
-        self._sprite_image = pygame.image.load(f"Assets\\{sprite_name}")
-        #self._sprite_image = pygame.image.load(f"pygame\\Assets\\{sprite_name}") # Jeres version
+        #self._sprite_image = pygame.image.load(f"Assets\\{sprite_name}")
+        self._sprite_image = pygame.image.load(f"pygame\\Assets\\{sprite_name}") # Jeres version
         #self._sprite_image = pygame.image.load(f"C:/AxP/Githubrepositories/Semester4/pyGame/pyGame/Assets/{sprite_name}") # Sargons Version
         self._sprite_name = sprite_name
         self._sprite = pygame.sprite.Sprite()
@@ -123,8 +123,8 @@ class Animator(Component):
     def add_animation(self, name, *args):
         frames = []
         for arg in args:
-            sprite_image = pygame.image.load(f"Assets\\{arg}")
-            #sprite_image = pygame.image.load(f"pygame\\Assets\\{arg}") # Jeres version
+            #sprite_image = pygame.image.load(f"Assets\\{arg}")
+            sprite_image = pygame.image.load(f"pygame\\Assets\\{arg}") # Jeres version
             #sprite_image = pygame.image.load(f"C:/AxP/Githubrepositories/Semester4/pyGame/pyGame/Assets/{arg}") # SARGONS VERSION
             frames.append(sprite_image)
         
@@ -272,15 +272,15 @@ class Collider(Component):
                 other.gameObject.destroy()
                 print("player is hit")
         
-        if self.gameObject.tag == "Enemy" and other.gameObject.tag == "PlayerProjectile":
-            other.gameObject.destroy()         
-            enemy = self.gameObject.get_component("Enemy") 
-            print(other.gameObject.damage)    
-            if enemy:
-                enemy.take_damage(other.gameObject.damage)
+    def collision_enter(self, other):
+        self._other_colliders.append(other)
 
-            # for component_name, component in self.gameObject._components.items():
-            #     print(f"{component_name}: {component}")         
+        if self.gameObject.tag == "Enemy" and other.gameObject.tag == "PlayerProjectile":
+            enemy = self.gameObject.get_component("Enemy")
+            if enemy:
+                enemy.destroy()  # 🎵 Spiller eksplosionseffekt her
+            other.gameObject.destroy()
+        
 
         if self.gameObject.tag == "Player" and other.gameObject.tag == "Enemy":
             print("player flew into enemy")
