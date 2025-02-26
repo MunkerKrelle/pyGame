@@ -160,8 +160,6 @@ class Boss(Component):
         animator = self.dangerSign.add_component(Animator())
         animator.add_animation("FlashDanger","/BossShip/danger.png", "/BossShip/danger.png","/BossShip/dangerEmpty.png","/BossShip/dangerEmpty.png")
         animator.play_animation("FlashDanger")
-        self.dangerSign.add_component(UIElement())
-        self.dangerSign.add_component(Collider())
         self.dangerSign.tag = "UIElement" 
         self.dangerSign.transform.position = pygame.math.Vector2((self._game_world.screen.get_width()/2 - sr.sprite_image.get_width()/2) , 0)
 

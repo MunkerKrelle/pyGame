@@ -12,8 +12,8 @@ from PowerUps import MoreLivesPowerUp
 from Components import Collider
 from Strategy import Battlecruiser, Bomber, Dreadnought, Fighter, Frigate, Scout, Strategy, Torpedo_Ship
 import pygame
-import random
 from Boss import Boss
+from UIElement import UIElement
 
 class Builder(ABC):
     
@@ -154,6 +154,18 @@ class BossBuilder(Builder):
         animator = self._gameObject.add_component(Animator())
         animator.add_spritesheet_animation("Attack", "pyGame/Assets/BossShip/Boss.png", 560, 208, 4)
         animator.play_animation("Attack")
+    
+    def get_gameObject(self) -> GameObject:
+        return self._gameObject
+    
+
+class UIElementBuilder(Builder):
+    def build(self, sprite_path, position):
+        self._gameObject = GameObject(None)
+        sr = self._gameObject.add_component(SpriteRenderer(sprite_path))
+        self._gameObject.tag = "UIElement" 
+        self._gameObject.transform.position = pygame.math.Vector2((position - sr.sprite_image.get_width()/2) , 0)
+        self._gameObject.add_component(UIElement())
     
     def get_gameObject(self) -> GameObject:
         return self._gameObject
