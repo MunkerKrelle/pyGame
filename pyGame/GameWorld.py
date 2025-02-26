@@ -10,6 +10,9 @@ from Builder import EnemyBuilder
 from LevelManager import LevelManager
 # from PowerUpSelector import PowerUpSelector
 from Builder import UIElementBuilder
+from UIManager import UIManager
+from ScoreManager import ScoreManager
+
 class GameWorld:
 
     def __init__(self) -> None:
@@ -17,8 +20,8 @@ class GameWorld:
         pygame.mixer.init()
         pygame.init()
 
-        # pygame.mixer.music.load("Pygame//assets/BackGroundMusic.mp3")
-        pygame.mixer.music.load("assets/BackGroundMusic.mp3")
+        pygame.mixer.music.load("Pygame//assets/BackGroundMusic.mp3")
+        #pygame.mixer.music.load("assets/BackGroundMusic.mp3")
         
         # pygame.mixer.music.play(-1)
         self._screen = pygame.display.set_mode((1280,720))
@@ -38,8 +41,8 @@ class GameWorld:
         self._gameObjects.append(self._UI_element.get_gameObject())
 
         
-        #self._background = Background("pygame\\Assets\\Space1.jpg", self._screen, speed=2)
-        self._background = Background("Assets\\Space1.jpg", self._screen, speed=2)
+        self._background = Background("pygame\\Assets\\Space1.jpg", self._screen, speed=2)
+        #self._background = Background("Assets\\Space1.jpg", self._screen, speed=2)
 
         self._level_manager = LevelManager(self)        
 
@@ -79,6 +82,10 @@ class GameWorld:
 
             self._screen.fill("black")
             self._background.draw()
+            
+            ScoreManager().draw(self._screen)
+            UIManager.draw(self._screen)
+
 
             self._level_manager.update()
             

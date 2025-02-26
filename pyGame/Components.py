@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 import pygame
+from ScoreManager import ScoreManager
 
 class Component(ABC):
 
@@ -63,8 +64,8 @@ class SpriteRenderer(Component):
     def __init__(self, sprite_name) -> None:
         super().__init__()
 
-        self._sprite_image = pygame.image.load(f"Assets\\{sprite_name}")
-        #self._sprite_image = pygame.image.load(f"pygame\\Assets\\{sprite_name}") # Jeres version
+        #self._sprite_image = pygame.image.load(f"Assets\\{sprite_name}")
+        self._sprite_image = pygame.image.load(f"pygame\\Assets\\{sprite_name}") # Jeres version
         #self._sprite_image = pygame.image.load(f"C:/AxP/Githubrepositories/Semester4/pyGame/pyGame/Assets/{sprite_name}") # Sargons Version
         self._sprite_name = sprite_name
         self._sprite = pygame.sprite.Sprite()
@@ -123,8 +124,8 @@ class Animator(Component):
     def add_animation(self, name, *args):
         frames = []
         for arg in args:
-            sprite_image = pygame.image.load(f"Assets\\{arg}")
-            #sprite_image = pygame.image.load(f"pygame\\Assets\\{arg}") # Jeres version
+            #sprite_image = pygame.image.load(f"Assets\\{arg}")
+            sprite_image = pygame.image.load(f"pygame\\Assets\\{arg}") # Jeres version
             #sprite_image = pygame.image.load(f"C:/AxP/Githubrepositories/Semester4/pyGame/pyGame/Assets/{arg}") # SARGONS VERSION
             frames.append(sprite_image)
         
@@ -296,6 +297,7 @@ class Collider(Component):
             enemy = self.gameObject.get_component("Enemy")
             if enemy:
                 enemy.destroy()  # 🎵 Spiller eksplosionseffekt her
+                ScoreManager().increase_score()
             other.gameObject.destroy()
         
 
