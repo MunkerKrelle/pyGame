@@ -31,10 +31,10 @@ class Enemy(Component):
         self._shoot_delay = 2  # Seconds between shots
 
          
-        # self._explosion_sound = pygame.mixer.Sound("pygame\\Assets\\Explode.mp3")
-        # self._laser_sound = pygame.mixer.Sound("pygame\\Assets\\LaserSound.mp3")
-        self._explosion_sound = pygame.mixer.Sound("Assets\\Explode.mp3")
-        self._laser_sound = pygame.mixer.Sound("Assets\\LaserSound.mp3")
+        self._explosion_sound = pygame.mixer.Sound("pygame\\Assets\\Explode.mp3")
+        self._laser_sound = pygame.mixer.Sound("pygame\\Assets\\LaserSound.mp3")
+        self._explosion_sound = pygame.mixer.Sound("pygame\\Assets\\Explode.mp3")
+        self._laser_sound = pygame.mixer.Sound("pygame\\Assets\\LaserSound.mp3")
 
 
     def start(self) -> None:

@@ -21,8 +21,8 @@ class GameWorld:
         # self.player = Player()
         self.font = pygame.font.SysFont("Arial", 30)
         print("test")
-        # pygame.mixer.music.load("Pygame//assets/BackGroundMusic.mp3")
-        pygame.mixer.music.load("assets/BackGroundMusic.mp3")
+        pygame.mixer.music.load("Pygame//assets/BackGroundMusic.mp3")
+        #pygame.mixer.music.load("assets/BackGroundMusic.mp3")
 
         # self.gamestate = 1
         # pygame.mixer.music.play(-1)
@@ -35,8 +35,8 @@ class GameWorld:
         self._gameObjects.append(builder.get_gameObject())
 
         
-        # self._background = Background("pygame\\Assets\\Space1.jpg", self._screen, speed=2)
-        self._background = Background("Assets\\Space1.jpg", self._screen, speed=2)
+        self._background = Background("pygame\\Assets\\Space1.jpg", self._screen, speed=2)
+        #self._background = Background("Assets\\Space1.jpg", self._screen, speed=2)
 
         builder = EnemyBuilder()
         builder.build("Dreadnought") 
@@ -108,7 +108,7 @@ class GameWorld:
                     if event.key == pygame.K_p:
                         ScoreManager().decrease_score()
 
-                    if ScoreManager().score >= 10:
+                    if ScoreManager().score >= 1000:
                         self.show_endgame_screens()
                         #Virker ikke, but who cares? --> self.score_manager.score = 0
 
