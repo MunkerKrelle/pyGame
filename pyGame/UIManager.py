@@ -2,6 +2,7 @@ import pygame
 from Button import Button
 # from GameWorld import GameWorld
 from Player import Player
+from ScoreManager import ScoreManager
 
 class UIManager:
     _instance = None
@@ -99,8 +100,21 @@ class UIManager:
             button.draw(screen)
 
     def draw_end_screen(self, screen):
+        # Access the existing singleton instance of ScoreManager
+        score_manager = ScoreManager()  # This will return the already created instance
+
+        # Draw buttons
         for button in self.end_buttons:
             button.draw(screen)
+
+        # Render the final score text
+        score_text = self.font.render(f"Final Score: {score_manager.score}", True, (255, 255, 255))  # White text
+
+        # Get the position to display the score (e.g., centered at the top of the screen)
+        text_rect = score_text.get_rect(center=(screen.get_width() // 2, 50))  # Centered horizontally at the top
+
+        # Blit the score text onto the screen
+        screen.blit(score_text, text_rect)
 
     def handle_event(self, event):
         #CHECK BUTTON CLICKS
@@ -138,7 +152,7 @@ class UIManager:
                     game.Start()
                     game.update()
                     break
-                
+
                 elif button.text == "OPTIONS":
                         print("Options are for pussies and color blind people")
                         break
