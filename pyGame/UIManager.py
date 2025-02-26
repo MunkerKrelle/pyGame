@@ -180,7 +180,7 @@ class UIManager:
 
                 elif button.text == "START OVER":
                     print("Restarting...")
-                    from GameWorld import GameWorld 
+                    # from GameWorld import GameWorld 
                     # game = GameWorld()
                     # game.run()
                     

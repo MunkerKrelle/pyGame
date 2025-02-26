@@ -80,6 +80,7 @@ class GameWorld:
     
     def Start(self): 
         for gameObject in self._gameObjects[:]:
+            # print(gameObject._components)
             gameObject.start()
         
       
