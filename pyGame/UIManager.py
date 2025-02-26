@@ -65,7 +65,7 @@ class UIManager:
 
     def handle_event(self, event):
         #CHECK BUTTON CLICKS
-        for button in self.buttons + self.completed_level_buttons + self.game_over_buttons :
+        for button in self.buttons:
             if button.is_clicked(event):
                 if button.text == "PLAY":
                     print("Starting Game")

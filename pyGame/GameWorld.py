@@ -12,6 +12,7 @@ from LevelManager import LevelManager
 from Builder import UIElementBuilder
 from UIManager import UIManager
 from ScoreManager import ScoreManager
+from Menu import Menu
 
 class GameWorld:
 
@@ -110,10 +111,14 @@ class GameWorld:
             if gameObject.tag == "Player":
                 return gameObject.transform.position
 
-gw = GameWorld()
 
-gw.Awake()
-gw.Start()
-gw.update()
+menu = Menu()
+
+menu.run()
+#gw = GameWorld()
+
+#gw.Awake()
+#gw.Start()
+#gw.update()
 
         
