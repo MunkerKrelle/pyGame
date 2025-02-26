@@ -8,7 +8,7 @@ from Background import Background
 from Builder import PlayerBuilder
 from Builder import EnemyBuilder
 from LevelManager import LevelManager
-# from PowerUpSelector import PowerUpSelector
+from PowerUpSelector import PowerUpSelector
 from Builder import UIElementBuilder
 class GameWorld:
 
@@ -26,17 +26,18 @@ class GameWorld:
         self._colliders = []
         builder = PlayerBuilder()
         builder.build()
-
+      
         self._gameObjects.append(builder.get_gameObject())
+        self.stored_player = builder.get_gameObject()
 
         # builder = BossBuilder()
         # builder.build()
         # self._gameObjects.append(builder.get_gameObject())   
 
         self._UI_element = UIElementBuilder()
-        self._UI_element.build("shield.png", pygame.math.Vector2(100, 100))
+        self._UI_element.build("shield.png", pygame.math.Vector2(100, 100), builder.get_gameObject())
         self._gameObjects.append(self._UI_element.get_gameObject())
-
+        
         
         #self._background = Background("pygame\\Assets\\Space1.jpg", self._screen, speed=2)
         self._background = Background("Assets\\Space1.jpg", self._screen, speed=2)
@@ -62,11 +63,14 @@ class GameWorld:
 
     def Awake(self): 
         for gameObject in self._gameObjects[:]:
-            gameObject.awake(self)
+            gameObject.awake(self)      
     
     def Start(self): 
         for gameObject in self._gameObjects[:]:
             gameObject.start()
+        
+        
+        
 
     def update(self):
 
@@ -104,6 +108,10 @@ class GameWorld:
         for gameObject in self._gameObjects:
             if gameObject.tag == "Player":
                 return gameObject.transform.position
+    
+    def get_player(self):
+        self.stored_player
+        return self.stored_player
 
 gw = GameWorld()
 

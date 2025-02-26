@@ -161,12 +161,12 @@ class BossBuilder(Builder):
     
 
 class UIElementBuilder(Builder):
-    def build(self, sprite_path, position):
+    def build(self, sprite_path, position, player):
         self._gameObject = GameObject(None)
-        sr = self._gameObject.add_component(SpriteRenderer(sprite_path))
+        # sr = self._gameObject.add_component(SpriteRenderer(sprite_path))
         self._gameObject.tag = "UIElement" 
-        self._gameObject.transform.position = pygame.math.Vector2((position.x - sr.sprite_image.get_width()/2, position.y - sr.sprite_image.get_width()/2))
-        self._gameObject.add_component(PowerUpSelector())
+        # self._gameObject.transform.position = pygame.math.Vector2((position.x - sr.sprite_image.get_width()/2, position.y - sr.sprite_image.get_width()/2))
+        self._gameObject.add_component(PowerUpSelector(player))
     
     def get_gameObject(self) -> GameObject:
         return self._gameObject
