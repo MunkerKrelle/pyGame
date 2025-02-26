@@ -84,8 +84,6 @@ class GameWorld:
             self._background.draw()
             
             ScoreManager().draw(self._screen)
-            UIManager.draw(self._screen)
-
 
             self._level_manager.update()
             
