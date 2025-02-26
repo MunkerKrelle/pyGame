@@ -5,6 +5,7 @@ from Components import Projectile
 from Components import SpriteRenderer
 from Components import Collider
 from GameObject import GameObject
+from UIElement import UIElement
 
 class Boss(Component):
     def __init__(self) -> None:
@@ -25,6 +26,7 @@ class Boss(Component):
 
         # Initialize bullet positions based on the Boss's initial position
         self.update_bullet_positions()
+        self.createDangerSign()
 
         self._screen_size = pygame.math.Vector2(game_world.screen.get_width(), game_world.screen.get_height())
         self.gameObject.transform.position = pygame.math.Vector2((game_world.screen.get_width()/2)-sr.sprite_image.get_width() / 2 , -208)
@@ -45,6 +47,7 @@ class Boss(Component):
             movement = pygame.math.Vector2(0, speed * delta_time)
             self.gameObject.transform.translate(movement)
         else:
+            self.dangerSign.destroy()
             self.shoot = True
             movement = pygame.math.Vector2(self.horizontal_movement * delta_time, 0)
             self.gameObject.transform.translate(movement)
@@ -153,3 +156,17 @@ class Boss(Component):
             (self.gameObject.transform.position.x + offset[0], self.gameObject.transform.position.y + offset[1] + 158)
             for offset in self.bullet_offset
         ]
+    
+    def createDangerSign(self):
+        self.dangerSign = GameObject(None)
+        sr = self.dangerSign.add_component(SpriteRenderer("/BossShip/danger.png"))
+        animator = self.dangerSign.add_component(Animator())
+        animator.add_animation("FlashDanger","/BossShip/danger.png", "/BossShip/danger.png","/BossShip/dangerEmpty.png","/BossShip/dangerEmpty.png")
+        animator.play_animation("FlashDanger")
+        self.dangerSign.add_component(UIElement())
+        self.dangerSign.add_component(Collider())
+        self.dangerSign.tag = "UIElement" 
+        self.dangerSign.transform.position = pygame.math.Vector2((self._game_world.screen.get_width()/2 - sr.sprite_image.get_width()/2) , 0)
+
+        self._game_world.instantiate(self.dangerSign)
+
