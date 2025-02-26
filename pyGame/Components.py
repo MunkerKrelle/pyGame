@@ -175,11 +175,11 @@ class Animator(Component):
 
             self._animations[name] = frames
 
-
-
-class Laser(Component):
-    def __init__(self, speed):
+class Projectile(Component):
+    def __init__(self, speed, target):
         self.speed = speed
+        self.target = target  # Store the player's position at the time of creation
+        self.initial_target_position = target.copy() if target else None  # Copy the initial target position if not None
 
     def awake(self, game_world):
         pass
@@ -188,18 +188,35 @@ class Laser(Component):
         pass
 
     def update(self, delta_time):
-        movement = pygame.math.Vector2(0, - self.speed)
-        self._gameObject.transform.translate(movement * delta_time)
-        
-        if self.gameObject.tag == "EnemyProjectile":
-            movement.y = self.speed *2 # Fjendens skud skal bevæge sig nedad
+        if self.gameObject.tag == "PlayerProjectile":
+            movement = pygame.math.Vector2(0, -self.speed)
+            self._gameObject.transform.translate(movement * delta_time)
+            movement.y = self.speed * 2  # Enemy projectiles move downwards
+        elif self.gameObject.tag == "EnemyProjectile":
+            movement = pygame.math.Vector2(0, self.speed)
+            self._gameObject.transform.translate(movement * delta_time)
+            movement.y = self.speed * 2  # Enemy projectiles move downwards
+        elif self.gameObject.tag == "MissileProjectile" and self.initial_target_position:
+            # Calculate direction vector towards the initial target position
+            target_direction = pygame.math.Vector2(self.initial_target_position.x, self.initial_target_position.y + 200) - self._gameObject.transform.position
+            direction = pygame.math.Vector2.normalize(target_direction)
+            movement = direction * self.speed * delta_time  # Apply delta time for smooth movement
+            self._gameObject.transform.translate(movement)
+        elif self.gameObject.tag == "BombProjectile":
+            movement = pygame.math.Vector2(0, self.speed)
+            self._gameObject.transform.translate(movement * delta_time)
 
-        self._gameObject.transform.translate(movement*delta_time)
+            if self._gameObject.transform.position.y >= 500:
+                self.speed = 0
+                animator = self.gameObject.get_component("Animator")
+                if animator:
+                    animator.play_animation("BombExp")
 
-        if self._gameObject.transform.position.y < 0:
+        # Destroy if off-screen (or other conditions)
+        if self._gameObject.transform.position.y < 0 or self._gameObject.transform.position.y > 750:
+            print("Destroying projectile")
             self._gameObject.destroy()
-
-
+            
 class Collider(Component):  
     def __init__(self) -> None:
         super().__init__()  
@@ -314,4 +331,4 @@ class Collider(Component):
         self._other_masks.remove(other)
         if "pixel_collision_exit" in self._listeners:
             self._listeners["pixel_collision_exit"](other)
-            
+

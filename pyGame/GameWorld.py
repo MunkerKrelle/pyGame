@@ -3,9 +3,8 @@ from GameObject import GameObject
 from Components import Animator
 from Components import SpriteRenderer
 from Player import Player
+from Builder import BossBuilder, PlayerBuilder, EnemyBuilder
 from Background import Background
-from Builder import PlayerBuilder
-from Builder import EnemyBuilder
 class GameWorld:
 
     def __init__(self) -> None:
@@ -26,24 +25,26 @@ class GameWorld:
 
         self._gameObjects.append(builder.get_gameObject())
 
+        # builder = EnemyBuilder()
+        # builder.build("Dreadnought")
+        # self._gameObjects.append(builder.get_gameObject())        
+        # builder.build("Scout")
+        # self._gameObjects.append(builder.get_gameObject())
+        # builder.build("Frigate")
+        # self._gameObjects.append(builder.get_gameObject())
+        # builder.build("Bomber")
+        # self._gameObjects.append(builder.get_gameObject())
+        # builder.build("Battlecruiser")
+        # self._gameObjects.append(builder.get_gameObject())
+        # builder.build("Fighter")
+        # self._gameObjects.append(builder.get_gameObject())
+        # builder.build("Torpedo_Ship")
+        # self._gameObjects.append(builder.get_gameObject())
+
+        builder = BossBuilder()
+        builder.build()
         
         self._background = Background("pygame\\Assets\\Space1.jpg", self._screen, speed=2)
-
-        builder = EnemyBuilder()
-        builder.build("Dreadnought") 
-        self._gameObjects.append(builder.get_gameObject())        
-        builder.build("Scout")
-        self._gameObjects.append(builder.get_gameObject())
-        builder.build("Frigate")
-        self._gameObjects.append(builder.get_gameObject())
-        builder.build("Bomber")
-        self._gameObjects.append(builder.get_gameObject())
-        builder.build("Battlecruiser")
-        self._gameObjects.append(builder.get_gameObject())
-        builder.build("Fighter")
-        self._gameObjects.append(builder.get_gameObject())
-        builder.build("Torpedo_Ship")
-        self._gameObjects.append(builder.get_gameObject())
 
         self._running = True
         self._clock = pygame.time.Clock()
@@ -106,6 +107,10 @@ class GameWorld:
 
         pygame.quit()
     
+    def get_player_position(self):
+        for gameObject in self._gameObjects:
+            if gameObject.tag == "Player":
+                return gameObject.transform.position
 
 gw = GameWorld()
 
