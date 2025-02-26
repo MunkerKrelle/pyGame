@@ -17,3 +17,4 @@ class PowerUpSelector(Component):
        
         if keys[pygame.K_1]:
             print("1 was pressed")
+            
