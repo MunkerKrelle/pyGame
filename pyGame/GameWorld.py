@@ -30,13 +30,16 @@ class GameWorld:
 
         builder = BossBuilder()
         builder.build()
-        self._gameObjects.append(builder.get_gameObject())
+        self._gameObjects.append(builder.get_gameObject())     
         
         #self._background = Background("pygame\\Assets\\Space1.jpg", self._screen, speed=2)
         self._background = Background("Assets\\Space1.jpg", self._screen, speed=2)
 
         self._level_manager = LevelManager(self)
+        
         self._power_up = PowerUpSelector()
+        
+
         self._running = True
         self._clock = pygame.time.Clock()
 
@@ -71,7 +74,6 @@ class GameWorld:
 
             self._background.update()
 
-            
             self._screen.fill("black")
             self._background.draw()
 
