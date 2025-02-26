@@ -13,7 +13,7 @@ from Components import Collider
 from Strategy import Battlecruiser, Bomber, Dreadnought, Fighter, Frigate, Scout, Strategy, Torpedo_Ship
 import pygame
 from Boss import Boss
-from UIElement import UIElement
+from PowerUpSelector import PowerUpSelector
 
 class Builder(ABC):
     
@@ -166,7 +166,7 @@ class UIElementBuilder(Builder):
         sr = self._gameObject.add_component(SpriteRenderer(sprite_path))
         self._gameObject.tag = "UIElement" 
         self._gameObject.transform.position = pygame.math.Vector2((position - sr.sprite_image.get_width()/2) , 0)
-        self._gameObject.add_component(UIElement())
+        self._gameObject.add_component(PowerUpSelector())
     
     def get_gameObject(self) -> GameObject:
         return self._gameObject
