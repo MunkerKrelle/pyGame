@@ -53,14 +53,14 @@ class Enemy(Component):
 
 
     def shoot(self):
-            """Fjenden skyder et projektil mod spilleren."""
-            self.projectile = GameObject(None)
-            sr = self.projectile.add_component(SpriteRenderer("laser.png"))
-            self.projectile.add_component(Projectile(500, None))
+        """Fjenden skyder et projektil mod spilleren."""
+        self.projectile = GameObject(None)
+        sr = self.projectile.add_component(SpriteRenderer("laser.png"))
+        self.projectile.add_component(Projectile(500, None))
 
         projectile_position = pygame.math.Vector2(
-                self.gameObject.transform.position.x + (self.gameObject.get_component("SpriteRenderer").sprite_image.get_width() / 2) - (sr.sprite_image.get_width() / 2),
-                self.gameObject.transform.position.y + 40
+            self.gameObject.transform.position.x + (self.gameObject.get_component("SpriteRenderer").sprite_image.get_width() / 2) - (sr.sprite_image.get_width() / 2),
+            self.gameObject.transform.position.y + 40
             )
         self.projectile.add_component(Collider())
         self.projectile.tag = "EnemyProjectile" 

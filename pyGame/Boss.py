@@ -19,6 +19,8 @@ class Boss(Component):
         self.nextShot = 0
         self.bulletIndex = 0
         self.nextBomb = 0
+        pygame.mixer.music.load("pyGame\Assets\BossShip/dangerSound.mp3")
+        pygame.mixer.music.play(-1)
 
         # Initialize bullet positions based on the Boss's initial position
         self.update_bullet_positions()

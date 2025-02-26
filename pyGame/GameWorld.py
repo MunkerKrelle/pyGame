@@ -12,9 +12,7 @@ class GameWorld:
         pygame.mixer.init()
         pygame.init()
 
-        
         pygame.mixer.music.load("Pygame//assets/BackGroundMusic.mp3")
-
         
         pygame.mixer.music.play(-1)
         self._screen = pygame.display.set_mode((1280,720))
@@ -43,6 +41,7 @@ class GameWorld:
 
         builder = BossBuilder()
         builder.build()
+        self._gameObjects.append(builder.get_gameObject())
         
         self._background = Background("pygame\\Assets\\Space1.jpg", self._screen, speed=2)
 
@@ -78,9 +77,6 @@ class GameWorld:
                 if event.type == pygame.QUIT:
                     self._running =False
 
-
-
-           
             self._background.update()
 
             
