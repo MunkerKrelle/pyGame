@@ -8,7 +8,8 @@ from Background import Background
 from Builder import PlayerBuilder
 from Builder import EnemyBuilder
 from LevelManager import LevelManager
-from PowerUpSelector import PowerUpSelector
+# from PowerUpSelector import PowerUpSelector
+from Builder import UIElementBuilder
 class GameWorld:
 
     def __init__(self) -> None:
@@ -28,17 +29,19 @@ class GameWorld:
 
         self._gameObjects.append(builder.get_gameObject())
 
-        builder = BossBuilder()
-        builder.build()
-        self._gameObjects.append(builder.get_gameObject())     
+        # builder = BossBuilder()
+        # builder.build()
+        # self._gameObjects.append(builder.get_gameObject())   
+
+        self._UI_element = UIElementBuilder()
+        self._UI_element.build("shield.png", pygame.math.Vector2(100, 100))
+        self._gameObjects.append(self._UI_element.get_gameObject())
+
         
         #self._background = Background("pygame\\Assets\\Space1.jpg", self._screen, speed=2)
         self._background = Background("Assets\\Space1.jpg", self._screen, speed=2)
 
-        self._level_manager = LevelManager(self)
-        
-        self._power_up = PowerUpSelector()
-        
+        self._level_manager = LevelManager(self)        
 
         self._running = True
         self._clock = pygame.time.Clock()
@@ -80,7 +83,6 @@ class GameWorld:
             self._level_manager.update()
             
             delta_time = self._clock.tick(60) / 1000.0
-            self._power_up.update(delta_time)
             
             for gameObject in self._gameObjects[:]:
                 gameObject.update(delta_time)

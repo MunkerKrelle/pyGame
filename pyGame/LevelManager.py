@@ -1,6 +1,6 @@
 import pygame
 from Builder import EnemyBuilder
-from Builder import UIElementBuilder
+
 
 class LevelManager:
     def __init__(self, game_world):
@@ -38,9 +38,6 @@ class LevelManager:
         if not enemies_left:
             print("No enemies left, advancing to next level...")
             # set extra condition for power up selected
-            self._UI_element = UIElementBuilder()
-            self._UI_element.build("shield.png", pygame.math.Vector2(10, 10))
-            self._gameObjects.append(self._UI_element.get_gameObject())
             self.next_level()
 
     def clear_enemies(self):
