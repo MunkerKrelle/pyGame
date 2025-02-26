@@ -6,6 +6,7 @@ from Player import Player
 from Background import Background
 from Builder import PlayerBuilder
 from Builder import EnemyBuilder
+from LevelManager import LevelManager
 class GameWorld:
 
     def __init__(self) -> None:
@@ -25,25 +26,29 @@ class GameWorld:
         builder.build()
 
         self._gameObjects.append(builder.get_gameObject())
+        
+
 
         
         self._background = Background("pygame\\Assets\\Space1.jpg", self._screen, speed=2)
 
-        builder = EnemyBuilder()
-        builder.build("Dreadnought") 
-        self._gameObjects.append(builder.get_gameObject())        
-        builder.build("Scout")
-        self._gameObjects.append(builder.get_gameObject())
-        builder.build("Frigate")
-        self._gameObjects.append(builder.get_gameObject())
-        builder.build("Bomber")
-        self._gameObjects.append(builder.get_gameObject())
-        builder.build("Battlecruiser")
-        self._gameObjects.append(builder.get_gameObject())
-        builder.build("Fighter")
-        self._gameObjects.append(builder.get_gameObject())
-        builder.build("Torpedo_Ship")
-        self._gameObjects.append(builder.get_gameObject())
+        #builder = EnemyBuilder()
+        #builder.build("Dreadnought") 
+        #self._gameObjects.append(builder.get_gameObject())        
+        #builder.build("Scout")
+        #self._gameObjects.append(builder.get_gameObject())
+        #builder.build("Frigate")
+        #self._gameObjects.append(builder.get_gameObject())
+        #builder.build("Bomber")
+        #self._gameObjects.append(builder.get_gameObject())
+        #builder.build("Battlecruiser")
+        #self._gameObjects.append(builder.get_gameObject())
+        #builder.build("Fighter")
+        #self._gameObjects.append(builder.get_gameObject())
+        #builder.build("Torpedo_Ship")
+        #self._gameObjects.append(builder.get_gameObject())
+
+        self._level_manager = LevelManager(self)
 
         self._running = True
         self._clock = pygame.time.Clock()
@@ -86,6 +91,7 @@ class GameWorld:
             self._screen.fill("black")
             self._background.draw()
 
+            self._level_manager.update()
 
             delta_time = self._clock.tick(60) / 1000.0
 

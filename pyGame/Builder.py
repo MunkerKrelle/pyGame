@@ -140,5 +140,4 @@ class EnemyBuilder(Builder):
         return self._gameObject
     
 
-        #     animator = self._gameObject.add_component(Animator())
-        # animator.add_spritesheet_animation("Attack", "Assets/EnemyShips/Weapons/Nairan - Dreadnought - Weapons.png", 64, 64, 4)
+        
