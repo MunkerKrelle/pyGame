@@ -71,7 +71,7 @@ class UIManager:
                     print("Starting Game")
                     from GameWorld import GameWorld 
                     game = GameWorld()
-                    game.run()
+                    #game.run()
                     game.Awake()
                     game.Start()
                     game.update()
