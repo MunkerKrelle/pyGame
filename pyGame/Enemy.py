@@ -7,11 +7,11 @@ from Components import Collider
 from GameObject import GameObject
 
 class Enemy(Component):
-    def __init__(self, strategy) -> None:
+    def __init__(self, strategy, lives) -> None:
         super().__init__()
 
         self._strategy = strategy
-        self._lives = 1
+        self._lives = lives
 
     def get_base_health(self, enemy_type):
         """Returnerer basis HP for hver fjendetype"""
@@ -27,13 +27,14 @@ class Enemy(Component):
         return base_health.get(enemy_type, 1)  # Standard 1 liv, hvis ukendt type
 
     def awake(self, game_world) -> None:
+        
         self._game_world = game_world
-        self._lives = 1  # Standard liv
-
+        
         sr = self.gameObject.get_component("SpriteRenderer")
         if sr:
-            self.set_enemy_health(sr)  # Opdater liv baseret på typen
-            print(f"Enemy {sr.sprite_name} starts with {self._lives} HP")  #     Debugging
+            self.set_enemy_health(sr)  # ✅ Sætter _lives baseret på fjendetype
+        
+        print(f"Enemy {sr.sprite_name} starts with {self._lives} HP")  # 🔍 Debugging
 
         random_x = random.randint(0, game_world.screen.get_width() - sr.sprite_image.get_width())
         self._screen_size = pygame.math.Vector2(game_world.screen.get_width(), game_world.screen.get_height())
@@ -71,28 +72,30 @@ class Enemy(Component):
         """Fjenden skyder et projektil mod spilleren."""
         self.projectile = GameObject(None)
         sr = self.projectile.add_component(SpriteRenderer("laser.png"))
-        self.projectile.add_component(Projectile(500, None))
+
+        # ✅ Tilføj damage til EnemyProjectile (standard 1)
+        projectile_component = self.projectile.add_component(Projectile(500, None, damage=1))  
 
         projectile_position = pygame.math.Vector2(
             self.gameObject.transform.position.x + (self.gameObject.get_component("SpriteRenderer").sprite_image.get_width() / 2) - (sr.sprite_image.get_width() / 2),
             self.gameObject.transform.position.y + 40
-            )
+        )
+
         self.projectile.add_component(Collider())
-        self.projectile.tag = "EnemyProjectile" 
+        self.projectile.tag = "EnemyProjectile"  
         self.projectile.transform.position = projectile_position
 
-            
         self._laser_sound.play()
 
-            
         self._game_world.instantiate(self.projectile)
-    
-    def take_damage(self, damage_taken):
+
+    def take_damage(self, damage_taken=1):  # ✅ Gør `damage_taken` valgfri, default = 1
         self._lives -= damage_taken
         print(f"Enemy was hit! Lives left: {self._lives}")
-        
+
         if self._lives <= 0:
-            self.game_over()
+            self.destroy()
+
 
     def game_over(self):
         print("Game Over!")

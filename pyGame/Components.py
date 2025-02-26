@@ -176,10 +176,12 @@ class Animator(Component):
             self._animations[name] = frames
 
 class Projectile(Component):
-    def __init__(self, speed, target):
+    def __init__(self, speed, target=None, damage=1):  # ✅ Tilføj damage
+        super().__init__()
         self.speed = speed
         self.target = target  # Store the player's position at the time of creation
         self.initial_target_position = target.copy() if target else None  # Copy the initial target position if not None
+        self.damage = damage  # ✅ Gem skadeværdien
 
     def awake(self, game_world):
         pass
@@ -191,16 +193,13 @@ class Projectile(Component):
         if self.gameObject.tag == "PlayerProjectile":
             movement = pygame.math.Vector2(0, -self.speed)
             self._gameObject.transform.translate(movement * delta_time)
-            movement.y = self.speed * 2  # Enemy projectiles move downwards
         elif self.gameObject.tag == "EnemyProjectile":
             movement = pygame.math.Vector2(0, self.speed)
             self._gameObject.transform.translate(movement * delta_time)
-            movement.y = self.speed * 2  # Enemy projectiles move downwards
         elif self.gameObject.tag == "MissileProjectile" and self.initial_target_position:
-            # Calculate direction vector towards the initial target position
             target_direction = pygame.math.Vector2(self.initial_target_position.x, self.initial_target_position.y + 200) - self._gameObject.transform.position
             direction = pygame.math.Vector2.normalize(target_direction)
-            movement = direction * self.speed * delta_time  # Apply delta time for smooth movement
+            movement = direction * self.speed * delta_time
             self._gameObject.transform.translate(movement)
         elif self.gameObject.tag == "BombProjectile":
             movement = pygame.math.Vector2(0, self.speed)
@@ -212,10 +211,11 @@ class Projectile(Component):
                 if animator:
                     animator.play_animation("BombExp")
 
-        # Destroy if off-screen (or other conditions)
+        # Destroy if off-screen
         if self._gameObject.transform.position.y < 0 or self._gameObject.transform.position.y > 750:
             print("Destroying projectile")
             self._gameObject.destroy()
+
             
 class Collider(Component):  
     def __init__(self) -> None:
@@ -293,11 +293,22 @@ class Collider(Component):
         self._other_colliders.append(other)
 
         if self.gameObject.tag == "Enemy" and other.gameObject.tag == "PlayerProjectile":
-            enemy = self.gameObject.get_component("Enemy")
-            if enemy:
-                enemy.destroy()  
+            projectile_component = other.gameObject.get_component("Projectile")
+            damage = projectile_component.damage if projectile_component else 1  # ✅ Brug damage, hvis det findes
+
+            print(f"Collision! Enemy hit by projectile with {damage} damage")  # 🔍 Debugging
+
             other.gameObject.destroy()
-        
+            enemy = self.gameObject.get_component("Enemy")
+            
+            if enemy:
+                print(f"Before damage: Enemy has {enemy._lives} HP")
+                enemy.take_damage(damage)  # ✅ Brug den faktiske skade
+                print(f"After damage: Enemy has {enemy._lives} HP")
+
+ 
+            
+
 
         if self.gameObject.tag == "Player" and other.gameObject.tag == "Enemy":
             print("player flew into enemy")

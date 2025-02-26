@@ -20,7 +20,7 @@ class Player(Component):
         self._shoot_dealy = 0.1 
         self._game_world = game_world
         
-        #self._shoot_sound = pygame.mixer.Sound("pygame\\Assets\\LaserSound.mp3")
+        self._shoot_sound = pygame.mixer.Sound("pygame\\Assets\\LaserSound.mp3")
         sr = self._gameObject.get_component("SpriteRenderer")
         self._screen_size = pygame.math.Vector2(game_world.screen.get_width(),game_world.screen.get_height())
         self._sprite_size = pygame.math.Vector2(sr.sprite_image.get_width(),sr.sprite_image.get_height())
@@ -89,30 +89,25 @@ class Player(Component):
 
 
     def shoot(self):
-        # global bullet_sprite
-        # global power
         if self._time_since_last_shot >= self._shoot_dealy:
             for i in range(power.proj_amount):
                 projectile = GameObject(None)
                 sr = projectile.add_component(SpriteRenderer(power.sprite))
-                # print(power.damage)
-                projectile.add_component(Projectile(power.proj_speed, None))
-                # print(power.proj_speed)
+
+                # ✅ Tilføj damage, når vi opretter projektilen
+                projectile_component = projectile.add_component(Projectile(power.proj_speed, None, power.damage))
+
                 projectile_position = power.unique_shoot(sr, self._sprite_size.x / 2, i, power.proj_amount, power.proj_spread_angle)
                 projectile.transform.position = projectile_position
-               
+
                 projectile.add_component(Collider())
+                projectile.tag = "PlayerProjectile"  
 
-                
-
-                projectile.tag = "PlayerProjectile" 
-                projectile.damage = power.damage 
-                # print(projectile.damage)
                 self._game_world.instantiate(projectile)
-                
-                self._shoot_sound.play()
 
+            self._shoot_sound.play()
             self._time_since_last_shot = 0
+
     
     def aqquire_fireball(self):     
         global power
