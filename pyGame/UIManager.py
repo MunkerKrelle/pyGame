@@ -35,34 +35,34 @@ class UIManager:
                     text_color = (255, 255, 255),
                     font = self.font
                 ),
-                Button(
-                    x = 150,
-                    y = 150,
-                    width  = 100,
-                    height = 50,
-                    text = "OPTIONS",
-                    color = (0, 200, 255),
-                    hover_color = (0, 200, 255),
-                    text_color = (255, 255, 255),
-                    font = self.font
-                ),
-                Button(
-                    x = 150,
-                    y = 250,
-                    width  = 100,
-                    height = 50,
-                    text = "QUIT",
-                    color = (0, 200, 255),
-                    hover_color = (0, 200, 255),
-                    text_color = (255, 255, 255),
-                    font = self.font
-                )
+                # Button(
+                #     x = 150,
+                #     y = 150,
+                #     width  = 100,
+                #     height = 50,
+                #     text = "OPTIONS",
+                #     color = (0, 200, 255),
+                #     hover_color = (0, 200, 255),
+                #     text_color = (255, 255, 255),
+                #     font = self.font
+                # ),
+                # Button(
+                #     x = 150,
+                #     y = 250,
+                #     width  = 100,
+                #     height = 50,
+                #     text = "QUIT",
+                #     color = (0, 200, 255),
+                #     hover_color = (0, 200, 255),
+                #     text_color = (255, 255, 255),
+                #     font = self.font
+                # )
         ]
 
         self.completed_level_buttons = [
             Button(
-                x = 150,
-                y = 50,
+                x = 50,
+                y = 250,
                 width  = 100,
                 height = 50,
                 text = "NEXT LEVEL",
@@ -71,63 +71,63 @@ class UIManager:
                 text_color = (255, 255, 255),
                 font = self.font
             ),
-            Button(
-                x = 150,
-                y = 150,
-                width  = 100,
-                height = 50,
-                text = "OPTIONS",
-                color = (0, 200, 255),
-                hover_color = (0, 200, 255),
-                text_color = (255, 255, 255),
-                font = self.font
-            ),
-            Button(
-                x = 150,
-                y = 250,
-                width  = 100,
-                height = 50,
-                text = "QUIT",
-                color = (0, 200, 255),
-                hover_color = (0, 200, 255),
-                text_color = (255, 255, 255),
-                font = self.font
-            )
+            # Button(
+            #     x = 150,
+            #     y = 150,
+            #     width  = 100,
+            #     height = 50,
+            #     text = "OPTIONS",
+            #     color = (0, 200, 255),
+            #     hover_color = (0, 200, 255),
+            #     text_color = (255, 255, 255),
+            #     font = self.font
+            # ),
+            # Button(
+            #     x = 150,
+            #     y = 250,
+            #     width  = 100,
+            #     height = 50,
+            #     text = "QUIT",
+            #     color = (0, 200, 255),
+            #     hover_color = (0, 200, 255),
+            #     text_color = (255, 255, 255),
+            #     font = self.font
+            # )
         ]
         self.game_over_buttons = [
-            Button(
-                x = 150,
-                y = 50,
-                width  = 100,
-                height = 50,
-                text = "START OVER",
-                color = (0, 200, 255),
-                hover_color = (0, 200, 255),
-                text_color = (255, 255, 255),
-                font = self.font
-            ),
-            Button(
-                x = 150,
-                y = 150,
-                width  = 100,
-                height = 50,
-                text = "OPTIONS",
-                color = (0, 200, 255),
-                hover_color = (0, 200, 255),
-                text_color = (255, 255, 255),
-                font = self.font
-            ),
-            Button(
-                x = 150,
-                y = 250,
-                width  = 100,
-                height = 50,
-                text = "QUIT",
-                color = (0, 200, 255),
-                hover_color = (0, 200, 255),
-                text_color = (255, 255, 255),
-                font = self.font
-            )
+            # Button(
+            #     x = 150,
+            #     y = 50,
+            #     width  = 100,
+            #     height = 50,
+            #     text = "START OVER",
+            #     color = (0, 200, 255),
+            #     hover_color = (0, 200, 255),
+            #     text_color = (255, 255, 255),
+            #     font = self.font
+            # ),
+            # Button(
+            #     x = 150,
+            #     y = 150,
+            #     width  = 100,
+            #     height = 50,
+            #     text = "OPTIONS",
+            #     color = (0, 200, 255),
+            #     hover_color = (0, 200, 255),
+            #     text_color = (255, 255, 255),
+            #     font = self.font
+            # ),
+            # Button(
+            #     x = 150,
+            #     y = 250,
+            #     width  = 100,
+            #     height = 50,
+            #     text = "QUIT",
+            #     color = (0, 200, 255),
+            #     hover_color = (0, 200, 255),
+            #     text_color = (255, 255, 255),
+            #     font = self.font
+            # )
         ]
 
     
@@ -153,8 +153,10 @@ class UIManager:
                     from GameWorld import GameWorld 
                     game = GameWorld()
                     # game.run()
-                    # game.Awake()
-                    # game.Start()
+                    game.Awake()
+                    game.Start()
+                    player = game.get_player()
+                    print(player)
                     game.update()
                     break
                 
@@ -170,12 +172,14 @@ class UIManager:
 
                 elif button.text == "NEXT LEVEL":
                     #Still Need Method for this
-                    
-                    game = GameWorld()
+                    # from GameWorld import GameWorld 
+                    # game = GameWorld()
                     # game.run()
                     # game.Awake()
                     # game.Start()
-                    game.update()
+                    # player = game.get_player()
+                    # print(player)
+                    # game.update()
                     break
 
                 elif button.text == "START OVER":

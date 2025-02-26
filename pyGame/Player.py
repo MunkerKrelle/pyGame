@@ -10,12 +10,20 @@ from PowerUps import SpeedPowerUp
 from PowerUps import MoreLivesPowerUp
 
 class Player(Component):
-    bullet_sprite = "blank"
+    _instance = None
+    def __new__(cls):
+        if not cls._instance:
+            cls._instance = super(Player, cls).__new__(cls)
+            cls._instance._initialized = False  # Prevent re-initialization
+        return cls._instance   
 
     def __init__(self):
-        self._lives = 3
-        self.font = pygame.font.Font(None, 36)
-
+        if not self._initialized:
+            self._initialized = True
+            self._lives = 3
+            self.font = pygame.font.Font(None, 36)
+        
+    bullet_sprite = "blank"
     
     def awake(self, game_world): 
         self._lives = 300

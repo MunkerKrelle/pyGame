@@ -56,8 +56,8 @@ class GameWorld:
 
         self._running = True
         self._clock = pygame.time.Clock()
-        self.Awake()
-        self.Start()
+        # self.Awake()
+        # self.Start()
      
 
     @property
@@ -73,6 +73,11 @@ class GameWorld:
         gameObject.start()
         self._gameObjects.append(gameObject)
 
+    def get_player(self):
+        for gameObject in self._gameObjects:
+            if gameObject.tag == "Player":
+                # print(gameObject)
+                return gameObject
 
     def Awake(self): 
         for gameObject in self._gameObjects[:]:
@@ -80,8 +85,9 @@ class GameWorld:
     
     def Start(self): 
         for gameObject in self._gameObjects[:]:
-            # print(gameObject._components)
             gameObject.start()
+
+        # self.get_player()
         
       
 
