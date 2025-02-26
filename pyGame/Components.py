@@ -295,7 +295,7 @@ class Collider(Component):
         if self.gameObject.tag == "Enemy" and other.gameObject.tag == "PlayerProjectile":
             enemy = self.gameObject.get_component("Enemy")
             if enemy:
-                enemy.destroy()  # 🎵 Spiller eksplosionseffekt her
+                enemy.destroy()  
             other.gameObject.destroy()
         
 
