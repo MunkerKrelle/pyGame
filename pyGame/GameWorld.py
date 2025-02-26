@@ -3,6 +3,7 @@ from GameObject import GameObject
 from Components import Animator
 from Components import SpriteRenderer
 from Player import Player
+from Builder import BossBuilder, PlayerBuilder, EnemyBuilder
 from Background import Background
 from Builder import PlayerBuilder
 from Builder import EnemyBuilder
@@ -14,9 +15,7 @@ class GameWorld:
         pygame.mixer.init()
         pygame.init()
 
-        
         pygame.mixer.music.load("Pygame//assets/BackGroundMusic.mp3")
-
         
         pygame.mixer.music.play(-1)
         self._screen = pygame.display.set_mode((1280,720))
@@ -26,9 +25,26 @@ class GameWorld:
         builder.build()
 
         self._gameObjects.append(builder.get_gameObject())
-        
 
+        # builder = EnemyBuilder()
+        # builder.build("Dreadnought")
+        # self._gameObjects.append(builder.get_gameObject())        
+        # builder.build("Scout")
+        # self._gameObjects.append(builder.get_gameObject())
+        # builder.build("Frigate")
+        # self._gameObjects.append(builder.get_gameObject())
+        # builder.build("Bomber")
+        # self._gameObjects.append(builder.get_gameObject())
+        # builder.build("Battlecruiser")
+        # self._gameObjects.append(builder.get_gameObject())
+        # builder.build("Fighter")
+        # self._gameObjects.append(builder.get_gameObject())
+        # builder.build("Torpedo_Ship")
+        # self._gameObjects.append(builder.get_gameObject())
 
+        builder = BossBuilder()
+        builder.build()
+        self._gameObjects.append(builder.get_gameObject())
         
         self._background = Background("pygame\\Assets\\Space1.jpg", self._screen, speed=2)
 
@@ -82,9 +98,6 @@ class GameWorld:
                 if event.type == pygame.QUIT:
                     self._running =False
 
-
-
-           
             self._background.update()
 
             
@@ -112,6 +125,10 @@ class GameWorld:
 
         pygame.quit()
     
+    def get_player_position(self):
+        for gameObject in self._gameObjects:
+            if gameObject.tag == "Player":
+                return gameObject.transform.position
 
 gw = GameWorld()
 
