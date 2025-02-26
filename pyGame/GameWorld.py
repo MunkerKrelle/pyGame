@@ -12,7 +12,7 @@ from LevelManager import LevelManager
 from Builder import UIElementBuilder
 from UIManager import UIManager
 from ScoreManager import ScoreManager
-from Menu import Menu
+from Menu import Menu, EndGameMenu
 
 class GameWorld:
 
@@ -88,6 +88,11 @@ class GameWorld:
             self._level_manager.draw(self._screen)
 
             self._level_manager.update()
+
+            if self._level_manager._current_level == 2:
+                print("CONGRATZ YOU COMPLETED THE GAMEEEEEEEE!!!")
+                EndGameMenu().run()
+
             
             delta_time = self._clock.tick(60) / 1000.0
             
@@ -113,9 +118,8 @@ class GameWorld:
                 return gameObject.transform.position
 
 
-menu = Menu()
 
-menu.run()
+Menu().run()
 #gw = GameWorld()
 
 #gw.Awake()

@@ -11,6 +11,10 @@ class LevelManager:
         self.spawn_enemies()
         self.font = pygame.font.Font(None, 36)
 
+    @property
+    def level(self):
+        return self._current_level
+
 
     def spawn_enemies(self):
         """Spawner fjender baseret på level"""
