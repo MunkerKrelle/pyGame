@@ -19,7 +19,7 @@ class Enemy(Component):
         
         random_x = random.randint(0, game_world.screen.get_width() - sr.sprite_image.get_width())
         self._screen_size = pygame.math.Vector2(game_world.screen.get_width(), game_world.screen.get_height())
-        self.gameObject.transform.position = pygame.math.Vector2(random_x, 0)
+        self.gameObject.transform.position = pygame.math.Vector2(random_x, -100)
         
         self.gameObject.add_component(Collider())
         self.gameObject.tag = "Enemy"
@@ -57,7 +57,5 @@ class Enemy(Component):
             self.projectile.add_component(Collider())
             self.projectile.tag = "EnemyProjectile" 
             self.projectile.transform.position = projectile_position
-
-
 
             self._game_world.instantiate(self.projectile)
