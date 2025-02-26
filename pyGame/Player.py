@@ -15,7 +15,7 @@ class Player(Component):
     def awake(self, game_world): 
         self._lives = 3
         self.gameObject.tag = "Player" 
-
+        
         self._time_since_last_shot = 1
         self._shoot_dealy = 0.1 
         self._game_world = game_world
