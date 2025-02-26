@@ -15,9 +15,10 @@ class GameWorld:
         pygame.mixer.init()
         pygame.init()
 
-        pygame.mixer.music.load("Pygame//assets/BackGroundMusic.mp3")
+        # pygame.mixer.music.load("Pygame//assets/BackGroundMusic.mp3")
+        pygame.mixer.music.load("assets/BackGroundMusic.mp3")
         
-        pygame.mixer.music.play(-1)
+        # pygame.mixer.music.play(-1)
         self._screen = pygame.display.set_mode((1280,720))
         self._gameObjects = []
         self._colliders = []
@@ -26,43 +27,12 @@ class GameWorld:
 
         self._gameObjects.append(builder.get_gameObject())
 
-        # builder = EnemyBuilder()
-        # builder.build("Dreadnought")
-        # self._gameObjects.append(builder.get_gameObject())        
-        # builder.build("Scout")
-        # self._gameObjects.append(builder.get_gameObject())
-        # builder.build("Frigate")
-        # self._gameObjects.append(builder.get_gameObject())
-        # builder.build("Bomber")
-        # self._gameObjects.append(builder.get_gameObject())
-        # builder.build("Battlecruiser")
-        # self._gameObjects.append(builder.get_gameObject())
-        # builder.build("Fighter")
-        # self._gameObjects.append(builder.get_gameObject())
-        # builder.build("Torpedo_Ship")
-        # self._gameObjects.append(builder.get_gameObject())
-
         builder = BossBuilder()
         builder.build()
         self._gameObjects.append(builder.get_gameObject())
         
-        self._background = Background("pygame\\Assets\\Space1.jpg", self._screen, speed=2)
-
-        #builder = EnemyBuilder()
-        #builder.build("Dreadnought") 
-        #self._gameObjects.append(builder.get_gameObject())        
-        #builder.build("Scout")
-        #self._gameObjects.append(builder.get_gameObject())
-        #builder.build("Frigate")
-        #self._gameObjects.append(builder.get_gameObject())
-        #builder.build("Bomber")
-        #self._gameObjects.append(builder.get_gameObject())
-        #builder.build("Battlecruiser")
-        #self._gameObjects.append(builder.get_gameObject())
-        #builder.build("Fighter")
-        #self._gameObjects.append(builder.get_gameObject())
-        #builder.build("Torpedo_Ship")
-        #self._gameObjects.append(builder.get_gameObject())
+        #self._background = Background("pygame\\Assets\\Space1.jpg", self._screen, speed=2)
+        self._background = Background("Assets\\Space1.jpg", self._screen, speed=2)
 
         self._level_manager = LevelManager(self)
 
