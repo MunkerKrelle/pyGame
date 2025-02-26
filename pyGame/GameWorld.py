@@ -3,13 +3,20 @@ from GameObject import GameObject
 from Components import Animator
 from Components import SpriteRenderer
 from Player import Player
-from Builder import BossBuilder, PlayerBuilder
-from Builder import EnemyBuilder
+from Builder import BossBuilder, PlayerBuilder, EnemyBuilder
+from Background import Background
 class GameWorld:
 
     def __init__(self) -> None:
+        
+        pygame.mixer.init()
         pygame.init()
 
+        
+        pygame.mixer.music.load("Pygame//assets/BackGroundMusic.mp3")
+
+        
+        pygame.mixer.music.play(-1)
         self._screen = pygame.display.set_mode((1280,720))
         self._gameObjects = []
         self._colliders = []
@@ -36,7 +43,8 @@ class GameWorld:
 
         builder = BossBuilder()
         builder.build()
-        self._gameObjects.append(builder.get_gameObject())
+        
+        self._background = Background("pygame\\Assets\\Space1.jpg", self._screen, speed=2)
 
         self._running = True
         self._clock = pygame.time.Clock()
@@ -55,11 +63,11 @@ class GameWorld:
         self._gameObjects.append(gameObject)
 
 
-    def Awake(self): # needs renamed to awake, lowercase. for consistency
+    def Awake(self): 
         for gameObject in self._gameObjects[:]:
             gameObject.awake(self)
     
-    def Start(self): # needs renamed to start, lowercase for consistency
+    def Start(self): 
         for gameObject in self._gameObjects[:]:
             gameObject.start()
 
@@ -70,11 +78,19 @@ class GameWorld:
                 if event.type == pygame.QUIT:
                     self._running =False
 
-            self._screen.fill("cornflowerblue")
+
+
+           
+            self._background.update()
+
+            
+            self._screen.fill("black")
+            self._background.draw()
+
 
             delta_time = self._clock.tick(60) / 1000.0
 
-            #draw your game
+            
             for gameObject in self._gameObjects[:]:
                 gameObject.update(delta_time)
 

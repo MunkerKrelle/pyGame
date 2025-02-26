@@ -11,15 +11,16 @@ from PowerUps import MoreLivesPowerUp
 
 class Player(Component):
     bullet_sprite = "blank"
-
+    
     def awake(self, game_world): 
         self._lives = 3
-        # self.gameObject.add_component(Collider())
         self.gameObject.tag = "Player" 
 
         self._time_since_last_shot = 1
-        self._shoot_dealy = 1 
+        self._shoot_dealy = 0.1 
         self._game_world = game_world
+        
+        self._shoot_sound = pygame.mixer.Sound("pygame\\Assets\\LaserSound.mp3")
         sr = self._gameObject.get_component("SpriteRenderer")
         self._screen_size = pygame.math.Vector2(game_world.screen.get_width(),game_world.screen.get_height())
         self._sprite_size = pygame.math.Vector2(sr.sprite_image.get_width(),sr.sprite_image.get_height())
@@ -29,14 +30,18 @@ class Player(Component):
         global name
         name = "BasePowerUp"
 
+        global damage
+        damage = 0
+      
         global power
         power = self._gameObject.get_component(name)
-        power.power_change()
+        damage = power.power_change()
+        print(damage)
 
         global speed
-        speed = self._gameObject.get_component(SpeedPowerUp.__name__)
+        # speed = self._gameObject.get_component(SpeedPowerUp.__name__)
         speed = 300 
-        # print(speed) 
+         
 
     def start(self):
         pass
@@ -63,7 +68,6 @@ class Player(Component):
             # self.remove_colliders()
             self.aqquire_lives_up()
 
-        
         self._gameObject.transform.translate(movement*delta_time)
 
         if self._gameObject.transform.position.x < -self._sprite_size.x:
@@ -79,9 +83,14 @@ class Player(Component):
         
         # print(f" player pos is: {self.gameObject.transform.position}")
     
+    @property
+    def damage(self):
+        return self.damage
+
+
     def shoot(self):
-        global bullet_sprite
-        global power
+        # global bullet_sprite
+        # global power
         if self._time_since_last_shot >= self._shoot_dealy:
             for i in range(power.proj_amount):
                 projectile = GameObject(None)
@@ -94,25 +103,28 @@ class Player(Component):
                
                 projectile.add_component(Collider())
 
-                # for component_name, component in projectile._components.items():
-                #     print(f"{component_name}: {component}")
-                #     self.gameObject.remove_component(component_name)
+                
 
                 projectile.tag = "PlayerProjectile" 
-                
+                projectile.damage = power.damage 
+                # print(projectile.damage)
                 self._game_world.instantiate(projectile)
+                
+                self._shoot_sound.play()
 
             self._time_since_last_shot = 0
     
     def aqquire_fireball(self):     
         global power
         power = self._gameObject.get_component(FireballPowerUp.__name__)
-        # power.power_change()
+        damage = power.power_change()
+        # print(damage)
 
     def aqquire_multi_shot(self):
         global power
         power = self._gameObject.get_component(MultiShot.__name__)
-        # power.power_change()
+        damage = power.power_change()
+        # print(damage)
 
     def aqquire_speed_up(self):     
         global speed
@@ -126,21 +138,14 @@ class Player(Component):
         print(temp)
         self._lives += temp
         print(self._lives)
-    
-    def remove_colliders(self):
-        pass
-        # global collider_list
-        # self.gameObject.remove_component(self.collider_list[0])
-        # projectile = self.gameObject.get_component("Collider")
-        # if projectile:
-            # self.gameObject.remove_component(projectile)
 
     def take_damage(self):
         self._lives -= 1
         print(f"Player hit! Lives left: {self._lives}")
-        
         if self._lives <= 0:
             self.game_over()
+
     def game_over(self):
         print("Game Over!")
-        self._game_world.destroy(self._gameObject)  # Fjerner spilleren fra spillet
+        # self._game_world.destroy(self._gameObject)  # Fjerner spilleren fra spillet
+        self.gameObject.destroy()

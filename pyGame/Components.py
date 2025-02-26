@@ -66,6 +66,7 @@ class SpriteRenderer(Component):
         #self._sprite_image = pygame.image.load(f"Assets\\{sprite_name}")
         self._sprite_image = pygame.image.load(f"pygame\\Assets\\{sprite_name}") # Jeres version
         #self._sprite_image = pygame.image.load(f"C:/AxP/Githubrepositories/Semester4/pyGame/pyGame/Assets/{sprite_name}") # Sargons Version
+        self._sprite_name = sprite_name
         self._sprite = pygame.sprite.Sprite()
         self._sprite.rect = self._sprite_image.get_rect()
         self._sprite_mask = pygame.mask.from_surface(self.sprite_image)
@@ -86,6 +87,10 @@ class SpriteRenderer(Component):
     @property
     def sprite(self):
         return self._sprite
+    
+    @property
+    def sprite_name(self):
+        return self._sprite_name
     
     # @property
     # def sprite_flip(self):
@@ -224,7 +229,7 @@ class Collider(Component):
         sr = self.gameObject.get_component("SpriteRenderer")
         self._collision_box = sr.sprite.rect
         self._sprite_mask = sr.sprite_mask
-        print(self._collision_box)
+        # print(self._collision_box)
         game_world.colliders.append(self)
         
     @property
@@ -284,15 +289,21 @@ class Collider(Component):
                 other.gameObject.destroy()
                 print("player is hit")
         
-        if self.gameObject.tag == "Enemy" and other.gameObject.tag == "PlayerProjectile":
-            other.gameObject.destroy()
-            self.gameObject.destroy()
+    def collision_enter(self, other):
+        self._other_colliders.append(other)
 
-            # for component_name, component in self.gameObject._components.items():
-            #     print(f"{component_name}: {component}")         
+        if self.gameObject.tag == "Enemy" and other.gameObject.tag == "PlayerProjectile":
+            enemy = self.gameObject.get_component("Enemy")
+            if enemy:
+                enemy.destroy()  # 🎵 Spiller eksplosionseffekt her
+            other.gameObject.destroy()
+        
 
         if self.gameObject.tag == "Player" and other.gameObject.tag == "Enemy":
             print("player flew into enemy")
+            player = self.gameObject.get_component("Player")  
+            if player:
+                player.take_damage()  
             # player = self.gameObject.get_component("Player")  
             # if player:
             #     player.take_damage()  
