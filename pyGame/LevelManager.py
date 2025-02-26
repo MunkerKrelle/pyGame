@@ -9,6 +9,8 @@ class LevelManager:
         self._enemies_per_level = 3  
         self._enemy_health_multiplier = 1  
         self.spawn_enemies()
+        self.font = pygame.font.Font(None, 36)
+
 
     def spawn_enemies(self):
         """Spawner fjender baseret på level"""
@@ -59,3 +61,8 @@ class LevelManager:
         self._enemy_health_multiplier += 0.2  
     
         self.spawn_enemies()
+
+    def draw(self, screen):
+        level_text = f"Level: {self._current_level}"
+        text_surface = self.font.render(level_text, True, (255, 255, 255))
+        screen.blit(text_surface, (10, 40))
