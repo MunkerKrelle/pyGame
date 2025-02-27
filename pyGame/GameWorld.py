@@ -1,12 +1,7 @@
 import pygame
-from GameObject import GameObject
-from Components import Animator
-from Components import SpriteRenderer
-from Player import Player
-from Builder import BossBuilder, PlayerBuilder, EnemyBuilder
+from Builder import BossBuilder, PlayerBuilder
 from Background import Background
 from Builder import PlayerBuilder
-from Builder import EnemyBuilder
 from LevelManager import LevelManager
 class GameWorld:
 
@@ -25,9 +20,6 @@ class GameWorld:
         builder.build()
 
         self._gameObjects.append(builder.get_gameObject())
-
-        
-
 
         builder = BossBuilder()
         builder.build()
