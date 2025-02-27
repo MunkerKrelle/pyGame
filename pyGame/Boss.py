@@ -21,9 +21,11 @@ class Boss(Component):
         self.nextShot = 0
         self.bulletIndex = 0
         self.nextBomb = 0
-        pygame.mixer.music.load("pyGame\Assets\BossShip/dangerSound.mp3")
-        #pygame.mixer.music.load("Assets\BossShip/dangerSound.mp3")
-        # pygame.mixer.music.play(-1)
+        #pygame.mixer.music.load("pyGame\Assets\BossShip/dangerSound.mp3")
+        pygame.mixer.music.load("Assets\BossShip/dangerSound.mp3")
+        self._explosion_sound = pygame.mixer.Sound("Assets\\Explode.mp3")
+        self._laser_sound = pygame.mixer.Sound("Assets\\LaserSound.mp3")
+        pygame.mixer.music.play(-1)
 
         # Initialize bullet positions based on the Boss's initial position
         self.update_bullet_positions()
@@ -89,7 +91,7 @@ class Boss(Component):
         
     def destroy(self):
         """Spil eksplosionseffekten, når fjenden dør"""
-        # self._explosion_sound.play()
+        self._explosion_sound.play()
         self.gameObject.destroy()
 
 
@@ -98,10 +100,11 @@ class Boss(Component):
         self.projectile.add_component(SpriteRenderer("/BossShip/bulletStart.png"))
         self.projectile.add_component(Projectile(500, None))
         animator = self.projectile.add_component(Animator())
-        animator.add_spritesheet_animation("Bullet", "pyGame/Assets/BossShip/bullet.png", 8, 32, 4)
-        #animator.add_spritesheet_animation("Bullet", "Assets/BossShip/bullet.png", 8, 32, 4)
+        #animator.add_spritesheet_animation("Bullet", "pyGame/Assets/BossShip/bullet.png", 8, 32, 4)
+        animator.add_spritesheet_animation("Bullet", "Assets/BossShip/bullet.png", 8, 32, 4)
         
         animator.play_animation("Bullet")
+        self._laser_sound.play()
         self.projectile.add_component(Collider())
         self.projectile.tag = "EnemyProjectile" 
         self.projectile.transform.position = self.bulletList[self.bulletIndex]
@@ -113,10 +116,11 @@ class Boss(Component):
         self.projectile.add_component(SpriteRenderer("/BossShip/missileStart.png"))
         self.projectile.add_component(Projectile(500, self._game_world.get_player_position()))
         animator = self.projectile.add_component(Animator())
-        animator.add_spritesheet_animation("Missile", "pyGame/Assets/BossShip/missile.png", 22, 64, 3)
-        #animator.add_spritesheet_animation("Missile", "Assets/BossShip/missile.png", 22, 64, 3)
+        #animator.add_spritesheet_animation("Missile", "pyGame/Assets/BossShip/missile.png", 22, 64, 3)
+        animator.add_spritesheet_animation("Missile", "Assets/BossShip/missile.png", 22, 64, 3)
 
         animator.play_animation("Missile")
+        self._explosion_sound.play()
         self.projectile.add_component(Collider())
         self.projectile.tag = "MissileProjectile" 
         self.projectile.transform.position = pos
