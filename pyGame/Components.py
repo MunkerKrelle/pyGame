@@ -64,8 +64,8 @@ class SpriteRenderer(Component):
     def __init__(self, sprite_name) -> None:
         super().__init__()
 
-        #self._sprite_image = pygame.image.load(f"Assets\\{sprite_name}")
-        self._sprite_image = pygame.image.load(f"pygame\\Assets\\{sprite_name}") # Jeres version
+        self._sprite_image = pygame.image.load(f"Assets\\{sprite_name}")
+        #self._sprite_image = pygame.image.load(f"pygame\\Assets\\{sprite_name}") # Jeres version
         #self._sprite_image = pygame.image.load(f"C:/AxP/Githubrepositories/Semester4/pyGame/pyGame/Assets/{sprite_name}") # Sargons Version
         self._sprite_name = sprite_name
         self._sprite = pygame.sprite.Sprite()
@@ -124,8 +124,8 @@ class Animator(Component):
     def add_animation(self, name, *args):
         frames = []
         for arg in args:
-            #sprite_image = pygame.image.load(f"Assets\\{arg}")
-            sprite_image = pygame.image.load(f"pygame\\Assets\\{arg}") # Jeres version
+            sprite_image = pygame.image.load(f"Assets\\{arg}")
+            #sprite_image = pygame.image.load(f"pygame\\Assets\\{arg}") # Jeres version
             #sprite_image = pygame.image.load(f"C:/AxP/Githubrepositories/Semester4/pyGame/pyGame/Assets/{arg}") # SARGONS VERSION
             frames.append(sprite_image)
         
@@ -281,6 +281,17 @@ class Collider(Component):
         
     def collision_enter(self, other):
         self._other_colliders.append(other)
+
+        if self.gameObject.tag == "Player" and other.gameObject.tag == "MissileProjectile":
+                # print("player is hit")
+                player = self.gameObject.get_component("Player")  
+                if player:
+                    print("player is hit by missile")
+                    player.take_damage()  
+                    other.gameObject.destroy()
+                    ScoreManager().decrease_score()
+
+
 
         if self.gameObject.tag == "Player" and other.gameObject.tag == "EnemyProjectile":
             # print("player is hit")
