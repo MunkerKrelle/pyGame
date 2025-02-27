@@ -75,10 +75,10 @@ class LevelManager:
         self._enemies_per_level += 1  
         self._enemy_health_multiplier += 0.2  
 
-        if self._current_level < 2:
+        if self._current_level < 4:
             self.spawn_enemies()
 
-        if self._current_level == 2:
+        if self._current_level == 4:
             self.spawn_boss()
 
         if self._current_level == 5:
