@@ -25,9 +25,7 @@ class GameWorld:
         self._gameObjects.append(builder.get_gameObject())
         self.stored_player = builder.get_gameObject()
 
-        # builder = BossBuilder()
-        # builder.build()
-        # self._gameObjects.append(builder.get_gameObject())   
+
 
         self._UI_element = UIElementBuilder()
         self._UI_element.build("shield.png", pygame.math.Vector2(100, 100), builder.get_gameObject())
