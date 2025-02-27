@@ -1,13 +1,16 @@
 import pygame
 from Builder import EnemyBuilder
+from PowerUpSelector import PowerUpSelector
 
 class LevelManager:
     def __init__(self, game_world):
         self._game_world = game_world
         self._current_level = 1  
         self._enemies_per_level = 3  
-        self._enemy_health_multiplier = 0  
+        self._enemy_health_multiplier = 0 
+        self.power_up = PowerUpSelector(self._game_world.get_player())
         self.spawn_enemies()
+        # self.available_powers = PowerUpSelector()
 
     def spawn_enemies(self):
         """Spawner fjender baseret på level"""
@@ -35,7 +38,12 @@ class LevelManager:
         enemies_left = any(obj.tag == "Enemy" for obj in self._game_world._gameObjects)
         if not enemies_left:
             print("No enemies left, advancing to next level...")
-            self.next_level()  
+            # set extra condition for power up selected
+
+            self.power_up.select_power()
+            if self.power_up.get_power_picker == True:
+                self.power_up.set_power_picker
+                self.next_level()
 
     def clear_enemies(self):
         """Fjerner alle fjender fra spillet før næste level starter"""

@@ -46,8 +46,10 @@ class Enemy(Component):
         self._shoot_delay = 2  # Seconds between shots
 
          
-        self._explosion_sound = pygame.mixer.Sound("pygame\\Assets\\Explode.mp3")
-        self._laser_sound = pygame.mixer.Sound("pygame\\Assets\\LaserSound.mp3")
+        # self._explosion_sound = pygame.mixer.Sound("pygame\\Assets\\Explode.mp3")
+        # self._laser_sound = pygame.mixer.Sound("pygame\\Assets\\LaserSound.mp3")
+        self._explosion_sound = pygame.mixer.Sound("Assets\\Explode.mp3")
+        self._laser_sound = pygame.mixer.Sound("Assets\\LaserSound.mp3")
 
 
     def start(self) -> None:
@@ -84,8 +86,10 @@ class Enemy(Component):
         self.projectile.tag = "EnemyProjectile"  
         self.projectile.transform.position = projectile_position
 
-        self._laser_sound.play()
+            
+        # self._laser_sound.play()
 
+            
         self._game_world.instantiate(self.projectile)
 
     def take_damage(self, damage_taken=1):  # ✅ Gør `damage_taken` valgfri, default = 1
@@ -120,6 +124,6 @@ class Enemy(Component):
 
     def destroy(self):
         """Spil eksplosionseffekten, når fjenden dør"""
-        self._explosion_sound.play()
+        # self._explosion_sound.play()
         self.gameObject.destroy()
 

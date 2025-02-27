@@ -3,6 +3,8 @@ from Builder import BossBuilder, PlayerBuilder
 from Background import Background
 from Builder import PlayerBuilder
 from LevelManager import LevelManager
+from PowerUpSelector import PowerUpSelector
+from Builder import UIElementBuilder
 class GameWorld:
 
     def __init__(self) -> None:
@@ -10,25 +12,32 @@ class GameWorld:
         pygame.mixer.init()
         pygame.init()
 
-        pygame.mixer.music.load("Pygame//assets/BackGroundMusic.mp3")
+        # pygame.mixer.music.load("Pygame//assets/BackGroundMusic.mp3")
+        pygame.mixer.music.load("assets/BackGroundMusic.mp3")
         
-        pygame.mixer.music.play(-1)
+        # pygame.mixer.music.play(-1)
         self._screen = pygame.display.set_mode((1280,720))
         self._gameObjects = []
         self._colliders = []
         builder = PlayerBuilder()
         builder.build()
-
+      
         self._gameObjects.append(builder.get_gameObject())
+        self.stored_player = builder.get_gameObject()
 
-        builder = BossBuilder()
-        builder.build()
-        self._gameObjects.append(builder.get_gameObject())
+        # builder = BossBuilder()
+        # builder.build()
+        # self._gameObjects.append(builder.get_gameObject())   
+
+        self._UI_element = UIElementBuilder()
+        self._UI_element.build("shield.png", pygame.math.Vector2(100, 100), builder.get_gameObject())
+        self._gameObjects.append(self._UI_element.get_gameObject())
         
-        self._background = Background("pygame\\Assets\\Space1.jpg", self._screen, speed=2)
+        
+        #self._background = Background("pygame\\Assets\\Space1.jpg", self._screen, speed=2)
+        self._background = Background("Assets\\Space1.jpg", self._screen, speed=2)
 
-
-        self._level_manager = LevelManager(self)
+        self._level_manager = LevelManager(self)        
 
         self._running = True
         self._clock = pygame.time.Clock()
@@ -49,11 +58,14 @@ class GameWorld:
 
     def Awake(self): 
         for gameObject in self._gameObjects[:]:
-            gameObject.awake(self)
+            gameObject.awake(self)      
     
     def Start(self): 
         for gameObject in self._gameObjects[:]:
             gameObject.start()
+        
+        
+        
 
     def update(self):
 
@@ -64,14 +76,12 @@ class GameWorld:
 
             self._background.update()
 
-            
             self._screen.fill("black")
             self._background.draw()
 
             self._level_manager.update()
-
+            
             delta_time = self._clock.tick(60) / 1000.0
-
             
             for gameObject in self._gameObjects[:]:
                 gameObject.update(delta_time)
@@ -93,6 +103,10 @@ class GameWorld:
         for gameObject in self._gameObjects:
             if gameObject.tag == "Player":
                 return gameObject.transform.position
+    
+    def get_player(self):
+        self.stored_player
+        return self.stored_player
 
 gw = GameWorld()
 

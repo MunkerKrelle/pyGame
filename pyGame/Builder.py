@@ -13,7 +13,7 @@ from Components import Collider
 from Strategy import Battlecruiser, Bomber, Dreadnought, Fighter, Frigate, Scout, Strategy, Torpedo_Ship
 import pygame
 from Boss import Boss
-from UIElement import UIElement
+from PowerUpSelector import PowerUpSelector
 
 class Builder(ABC):
     
@@ -56,8 +56,8 @@ class EnemyBuilder(Builder):
 
         if shipType == "Dreadnought":
             self._gameObject.add_component(SpriteRenderer("/EnemyShips/Designs - Base/pngs/Nairan - Dreadnought - Base.png"))
-            spritesheet = ("pyGame/Assets/EnemyShips/Weapons/pngs/Nairan - Dreadnought - Weapons.png")
-            #spritesheet = ("Assets/EnemyShips/Weapons/pngs/Nairan - Dreadnought - Weapons.png")
+            #spritesheet = ("pyGame/Assets/EnemyShips/Weapons/pngs/Nairan - Dreadnought - Weapons.png")
+            spritesheet = ("Assets/EnemyShips/Weapons/pngs/Nairan - Dreadnought - Weapons.png")
             strategy = Dreadnought()
             lives = 2
             frame_width = 128  # Adjust based on your spritesheet
@@ -65,8 +65,8 @@ class EnemyBuilder(Builder):
             frame_count = 34  # Adjust based on your spritesheet
         elif shipType == "Battlecruiser":
             self._gameObject.add_component(SpriteRenderer("/EnemyShips/Designs - Base/pngs/Nairan - Battlecruiser - Base.png"))
-            spritesheet = ("pyGame/Assets/EnemyShips/Weapons/pngs/Nairan - Battlecruiser - Weapons.png")
-            #spritesheet = ("Assets/EnemyShips/Weapons/pngs/Nairan - Battlecruiser - Weapons.png")
+            #spritesheet = ("pyGame/Assets/EnemyShips/Weapons/pngs/Nairan - Battlecruiser - Weapons.png")
+            spritesheet = ("Assets/EnemyShips/Weapons/pngs/Nairan - Battlecruiser - Weapons.png")
             state = Battlecruiser()
             strategy = Battlecruiser()
             lives = 2
@@ -75,8 +75,8 @@ class EnemyBuilder(Builder):
             frame_count = 9  # Adjust based on your spritesheet
         elif shipType == "Frigate":
             self._gameObject.add_component(SpriteRenderer("/EnemyShips/Designs - Base/pngs/Nairan - Frigate - Base.png"))
-            spritesheet = ("pyGame/Assets/EnemyShips/Weapons/pngs/Nairan - Frigate - Weapons.png")
-            #spritesheet = ("Assets/EnemyShips/Weapons/pngs/Nairan - Frigate - Weapons.png")
+            #spritesheet = ("pyGame/Assets/EnemyShips/Weapons/pngs/Nairan - Frigate - Weapons.png")
+            spritesheet = ("Assets/EnemyShips/Weapons/pngs/Nairan - Frigate - Weapons.png")
             strategy = Frigate()
             lives = 3
             frame_width = 64  # Adjust based on your spritesheet
@@ -84,8 +84,8 @@ class EnemyBuilder(Builder):
             frame_count = 5  # Adjust based on your spritesheet
         elif shipType == "Fighter":
             self._gameObject.add_component(SpriteRenderer("/EnemyShips/Designs - Base/pngs/Nairan - Fighter - Base.png"))
-            spritesheet = ("pyGame/Assets/EnemyShips/Weapons/pngs/Nairan - Fighter - Weapons.png")
-            #spritesheet = ("Assets/EnemyShips/Weapons/pngs/Nairan - Fighter - Weapons.png")
+            #spritesheet = ("pyGame/Assets/EnemyShips/Weapons/pngs/Nairan - Fighter - Weapons.png")
+            spritesheet = ("Assets/EnemyShips/Weapons/pngs/Nairan - Fighter - Weapons.png")
             strategy = Fighter()
             lives = 2
             frame_width = 64  # Adjust based on your spritesheet
@@ -93,8 +93,8 @@ class EnemyBuilder(Builder):
             frame_count = 28  # Adjust based on your spritesheet
         elif shipType == "Bomber":
             self._gameObject.add_component(SpriteRenderer("/EnemyShips/Designs - Base/pngs/Nairan - Bomber - Base.png"))
-            spritesheet = ("pyGame/Assets/EnemyShips/Designs - Base/pngs/Nairan - Bomber - Base.png")
-            #spritesheet = ("Assets/EnemyShips/Designs - Base/pngs/Nairan - Bomber - Base.png")
+            #spritesheet = ("pyGame/Assets/EnemyShips/Designs - Base/pngs/Nairan - Bomber - Base.png")
+            spritesheet = ("Assets/EnemyShips/Designs - Base/pngs/Nairan - Bomber - Base.png")
             strategy = Bomber()
             lives = 2
             frame_width = 64  # Adjust based on your spritesheet
@@ -102,8 +102,8 @@ class EnemyBuilder(Builder):
             frame_count = 1  # Adjust based on your spritesheet
         elif shipType == "Scout":
             self._gameObject.add_component(SpriteRenderer("/EnemyShips/Designs - Base/pngs/Nairan - Scout - Base.png"))
-            spritesheet = ("pyGame/Assets/EnemyShips/Weapons/pngs/Nairan - Scout - Weapons.png")
-            #spritesheet = ("Assets/EnemyShips/Weapons/pngs/Nairan - Scout - Weapons.png")
+            #spritesheet = ("pyGame/Assets/EnemyShips/Weapons/pngs/Nairan - Scout - Weapons.png")
+            spritesheet = ("Assets/EnemyShips/Weapons/pngs/Nairan - Scout - Weapons.png")
             strategy = Scout()
             lives = 2
             frame_width = 64  # Adjust based on your spritesheet
@@ -111,8 +111,8 @@ class EnemyBuilder(Builder):
             frame_count = 6  # Adjust based on your spritesheet
         elif shipType == "Torpedo_Ship":
             self._gameObject.add_component(SpriteRenderer("/EnemyShips/Designs - Base/pngs/Nairan - Torpedo Ship - Base.png"))
-            spritesheet = ("pyGame/Assets/EnemyShips/Weapons/pngs/Nairan - Torpedo Ship - Weapons.png")
-            #spritesheet = ("Assets/EnemyShips/Weapons/pngs/Nairan - Torpedo Ship - Weapons.png")
+            #spritesheet = ("pyGame/Assets/EnemyShips/Weapons/pngs/Nairan - Torpedo Ship - Weapons.png")
+            spritesheet = ("Assets/EnemyShips/Weapons/pngs/Nairan - Torpedo Ship - Weapons.png")
             strategy = Torpedo_Ship()
             lives = 2
             frame_width = 64  # Adjust based on your spritesheet
@@ -144,7 +144,8 @@ class BossBuilder(Builder):
         self._gameObject.add_component(SpriteRenderer("/BossShip/BossBase.png"))
         self._gameObject.add_component(Boss())
         animator = self._gameObject.add_component(Animator())
-        animator.add_spritesheet_animation("Attack", "pyGame/Assets/BossShip/Boss.png", 560, 208, 4)
+        # animator.add_spritesheet_animation("Attack", "pyGame/Assets/BossShip/Boss.png", 560, 208, 4)
+        animator.add_spritesheet_animation("Attack", "Assets/BossShip/Boss.png", 560, 208, 4)
         animator.play_animation("Attack")
     
     def get_gameObject(self) -> GameObject:
@@ -152,12 +153,12 @@ class BossBuilder(Builder):
     
 
 class UIElementBuilder(Builder):
-    def build(self, sprite_path, position):
+    def build(self, sprite_path, position, player):
         self._gameObject = GameObject(None)
-        sr = self._gameObject.add_component(SpriteRenderer(sprite_path))
+        # sr = self._gameObject.add_component(SpriteRenderer(sprite_path))
         self._gameObject.tag = "UIElement" 
-        self._gameObject.transform.position = pygame.math.Vector2((position - sr.sprite_image.get_width()/2) , 0)
-        self._gameObject.add_component(UIElement())
+        # self._gameObject.transform.position = pygame.math.Vector2((position.x - sr.sprite_image.get_width()/2, position.y - sr.sprite_image.get_width()/2))
+        self._gameObject.add_component(PowerUpSelector(player))
     
     def get_gameObject(self) -> GameObject:
         return self._gameObject
