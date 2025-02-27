@@ -8,8 +8,16 @@ from PowerUps import FireballPowerUp
 from PowerUps import MultiShot
 from PowerUps import SpeedPowerUp
 from PowerUps import MoreLivesPowerUp
+from Menu import EndGameMenu
 
 class Player(Component):
+
+
+    def __init__(self):
+        self._lives = 3
+        self.font = pygame.font.Font(None, 36)
+
+
     bullet_sprite = "blank"
     
     def awake(self, game_world): 
@@ -20,8 +28,8 @@ class Player(Component):
         self._shoot_dealy = 0.1 
         self._game_world = game_world
         
-        # self._shoot_sound = pygame.mixer.Sound("pygame\\Assets\\LaserSound.mp3")
-        self._shoot_sound = pygame.mixer.Sound("Assets\\LaserSound.mp3")
+        self._shoot_sound = pygame.mixer.Sound("pygame\\Assets\\LaserSound.mp3")
+        #self._shoot_sound = pygame.mixer.Sound("Assets\\LaserSound.mp3")
         sr = self._gameObject.get_component("SpriteRenderer")
         self._screen_size = pygame.math.Vector2(game_world.screen.get_width(),game_world.screen.get_height())
         self._sprite_size = pygame.math.Vector2(sr.sprite_image.get_width(),sr.sprite_image.get_height())
@@ -148,5 +156,12 @@ class Player(Component):
         print("Game Over!")
         # self._game_world.destroy(self._gameObject)  # Fjerner spilleren fra spillet
         self.gameObject.destroy()
+        EndGameMenu().run()
+
+        
+def draw(self, screen):
+        score_text = f"Lives: {self._lives}"
+        text_surface = self.font.render(score_text, True, (255, 255, 255))
+        screen.blit(text_surface, (10, 40))
         
         #Jeppe add end screen here also

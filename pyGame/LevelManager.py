@@ -1,6 +1,7 @@
 import pygame
 from Builder import EnemyBuilder, BossBuilder
 from PowerUpSelector import PowerUpSelector
+from Menu import EndGameMenu
 
 class LevelManager:
     def __init__(self, game_world):
@@ -10,7 +11,13 @@ class LevelManager:
         self._enemy_health_multiplier = 0 
         self.power_up = PowerUpSelector(self._game_world.get_player())
         self.spawn_enemies()
-        # self.available_powers = PowerUpSelector()
+        self.font = pygame.font.Font(None, 36)
+
+    @property
+    def level(self):
+        return self._current_level
+
+
 
     def spawn_enemies(self):
         """Spawner fjender baseret på level"""
@@ -25,9 +32,9 @@ class LevelManager:
             enemy = builder.get_gameObject()
 
             enemy_component = enemy.get_component(enemy_type)
-            
                 
-                
+                    
+                    
 
             self._game_world.instantiate(enemy)
 
@@ -59,7 +66,7 @@ class LevelManager:
         self._game_world.instantiate(builder.get_gameObject())   
 
     def next_level(self):
-        """Skifter til næste level"""
+        """Skifter til nÃ¦ste level"""
         print(f"Level {self._current_level} complete! Starting Level {self._current_level + 1}...")
 
         self.clear_enemies()  
@@ -73,5 +80,11 @@ class LevelManager:
 
         if self._current_level == 4:
             self.spawn_boss()
-        
-        # ADD END SCREEN AFTER BOSS
+
+        if self._current_level == 5:
+            EndGameMenu().run()
+
+    def draw(self, screen):
+        level_text = f"Level: {self._current_level}"
+        text_surface = self.font.render(level_text, True, (255, 255, 255))
+        screen.blit(text_surface, (10, 40))
