@@ -11,6 +11,7 @@ class Boss(Component):
     def __init__(self) -> None:
         super().__init__()
         self.bullet_offset = [(208, 0), (218, 0), (228, 0), (326, 0), (336, 0), (346, 0), (166,0), (388,0), (102,0), (452,0)]  # Define bullet offsets relative to the Boss
+        self._lives = 100
 
     def awake(self, game_world) -> None:
         self.horizontal_movement = 100  # Initialize horizontal movement
@@ -20,6 +21,7 @@ class Boss(Component):
         self.nextShot = 0
         self.bulletIndex = 0
         self.nextBomb = 0
+        
         #pygame.mixer.music.load("pyGame\Assets\BossShip/dangerSound.mp3")
         pygame.mixer.music.load("Assets\BossShip/dangerSound.mp3")
         # pygame.mixer.music.play(-1)
@@ -78,6 +80,19 @@ class Boss(Component):
         #     self.shoot_bomb(self.bulletList[8])
         #     self.shoot_bomb(self.bulletList[9])
         #     self.nextBomb = 0
+
+    def take_damage(self, damage_taken=1):  # ✅ Gør `damage_taken` valgfri, default = 1
+        self._lives -= damage_taken
+        print(f"Enemy was hit! Lives left: {self._lives}")
+
+        if self._lives <= 0:
+            self.destroy()
+        
+    def destroy(self):
+        """Spil eksplosionseffekten, når fjenden dør"""
+        # self._explosion_sound.play()
+        self.gameObject.destroy()
+
 
     def shoot_bullet(self):
         self.projectile = GameObject(None)

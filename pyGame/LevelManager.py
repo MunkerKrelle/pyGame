@@ -1,5 +1,5 @@
 import pygame
-from Builder import EnemyBuilder
+from Builder import EnemyBuilder, BossBuilder
 from PowerUpSelector import PowerUpSelector
 
 class LevelManager:
@@ -53,6 +53,10 @@ class LevelManager:
         enemies_after = len([obj for obj in self._game_world._gameObjects if obj.tag == "Enemy"])
         print(f"Cleared {enemies_before - enemies_after} enemies before next level.")
 
+    def spawn_boss(self):
+        builder = BossBuilder()
+        builder.build()
+        self._game_world.instantiate(builder.get_gameObject())   
 
     def next_level(self):
         """Skifter til næste level"""
@@ -63,5 +67,11 @@ class LevelManager:
         self._current_level += 1
         self._enemies_per_level += 1  
         self._enemy_health_multiplier += 0.2  
-    
-        self.spawn_enemies()
+
+        if self._current_level < 4:
+            self.spawn_enemies()
+
+        if self._current_level == 4:
+            self.spawn_boss()
+        
+        # ADD END SCREEN AFTER BOSS

@@ -276,21 +276,18 @@ class Collider(Component):
         pass
 
     def update(self, delta_time):
-        pass
-
+        pass                
+        
     def collision_enter(self, other):
         self._other_colliders.append(other)
-        
+
         if self.gameObject.tag == "Player" and other.gameObject.tag == "EnemyProjectile":
             # print("player is hit")
             player = self.gameObject.get_component("Player")  
             if player:
+                print("player is hit")
                 player.take_damage()  
                 other.gameObject.destroy()
-                print("player is hit")
-        
-    def collision_enter(self, other):
-        self._other_colliders.append(other)
 
         if self.gameObject.tag == "Enemy" and other.gameObject.tag == "PlayerProjectile":
             projectile_component = other.gameObject.get_component("Projectile")
@@ -306,6 +303,10 @@ class Collider(Component):
                 enemy.take_damage(damage)  # ✅ Brug den faktiske skade
                 print(f"After damage: Enemy has {enemy._lives} HP")
 
+            boss = self.gameObject.get_component("Boss")
+            if boss:
+                boss.take_damage(damage)  # ✅ Brug den faktiske skade
+   
  
             
 

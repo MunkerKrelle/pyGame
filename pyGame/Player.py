@@ -148,3 +148,5 @@ class Player(Component):
         print("Game Over!")
         # self._game_world.destroy(self._gameObject)  # Fjerner spilleren fra spillet
         self.gameObject.destroy()
+        
+        #Jeppe add end screen here also
