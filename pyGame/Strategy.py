@@ -47,8 +47,7 @@ class Bomber(Strategy):
         speed = 60
         movement = pygame.math.Vector2(0, speed * delta_time)
 
-        # Change direction more frequently (every 0.2 seconds)
-        if random.randint(0, 30) == 0:  # 30 frames per second = 0.2 seconds
+        if random.randint(0, 30) == 0:
             self.horizontal_movement = random.choice([-1, 1]) * speed * delta_time
 
         movement.x = self.horizontal_movement  # Apply horizontal movement
@@ -60,8 +59,8 @@ class Fighter(Strategy):
         self.change_direction_timer = 0
         self.change_direction_interval = 2  # Change direction every 2 seconds
         self.current_movement = pygame.math.Vector2(random.uniform(-1, 1), random.uniform(-1, 1))
-        self.descent_speed = 50  # Adjust this value for desired downward speed
-        self.horizontal_movement = 0  # Initialize horizontal movement
+        self.descent_speed = 50  
+        self.horizontal_movement = 0 
 
     def move(self, game_object, delta_time, game_world):
         # Fighters move randomly with a downward bias

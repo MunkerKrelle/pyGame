@@ -1,9 +1,6 @@
 import pygame
 from Components import Component
 from GameObject import GameObject
-from Components import SpriteRenderer
-from Components import Projectile
-
 
 class BasePowerUp(Component):
     def __init__(self,player_pos, damage, proj_amount, proj_speed, proj_spread_angle, sprite) -> None:
