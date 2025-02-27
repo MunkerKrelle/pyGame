@@ -1,5 +1,4 @@
 from Components import Animator, Component
-import random
 import pygame
 from Components import Projectile  
 from Components import SpriteRenderer
@@ -21,10 +20,12 @@ class Boss(Component):
         self.nextShot = 0
         self.bulletIndex = 0
         self.nextBomb = 0
-        #pygame.mixer.music.load("pyGame\Assets\BossShip/dangerSound.mp3")
-        pygame.mixer.music.load("Assets\BossShip/dangerSound.mp3")
-        self._explosion_sound = pygame.mixer.Sound("Assets\\Explode.mp3")
-        self._laser_sound = pygame.mixer.Sound("Assets\\LaserSound.mp3")
+        pygame.mixer.music.load("pyGame\Assets\BossShip/dangerSound.mp3")
+        #pygame.mixer.music.load("Assets\BossShip/dangerSound.mp3")
+        #self._explosion_sound = pygame.mixer.Sound("Assets\\Explode.mp3")
+        #self._laser_sound = pygame.mixer.Sound("Assets\\LaserSound.mp3")
+        self._explosion_sound = pygame.mixer.Sound("pygame/Assets\\Explode.mp3")
+        self._laser_sound = pygame.mixer.Sound("pygame/Assets\\LaserSound.mp3")
         pygame.mixer.music.play(-1)
 
         # Initialize bullet positions based on the Boss's initial position
@@ -45,7 +46,8 @@ class Boss(Component):
 
     def update(self, delta_time: float) -> None:
         speed = 100
-
+        
+        # Move the Boss downwards until it reaches the screen
         if self.gameObject.transform.position.y < 0:
             movement = pygame.math.Vector2(0, speed * delta_time)
             self.gameObject.transform.translate(movement)
@@ -57,11 +59,8 @@ class Boss(Component):
             self.update_bullet_positions()
 
         self._keep_within_bounds(self.gameObject, self._game_world.screen.get_width())
-
-        bottom_limit = self._screen_size.y
-        if self.gameObject.transform.position.y > bottom_limit:
-            self.gameObject.destroy()
         
+        # Check if it's time to shoot bullets
         self._time_since_last_shot += delta_time
         self.nextShot += delta_time
         self.nextBomb += delta_time
@@ -76,13 +75,14 @@ class Boss(Component):
                     self.shoot_missile(self.bulletList[6])    
                     self.shoot_missile(self.bulletList[7])   
 
+        #Not implemented yet
         # if self.nextBomb >= 2:
         #     print("Shooting Bombs")
         #     self.shoot_bomb(self.bulletList[8])
         #     self.shoot_bomb(self.bulletList[9])
         #     self.nextBomb = 0
 
-    def take_damage(self, damage_taken=1):  # ✅ Gør `damage_taken` valgfri, default = 1
+    def take_damage(self, damage_taken=1): 
         self._lives -= damage_taken
         print(f"Enemy was hit! Lives left: {self._lives}")
 
@@ -90,7 +90,6 @@ class Boss(Component):
             self.destroy()
         
     def destroy(self):
-        """Spil eksplosionseffekten, når fjenden dør"""
         self._explosion_sound.play()
         self.gameObject.destroy()
 
@@ -100,8 +99,8 @@ class Boss(Component):
         self.projectile.add_component(SpriteRenderer("/BossShip/bulletStart.png"))
         self.projectile.add_component(Projectile(500, None))
         animator = self.projectile.add_component(Animator())
-        #animator.add_spritesheet_animation("Bullet", "pyGame/Assets/BossShip/bullet.png", 8, 32, 4)
-        animator.add_spritesheet_animation("Bullet", "Assets/BossShip/bullet.png", 8, 32, 4)
+        animator.add_spritesheet_animation("Bullet", "pyGame/Assets/BossShip/bullet.png", 8, 32, 4)
+        #animator.add_spritesheet_animation("Bullet", "Assets/BossShip/bullet.png", 8, 32, 4)
         
         animator.play_animation("Bullet")
         self._laser_sound.play()
@@ -116,8 +115,8 @@ class Boss(Component):
         self.projectile.add_component(SpriteRenderer("/BossShip/missileStart.png"))
         self.projectile.add_component(Projectile(500, self._game_world.get_player_position()))
         animator = self.projectile.add_component(Animator())
-        #animator.add_spritesheet_animation("Missile", "pyGame/Assets/BossShip/missile.png", 22, 64, 3)
-        animator.add_spritesheet_animation("Missile", "Assets/BossShip/missile.png", 22, 64, 3)
+        animator.add_spritesheet_animation("Missile", "pyGame/Assets/BossShip/missile.png", 22, 64, 3)
+        #animator.add_spritesheet_animation("Missile", "Assets/BossShip/missile.png", 22, 64, 3)
 
         animator.play_animation("Missile")
         self._explosion_sound.play()
@@ -158,9 +157,8 @@ class Boss(Component):
 
         self._game_world.instantiate(self.projectile)
 
-
+    # Ensure the game object stays within the screen bounds on the x-axis and change direction if needed
     def _keep_within_bounds(self, game_object, screen_width):
-        # Ensure the game object stays within the screen bounds on the x-axis and change direction if needed
         if game_object.transform.position.x < 0:
             game_object.transform.position.x = 0
             self.horizontal_movement = abs(self.horizontal_movement)  # Change direction to right
@@ -168,13 +166,14 @@ class Boss(Component):
             game_object.transform.position.x = screen_width - game_object.get_component("SpriteRenderer").sprite_image.get_width()
             self.horizontal_movement = -abs(self.horizontal_movement)  # Change direction to left
 
+    # Calculate bullet positions relative to the Boss's current position
     def update_bullet_positions(self):
-        # Calculate bullet positions relative to the Boss's current position
         self.bulletList = [
             (self.gameObject.transform.position.x + offset[0], self.gameObject.transform.position.y + offset[1] + 158)
             for offset in self.bullet_offset
         ]
     
+    #Creates a flashing danger sign when the boss appears
     def createDangerSign(self):
         self.dangerSign = GameObject(None)
         sr = self.dangerSign.add_component(SpriteRenderer("/BossShip/danger.png"))

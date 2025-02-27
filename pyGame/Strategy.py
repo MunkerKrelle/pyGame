@@ -2,6 +2,7 @@ import pygame
 import random
 import math
 
+#Stragey class for the different types of enemies
 class Strategy():
     def __init__(self) -> None:
         super().__init__()
@@ -142,6 +143,4 @@ class Scout(Strategy):
         movement = pygame.math.Vector2(loop_x, loop_y)
         movement.y += self.descent_speed * delta_time  # Add vertical descent
 
-        # Apply the movement
         game_object.transform.translate(movement)
-        # self._keep_within_bounds(game_object, game_world.screen.get_width())

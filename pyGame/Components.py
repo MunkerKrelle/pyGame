@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 import pygame
-from ScoreManager import ScoreManager
 
+# Base class for all components
 class Component(ABC):
 
     def __init__(self) -> None:
@@ -28,6 +28,7 @@ class Component(ABC):
     def update(self, delta_time):
         pass
 
+# Transform component to handle position and movement
 class Transform(Component):
 
     def __init__(self, position) -> None:
@@ -58,20 +59,18 @@ class Transform(Component):
     def update(self, delta_time):
         pass 
 
-#SpriteRenderer
+# SpriteRenderer component to handle rendering of sprites
 class SpriteRenderer(Component):
 
     def __init__(self, sprite_name) -> None:
         super().__init__()
 
-        self._sprite_image = pygame.image.load(f"Assets\\{sprite_name}")
-        #self._sprite_image = pygame.image.load(f"pygame\\Assets\\{sprite_name}") # Jeres version
-        #self._sprite_image = pygame.image.load(f"C:/AxP/Githubrepositories/Semester4/pyGame/pyGame/Assets/{sprite_name}") # Sargons Version
+        #self._sprite_image = pygame.image.load(f"Assets\\{sprite_name}") #Sargons version
+        self._sprite_image = pygame.image.load(f"pygame\\Assets\\{sprite_name}") # Load sprite image
         self._sprite_name = sprite_name
         self._sprite = pygame.sprite.Sprite()
         self._sprite.rect = self._sprite_image.get_rect()
         self._sprite_mask = pygame.mask.from_surface(self.sprite_image)
-        # self._sprite_flip = pygame.transform.flip(self._sprite_image, False, False)
 
     @property
     def sprite_image(self):
@@ -93,14 +92,6 @@ class SpriteRenderer(Component):
     def sprite_name(self):
         return self._sprite_name
     
-    # @property
-    # def sprite_flip(self):
-    #     return self._sprite_flip
-    
-    # @sprite_flip.setter
-    # def sprite_flip(self, flip_vertical, flip_horizontal):
-    #     self._sprite_flip = pygame.transform.flip(self._sprite_image, flip_vertical, flip_horizontal)
-    
     def awake(self, game_world, ):
       self._game_world = game_world
       self._sprite.rect.topleft = self.gameObject.transform.position
@@ -112,6 +103,7 @@ class SpriteRenderer(Component):
         self._sprite.rect.topleft = self.gameObject.transform.position
         self._game_world.screen.blit(self._sprite_image,self._sprite.rect) 
 
+# Animator component to handle animations
 class Animator(Component):
 
     def __init__(self) -> None:
@@ -124,9 +116,8 @@ class Animator(Component):
     def add_animation(self, name, *args):
         frames = []
         for arg in args:
-            sprite_image = pygame.image.load(f"Assets\\{arg}")
-            #sprite_image = pygame.image.load(f"pygame\\Assets\\{arg}") # Jeres version
-            #sprite_image = pygame.image.load(f"C:/AxP/Githubrepositories/Semester4/pyGame/pyGame/Assets/{arg}") # SARGONS VERSION
+            #sprite_image = pygame.image.load(f"Assets\\{arg}")
+            sprite_image = pygame.image.load(f"pygame\\Assets\\{arg}") # Load each frame
             frames.append(sprite_image)
         
         self._animations[name] = frames
@@ -176,13 +167,12 @@ class Animator(Component):
 
             self._animations[name] = frames
 
+# Projectile component to handle projectile behavior
 class Projectile(Component):
-    def __init__(self, speed, target=None, damage=1):  # ✅ Tilføj damage
-        super().__init__()
+    def __init__(self, speed, target):
         self.speed = speed
         self.target = target  # Store the player's position at the time of creation
         self.initial_target_position = target.copy() if target else None  # Copy the initial target position if not None
-        self.damage = damage  # ✅ Gem skadeværdien
 
     def awake(self, game_world):
         pass
@@ -194,13 +184,16 @@ class Projectile(Component):
         if self.gameObject.tag == "PlayerProjectile":
             movement = pygame.math.Vector2(0, -self.speed)
             self._gameObject.transform.translate(movement * delta_time)
+            movement.y = self.speed * 2  # Enemy projectiles move downwards
         elif self.gameObject.tag == "EnemyProjectile":
             movement = pygame.math.Vector2(0, self.speed)
             self._gameObject.transform.translate(movement * delta_time)
+            movement.y = self.speed * 2  # Enemy projectiles move downwards
         elif self.gameObject.tag == "MissileProjectile" and self.initial_target_position:
+            # Calculate direction vector towards the initial target position
             target_direction = pygame.math.Vector2(self.initial_target_position.x, self.initial_target_position.y + 200) - self._gameObject.transform.position
             direction = pygame.math.Vector2.normalize(target_direction)
-            movement = direction * self.speed * delta_time
+            movement = direction * self.speed * delta_time  # Apply delta time for smooth movement
             self._gameObject.transform.translate(movement)
         elif self.gameObject.tag == "BombProjectile":
             movement = pygame.math.Vector2(0, self.speed)
@@ -212,12 +205,12 @@ class Projectile(Component):
                 if animator:
                     animator.play_animation("BombExp")
 
-        # Destroy if off-screen
+        # Destroy if off-screen (or other conditions)
         if self._gameObject.transform.position.y < 0 or self._gameObject.transform.position.y > 750:
             print("Destroying projectile")
             self._gameObject.destroy()
 
-            
+# Collider component to handle collision detection
 class Collider(Component):  
     def __init__(self) -> None:
         super().__init__()  
@@ -277,49 +270,26 @@ class Collider(Component):
         pass
 
     def update(self, delta_time):
-        pass                
-        
+        pass
+
     def collision_enter(self, other):
         self._other_colliders.append(other)
-
-        if self.gameObject.tag == "Player" and other.gameObject.tag == "MissileProjectile":
-                # print("player is hit")
-                player = self.gameObject.get_component("Player")  
-                if player:
-                    print("player is hit by missile")
-                    player.take_damage()  
-                    other.gameObject.destroy()
-                    ScoreManager().decrease_score()
-
-
-
+        
         if self.gameObject.tag == "Player" and other.gameObject.tag == "EnemyProjectile":
             # print("player is hit")
             player = self.gameObject.get_component("Player")  
             if player:
-                print("player is hit")
                 player.take_damage()  
                 other.gameObject.destroy()
-                ScoreManager().decrease_score()
+                print("player is hit")
+        
+    def collision_enter(self, other):
+        self._other_colliders.append(other)
 
         if self.gameObject.tag == "Enemy" and other.gameObject.tag == "PlayerProjectile":
-            projectile_component = other.gameObject.get_component("Projectile")
-            damage = projectile_component.damage if projectile_component else 1  # ✅ Brug damage, hvis det findes
-
-            print(f"Collision! Enemy hit by projectile with {damage} damage")  # 🔍 Debugging
-
-            other.gameObject.destroy()
             enemy = self.gameObject.get_component("Enemy")
-            
             if enemy:
-                print(f"Before damage: Enemy has {enemy._lives} HP")
-                enemy.take_damage(damage)  # ✅ Brug den faktiske skade
-                print(f"After damage: Enemy has {enemy._lives} HP")
-
-            boss = self.gameObject.get_component("Boss")
-            if boss:
-                boss.take_damage(damage)  # ✅ Brug den faktiske skade
-                ScoreManager().increase_score()
+                enemy.destroy()  
             other.gameObject.destroy()
         
 
@@ -327,14 +297,7 @@ class Collider(Component):
             print("player flew into enemy")
             player = self.gameObject.get_component("Player")  
             if player:
-                player.take_damage()
-                ScoreManager().decrease_score()
-            # player = self.gameObject.get_component("Player")  
-            # if player:
-            #     player.take_damage()  
-            #     other.gameObject.destroy()
-            #     print("player flew into enemy")
-        
+                player.take_damage()  
 
         if "collision_enter" in self._listeners:
             self._listeners["collision_enter"](other)

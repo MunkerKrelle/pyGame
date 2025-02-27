@@ -36,8 +36,8 @@ class GameWorld:
         self._gameObjects.append(self._UI_element.get_gameObject())
         
         
-        #self._background = Background("pygame\\Assets\\Space1.jpg", self._screen, speed=2)
-        self._background = Background("Assets\\Space1.jpg", self._screen, speed=2)
+        self._background = Background("pygame\\Assets\\Space1.jpg", self._screen, speed=2)
+        #self._background = Background("Assets\\Space1.jpg", self._screen, speed=2)
 
         self._level_manager = LevelManager(self)        
 
@@ -64,10 +64,7 @@ class GameWorld:
     
     def Start(self): 
         for gameObject in self._gameObjects[:]:
-            gameObject.start()
-        
-        
-        
+            gameObject.start() 
 
     def update(self):
 
