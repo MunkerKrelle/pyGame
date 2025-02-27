@@ -25,7 +25,7 @@ class Player(Component):
         self._screen_size = pygame.math.Vector2(game_world.screen.get_width(),game_world.screen.get_height())
         self._sprite_size = pygame.math.Vector2(sr.sprite_image.get_width(),sr.sprite_image.get_height())
         self._gameObject.transform.position.x = (self._screen_size.x/2) - (self._sprite_size.x/2)
-        self._gameObject.transform.position.y = (self._screen_size.y) - (self._sprite_size.y)
+        self._gameObject.transform.position.y = (self._screen_size.y) - (self._sprite_size.y*2)
 
         global name
         name = "BasePowerUp"
@@ -41,6 +41,8 @@ class Player(Component):
         global speed
         # speed = self._gameObject.get_component(SpeedPowerUp.__name__)
         speed = 300 
+
+        
          
 
     def start(self):

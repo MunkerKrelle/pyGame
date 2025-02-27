@@ -12,8 +12,8 @@ from PowerUps import MoreLivesPowerUp
 from Components import Collider
 from Strategy import Battlecruiser, Bomber, Dreadnought, Fighter, Frigate, Scout, Strategy, Torpedo_Ship
 import pygame
-import random
 from Boss import Boss
+from UIElement import UIElement
 
 class Builder(ABC):
     
@@ -36,22 +36,7 @@ class PlayerBuilder(Builder):
         self._gameObject.add_component(MultiShot(pygame.math.Vector2(0, 0), 1, 6, 1200, 30, "player_fire-spaceship.png"))
         self._gameObject.add_component(SpeedPowerUp(pygame.math.Vector2(0, 0),800))
         self._gameObject.add_component(MoreLivesPowerUp(pygame.math.Vector2(0, 0),5))
-        self._gameObject.add_component(SpriteRenderer("player08.png"))
-        animator = self._gameObject.add_component(Animator())
-        animator.add_animation("Idle","player02.png",
-                            "player03.png",
-                            "player04.png",
-                            "player05.png",
-                            "player06.png",
-                            "player07.png",
-                            "player08.png",
-                            "player07.png",
-                            "player06.png",
-                            "player05.png",
-                            "player04.png",
-                            "player03.png",)
-        
-        animator.play_animation("Idle")
+        self._gameObject.add_component(SpriteRenderer("player.png"))
 
 
     def get_gameObject(self):
@@ -161,6 +146,18 @@ class BossBuilder(Builder):
         animator = self._gameObject.add_component(Animator())
         animator.add_spritesheet_animation("Attack", "pyGame/Assets/BossShip/Boss.png", 560, 208, 4)
         animator.play_animation("Attack")
+    
+    def get_gameObject(self) -> GameObject:
+        return self._gameObject
+    
+
+class UIElementBuilder(Builder):
+    def build(self, sprite_path, position):
+        self._gameObject = GameObject(None)
+        sr = self._gameObject.add_component(SpriteRenderer(sprite_path))
+        self._gameObject.tag = "UIElement" 
+        self._gameObject.transform.position = pygame.math.Vector2((position - sr.sprite_image.get_width()/2) , 0)
+        self._gameObject.add_component(UIElement())
     
     def get_gameObject(self) -> GameObject:
         return self._gameObject

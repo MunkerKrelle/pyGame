@@ -30,7 +30,7 @@ class Boss(Component):
         self._screen_size = pygame.math.Vector2(game_world.screen.get_width(), game_world.screen.get_height())
         self.gameObject.transform.position = pygame.math.Vector2((game_world.screen.get_width()/2)-sr.sprite_image.get_width() / 2 , -208)
         
-        self.gameObject.tag = "Boss"
+        self.gameObject.tag = "Enemy"
         
         self._time_since_last_shot = 0
         self._shoot_delay = 2  # Seconds between shots
@@ -160,8 +160,6 @@ class Boss(Component):
         animator = self.dangerSign.add_component(Animator())
         animator.add_animation("FlashDanger","/BossShip/danger.png", "/BossShip/danger.png","/BossShip/dangerEmpty.png","/BossShip/dangerEmpty.png")
         animator.play_animation("FlashDanger")
-        self.dangerSign.add_component(UIElement())
-        self.dangerSign.add_component(Collider())
         self.dangerSign.tag = "UIElement" 
         self.dangerSign.transform.position = pygame.math.Vector2((self._game_world.screen.get_width()/2 - sr.sprite_image.get_width()/2) , 0)
 
