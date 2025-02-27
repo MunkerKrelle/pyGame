@@ -11,6 +11,7 @@ class Boss(Component):
     def __init__(self) -> None:
         super().__init__()
         self.bullet_offset = [(208, 0), (218, 0), (228, 0), (326, 0), (336, 0), (346, 0), (166,0), (388,0), (102,0), (452,0)]  # Define bullet offsets relative to the Boss
+        self._lives = 100
 
     def awake(self, game_world) -> None:
         self.horizontal_movement = 100  # Initialize horizontal movement
@@ -31,7 +32,7 @@ class Boss(Component):
         self._screen_size = pygame.math.Vector2(game_world.screen.get_width(), game_world.screen.get_height())
         self.gameObject.transform.position = pygame.math.Vector2((game_world.screen.get_width()/2)-sr.sprite_image.get_width() / 2 , -208)
         
-        self.gameObject.tag = "Boss"
+        self.gameObject.tag = "Enemy"
         
         self._time_since_last_shot = 0
         self._shoot_delay = 2  # Seconds between shots
@@ -78,6 +79,19 @@ class Boss(Component):
         #     self.shoot_bomb(self.bulletList[8])
         #     self.shoot_bomb(self.bulletList[9])
         #     self.nextBomb = 0
+
+    def take_damage(self, damage_taken=1):  # ✅ Gør `damage_taken` valgfri, default = 1
+        self._lives -= damage_taken
+        print(f"Enemy was hit! Lives left: {self._lives}")
+
+        if self._lives <= 0:
+            self.destroy()
+        
+    def destroy(self):
+        """Spil eksplosionseffekten, når fjenden dør"""
+        # self._explosion_sound.play()
+        self.gameObject.destroy()
+
 
     def shoot_bullet(self):
         self.projectile = GameObject(None)
