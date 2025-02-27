@@ -8,6 +8,7 @@ from PowerUps import FireballPowerUp
 from PowerUps import MultiShot
 from PowerUps import SpeedPowerUp
 from PowerUps import MoreLivesPowerUp
+from Menu import EndGameMenu
 
 class Player(Component):
 
@@ -155,6 +156,8 @@ class Player(Component):
         print("Game Over!")
         # self._game_world.destroy(self._gameObject)  # Fjerner spilleren fra spillet
         self.gameObject.destroy()
+        EndGameMenu().run()
+
         
 def draw(self, screen):
         score_text = f"Lives: {self._lives}"

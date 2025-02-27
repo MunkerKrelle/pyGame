@@ -5,6 +5,7 @@ from Components import Projectile
 from Components import SpriteRenderer
 from Components import Collider
 from GameObject import GameObject
+from ScoreManager import ScoreManager
 
 class Enemy(Component):
     def __init__(self, strategy, lives) -> None:
@@ -126,4 +127,6 @@ class Enemy(Component):
         """Spil eksplosionseffekten, når fjenden dør"""
         # self._explosion_sound.play()
         self.gameObject.destroy()
+        ScoreManager().increase_score()
+        
 

@@ -289,6 +289,7 @@ class Collider(Component):
                 print("player is hit")
                 player.take_damage()  
                 other.gameObject.destroy()
+                ScoreManager().decrease_score()
 
         if self.gameObject.tag == "Enemy" and other.gameObject.tag == "PlayerProjectile":
             projectile_component = other.gameObject.get_component("Projectile")
@@ -307,11 +308,6 @@ class Collider(Component):
             boss = self.gameObject.get_component("Boss")
             if boss:
                 boss.take_damage(damage)  # ✅ Brug den faktiske skade
-   
- 
-            
-
-                enemy.destroy()  # 🎵 Spiller eksplosionseffekt her
                 ScoreManager().increase_score()
             other.gameObject.destroy()
         
@@ -320,7 +316,8 @@ class Collider(Component):
             print("player flew into enemy")
             player = self.gameObject.get_component("Player")  
             if player:
-                player.take_damage()  
+                player.take_damage()
+                ScoreManager().decrease_score()
             # player = self.gameObject.get_component("Player")  
             # if player:
             #     player.take_damage()  

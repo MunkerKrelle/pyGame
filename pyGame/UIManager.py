@@ -1,7 +1,5 @@
 import pygame
 from Button import Button
-# from GameWorld import GameWorld
-from Player import Player
 from ScoreManager import ScoreManager
 
 class UIManager:
@@ -18,7 +16,6 @@ class UIManager:
         if not self._initialized:
             self._initialized = True
             self.font = pygame.font.Font(None, 36)
-            self.player = Player()
 
             # CREATE A LIST OF UI ELEMENTS
             self.buttons = [
@@ -91,8 +88,6 @@ class UIManager:
                     font=self.font
                 )
             ]
-
-
     
     def draw(self, screen):
         #DRAW ALL BUTTONS
@@ -100,20 +95,10 @@ class UIManager:
             button.draw(screen)
 
     def draw_end_screen(self, screen):
-        # Access the existing singleton instance of ScoreManager
-        score_manager = ScoreManager()  # This will return the already created instance
-
-        # Draw buttons
         for button in self.end_buttons:
             button.draw(screen)
-
-        # Render the final score text
-        score_text = self.font.render(f"Final Score: {score_manager.score}", True, (255, 255, 255))  # White text
-
-        # Get the position to display the score (e.g., centered at the top of the screen)
-        text_rect = score_text.get_rect(center=(screen.get_width() // 2, 50))  # Centered horizontally at the top
-
-        # Blit the score text onto the screen
+        score_text = self.font.render(f"Final Score: {ScoreManager().score}", True, (255, 255, 255))
+        text_rect = score_text.get_rect(topleft=(10, 10))
         screen.blit(score_text, text_rect)
 
     def handle_event(self, event):
@@ -147,7 +132,7 @@ class UIManager:
                     print("Starting Game")
                     from GameWorld import GameWorld 
                     game = GameWorld()
-                    #game.run()
+                    ScoreManager().score = 0
                     game.Awake()
                     game.Start()
                     game.update()

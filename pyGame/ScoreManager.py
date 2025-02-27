@@ -11,7 +11,7 @@ class ScoreManager:
 
     def __init__(self):
         if not self._initialized:
-            self.score = 1000
+            self.score = 0
             self.font = pygame.font.Font(None, 36)
             self._initialized = True
 

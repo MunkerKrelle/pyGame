@@ -1,6 +1,7 @@
 import pygame
 from UIManager import UIManager
 from Button import Button
+from ScoreManager import ScoreManager
 
 class Menu:
     _instance = None  # Class-level variable to hold the single instance
@@ -34,9 +35,6 @@ class Menu:
         print("Starting game")
         self.running = False
 
-# if __name__ == "__main__":
-#     Menu().run()
-
 
 class EndGameMenu:
     _instance = None
@@ -57,7 +55,7 @@ class EndGameMenu:
 
     def run(self):
         while self.running:
-                self.screen.fill((30, 30, 30))
+                self.screen.fill((70, 70, 70))
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
                         self.running = False

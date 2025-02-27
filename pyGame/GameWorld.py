@@ -85,12 +85,7 @@ class GameWorld:
             self._level_manager.draw(self._screen)
 
             self._level_manager.update()
-
-            if self._level_manager._current_level == 2:
-                print("CONGRATZ YOU COMPLETED THE GAMEEEEEEEE!!!")
-                EndGameMenu().run()
-
-            
+        
             delta_time = self._clock.tick(60) / 1000.0
             
             for gameObject in self._gameObjects[:]:
@@ -118,13 +113,6 @@ class GameWorld:
         self.stored_player
         return self.stored_player
 
-
-
 Menu().run()
-#gw = GameWorld()
-
-#gw.Awake()
-#gw.Start()
-#gw.update()
 
         
