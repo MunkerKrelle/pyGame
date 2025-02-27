@@ -18,8 +18,8 @@ class GameWorld:
         pygame.mixer.init()
         pygame.init()
 
-        #pygame.mixer.music.load("Pygame//assets/BackGroundMusic.mp3")
-        pygame.mixer.music.load("assets/BackGroundMusic.mp3")
+        pygame.mixer.music.load("Pygame//assets/BackGroundMusic.mp3")
+        #pygame.mixer.music.load("assets/BackGroundMusic.mp3")
         
         pygame.mixer.music.play(-1)
         self._screen = pygame.display.set_mode((1280,720))
@@ -38,8 +38,8 @@ class GameWorld:
         self._gameObjects.append(self._UI_element.get_gameObject())
         
         
-        #self._background = Background("pygame\\Assets\\Space1.jpg", self._screen, speed=2)
-        self._background = Background("Assets\\Space1.jpg", self._screen, speed=2)
+        self._background = Background("pygame\\Assets\\Space1.jpg", self._screen, speed=2)
+        #self._background = Background("Assets\\Space1.jpg", self._screen, speed=2)
 
         self._level_manager = LevelManager(self)        
 

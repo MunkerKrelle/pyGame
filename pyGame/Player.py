@@ -49,8 +49,10 @@ class Player(Component):
         self._game_world = game_world  # Store reference to game world
 
         # Load sound effects for shooting and explosions
-        self._shoot_sound = pygame.mixer.Sound("Assets\\LaserSound.mp3")
-        self._explosion_sound = pygame.mixer.Sound("Assets\\Explode.mp3")
+        # self._shoot_sound = pygame.mixer.Sound("Assets\\LaserSound.mp3")
+        # self._explosion_sound = pygame.mixer.Sound("Assets\\Explode.mp3")
+        self._shoot_sound = pygame.mixer.Sound("pygame/Assets\\LaserSound.mp3")
+        self._explosion_sound = pygame.mixer.Sound("pygame/Assets\\Explode.mp3")
 
         # Get sprite details for positioning
         sr = self._gameObject.get_component("SpriteRenderer")
