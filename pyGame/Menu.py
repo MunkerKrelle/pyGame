@@ -3,20 +3,22 @@ from UIManager import UIManager
 from Button import Button
 from ScoreManager import ScoreManager
 
+#Denne fil står for tre klasser: Menu, EndGameMenu og Options.
+#Hver klasse er en singleton og har hver deres run og constructor til at tegne hver skærm
 class Menu:
-    _instance = None  # Class-level variable to hold the single instance
+    _instance = None
 
     def __new__(cls, *args, **kwargs):
-        if cls._instance is None:  # Only create an instance if one doesn't exist
+        if cls._instance is None:
             cls._instance = super(Menu, cls).__new__(cls)
-        return cls._instance  # Always return the same instance
+        return cls._instance
 
     def __init__(self):
-        if not hasattr(self, 'initialized'):  # Prevent multiple initializations
+        if not hasattr(self, 'initialized'):
             pygame.init()
             self.screen = pygame.display.set_mode((400, 300))
             self.running = True
-            self.initialized = True  # Mark as initialized
+            self.initialized = True
 
     def run(self):
         while self.running:

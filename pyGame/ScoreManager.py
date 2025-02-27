@@ -1,5 +1,7 @@
 import pygame
 
+#ScoreManager holder styr på score. Det er en singleton, så samme instans af score kan tilgås fra hele programmet.
+#Dette bruges også til at resette score mellem runs
 class ScoreManager:
     _instance = None
 
@@ -15,9 +17,11 @@ class ScoreManager:
             self.font = pygame.font.Font(None, 36)
             self._initialized = True
 
+#Øg scoren ved dræbt fjende eller ramt boss
     def increase_score(self):
         self.score += 10
 
+#- score hvis man rammer en fjende eller bliver ramt af et skud
     def decrease_score(self):
         self.score = max(0, self.score - 10)
 

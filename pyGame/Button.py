@@ -1,5 +1,7 @@
 import pygame
 
+#Klasse til at tegne alle knapper, constructer til oprettelse af lister af knapper i UI Manager
+#Bliver også brugt til at tjekke om de bliver trykket på
 class Button:
     def __init__(self, x, y, width, height, text, color, hover_color, text_color, font):
         self.rect = pygame.Rect(x, y, width, height)
@@ -9,6 +11,7 @@ class Button:
         self.text_color = text_color
         self.font = font
 
+#Tegner alle knapper og tjekker mouse pos
     def draw(self, screen):
         mouse_pos = pygame.mouse.get_pos()
 

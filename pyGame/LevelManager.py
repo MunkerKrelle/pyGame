@@ -13,6 +13,8 @@ class LevelManager:
         self.spawn_enemies()
         self.font = pygame.font.Font(None, 36)
 
+#Property som bruges til at returnere level, som hjælper med at holde styr på game loop
+#Hvornår bosser skal spawnes, hvor mange levels før end game screen etc.
     @property
     def level(self):
         return self._current_level

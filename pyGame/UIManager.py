@@ -2,22 +2,24 @@ import pygame
 from Button import Button
 from ScoreManager import ScoreManager
 
+#Klassen er en singleton
+#Denne klasse opretter knapper samt kalder buttons draw metode
+#Den tegner også alle skærme samt håndterer tryk på de forskellige knapper
+#Med dette tænkes der på de forskellige klassers run metode, fx menu, options og endgame
 class UIManager:
     _instance = None
 
     def __new__(cls):
         if not cls._instance:
             cls._instance = super(UIManager, cls).__new__(cls)
-            cls._instance._initialized = False  # Prevent re-initialization
+            cls._instance._initialized = False
         return cls._instance
 
     def __init__(self):
-        # LOAD A FONT FOR UI ELEMENTS
         if not self._initialized:
             self._initialized = True
             self.font = pygame.font.Font(None, 36)
 
-            # CREATE A LIST OF UI ELEMENTS
             self.buttons = [
                 Button(
                     x=150,
@@ -143,9 +145,8 @@ class UIManager:
             screen.blit(options_text, text_rect)
             y += 30
 
-
+#Alle handle_event metoder står for at køre relevante funktioner alt efter hvilke knapper der trykkes på
     def handle_event(self, event):
-        #CHECK BUTTON CLICKS
         for button in self.buttons:
             if button.is_clicked(event):
                 if button.text == "PLAY":
