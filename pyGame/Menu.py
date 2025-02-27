@@ -55,11 +55,39 @@ class EndGameMenu:
 
     def run(self):
         while self.running:
-                self.screen.fill((70, 70, 70))
+                self.screen.fill((50, 50, 50))
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
                         self.running = False
                     UIManager().handle_endgame(event)
 
                 UIManager().draw_end_screen(self.screen)
+                pygame.display.flip()
+
+class Options:
+    _instance = None
+
+    def __new__(cls):
+        if not cls._instance:
+            cls._instance = super(Options, cls).__new__(cls)
+            cls._instance._initialized = False
+        return cls._instance
+
+    def __init__(self):
+        if not self._initialized:
+            pygame.init()
+            self.screen = pygame.display.set_mode((800,600))
+            self.font = pygame.font.Font(None, 36)
+            self.running = True
+            self._initialized = True
+
+    def run(self):
+        while self.running:
+                self.screen.fill((50, 50, 50))
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        self.running = False
+                    UIManager().handle_options(event)
+
+                UIManager().draw_options(self.screen)
                 pygame.display.flip()
