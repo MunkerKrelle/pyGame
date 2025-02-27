@@ -26,7 +26,7 @@ class Player(Component):
         self._screen_size = pygame.math.Vector2(game_world.screen.get_width(),game_world.screen.get_height())
         self._sprite_size = pygame.math.Vector2(sr.sprite_image.get_width(),sr.sprite_image.get_height())
         self._gameObject.transform.position.x = (self._screen_size.x/2) - (self._sprite_size.x/2)
-        self._gameObject.transform.position.y = (self._screen_size.y) - (self._sprite_size.y)
+        self._gameObject.transform.position.y = (self._screen_size.y) - (self._sprite_size.y*2)
 
         global name
         name = "BasePowerUp"
@@ -42,6 +42,8 @@ class Player(Component):
         global speed
         # speed = self._gameObject.get_component(SpeedPowerUp.__name__)
         speed = 300 
+
+        
          
 
     def start(self):
@@ -90,30 +92,26 @@ class Player(Component):
 
 
     def shoot(self):
-        # global bullet_sprite
-        # global power
         if self._time_since_last_shot >= self._shoot_dealy:
             for i in range(power.proj_amount):
                 projectile = GameObject(None)
                 sr = projectile.add_component(SpriteRenderer(power.sprite))
-                # print(power.damage)
-                projectile.add_component(Projectile(power.proj_speed, None))
-                # print(power.proj_speed)
+
+                # ✅ Tilføj damage, når vi opretter projektilen
+                projectile_component = projectile.add_component(Projectile(power.proj_speed, None, power.damage))
+
                 projectile_position = power.unique_shoot(sr, self._sprite_size.x / 2, i, power.proj_amount, power.proj_spread_angle)
                 projectile.transform.position = projectile_position
-               
+
                 projectile.add_component(Collider())
+                projectile.tag = "PlayerProjectile"  
 
-                
-
-                projectile.tag = "PlayerProjectile" 
-                projectile.damage = power.damage 
-                # print(projectile.damage)
                 self._game_world.instantiate(projectile)
                 
                 # self._shoot_sound.play()
 
             self._time_since_last_shot = 0
+
     
     def aqquire_fireball(self):     
         global power

@@ -7,7 +7,7 @@ class LevelManager:
         self._game_world = game_world
         self._current_level = 1  
         self._enemies_per_level = 3  
-        self._enemy_health_multiplier = 1 
+        self._enemy_health_multiplier = 0 
         self.power_up = PowerUpSelector(self._game_world.get_player())
         self.spawn_enemies()
         # self.available_powers = PowerUpSelector()
@@ -21,17 +21,16 @@ class LevelManager:
 
         for _ in range(self._enemies_per_level):
             enemy_type = enemy_types[_ % len(enemy_types)]  
-            builder.build(enemy_type)
+            builder.build(enemy_type, 1)
             enemy = builder.get_gameObject()
 
-            enemy_component = enemy.get_component("Enemy")
-            if enemy_component:
-                # 🚀 Få fjendens BASE health
-                base_health = enemy_component.get_base_health(enemy_type)  # ✅ Henter original HP
-                enemy_component._lives = int(base_health * self._enemy_health_multiplier)  # 🔥 Skalerer liv
-                print(f"Enemy {enemy_type} spawned with {enemy_component._lives} HP")  # Debugging
+            enemy_component = enemy.get_component(enemy_type)
+            
+                
+                
 
             self._game_world.instantiate(enemy)
+
 
 
     def update(self):
@@ -53,6 +52,7 @@ class LevelManager:
         self._game_world._colliders = [col for col in self._game_world._colliders if col.gameObject.tag != "Enemy"]
         enemies_after = len([obj for obj in self._game_world._gameObjects if obj.tag == "Enemy"])
         print(f"Cleared {enemies_before - enemies_after} enemies before next level.")
+
 
     def next_level(self):
         """Skifter til næste level"""
