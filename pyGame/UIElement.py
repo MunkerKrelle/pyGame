@@ -1,6 +1,7 @@
 import pygame
 from Components import Component
 
+# This class was supposed to create UI elements, but was not completed 
 class UIElement(Component):
     def __init__(self) -> None:
         super().__init__()

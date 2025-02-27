@@ -1,5 +1,6 @@
 import pygame
 
+# This class loops a background so that we get the effect of a topdown shooter.
 class Background:
     def __init__(self, image_path, screen, speed):
         self.image = pygame.image.load(image_path).convert()

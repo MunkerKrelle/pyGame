@@ -7,6 +7,7 @@ from Components import Collider
 from GameObject import GameObject
 from ScoreManager import ScoreManager
 
+# The enemy class handles the enemy logic, such as which strategy pattern they use, or what happens when they run out of lives etc.
 class Enemy(Component):
     def __init__(self, strategy, lives) -> None:
         super().__init__()
@@ -27,6 +28,7 @@ class Enemy(Component):
     #     }
     #     return base_health.get(enemy_type, 1)  # Standard 1 liv, hvis ukendt type
 
+    # Spawn the enemy randomly in the world along the X axis.
     def awake(self, game_world) -> None:
         
         self._game_world = game_world
@@ -56,6 +58,7 @@ class Enemy(Component):
     def start(self) -> None:
         pass
 
+    # Dictates movement stratety and what happens when the enemy reaches the buttom of the screen
     def update(self, delta_time: float) -> None:
         self._strategy.move(self.gameObject, delta_time, self._game_world)
 
@@ -69,7 +72,7 @@ class Enemy(Component):
             self.shoot()
             self._time_since_last_shot = 0
 
-
+    # The enemy can shoot projectiles which can hit the player, here we pass along things like sprites, damage amount, tags etc
     def shoot(self):
         """Fjenden skyder et projektil mod spilleren."""
         self.projectile = GameObject(None)

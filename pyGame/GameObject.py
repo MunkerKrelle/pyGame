@@ -1,6 +1,8 @@
 import pygame
 from Components import Transform
 
+# the GameObject sets the rules for how we interact with components and other classes.
+# Every object in game will have a transform, and other components added as needed.
 class GameObject:
 
     def __init__(self, position) -> None:
@@ -19,13 +21,15 @@ class GameObject:
     def destroy(self):
         self._is_destroyed = True
         # self._components.clear()
-
+    
+    # Here we add a component to an object, such as transform or spriterenderer etc.
     def add_component(self, component):
         component_name = component.__class__.__name__
         self._components[component_name] = component
         component.gameObject = self
         return component
     
+    # and here we remove said component, if needed
     def remove_component(self, component):
         component_name = component.__class__.__name__
         if component_name in self._components:
