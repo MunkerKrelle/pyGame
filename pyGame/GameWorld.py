@@ -9,6 +9,8 @@ from UIManager import UIManager
 from ScoreManager import ScoreManager
 from Menu import Menu, EndGameMenu
 
+# Gameworld handles early initialization for things such as list of objects and colliders, instantiation of manager classes etc,
+# whilst also retaining the core gameplay loop in update.
 class GameWorld:
 
     def __init__(self) -> None:
@@ -65,10 +67,9 @@ class GameWorld:
     def Start(self): 
         for gameObject in self._gameObjects[:]:
             gameObject.start()
-        
-        
-        
-
+    
+    # Runs the core loop of the game, calls update on all gameobjects in the list, sets tick rate for fps, checks input for quitting the game,
+    # draws the screen, checks collisions etc.
     def update(self):
 
         while self._running:
@@ -91,11 +92,12 @@ class GameWorld:
             for gameObject in self._gameObjects[:]:
                 gameObject.update(delta_time)
 
+            #checks collisions of objects.
             for i, collider1 in enumerate(self._colliders):
                 for j in range(i + 1, len(self._colliders)):
                     collider2 = self._colliders[j]
                     collider1.collision_check(collider2)
-
+            #removes objects and colliders from the list of active objects and colliders.
             self._gameObjects = [obj for obj in self._gameObjects if not obj.is_destroyed]
             self._colliders = [col for col in self._colliders if not col.gameObject.is_destroyed]
 
@@ -112,7 +114,8 @@ class GameWorld:
     def get_player(self):
         self.stored_player
         return self.stored_player
-
+    
+# runs the menu which the player can press play, options or quit 
 Menu().run()
 
         
