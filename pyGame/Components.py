@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 import pygame
+from ScoreManager import ScoreManager
 
 # Base class for all components
 class Component(ABC):
@@ -169,7 +170,8 @@ class Animator(Component):
 
 # Projectile component to handle projectile behavior
 class Projectile(Component):
-    def __init__(self, speed, target, damage=1):
+    def __init__(self, speed, target=None, damage=1):
+        super().__init__()
         self.speed = speed
         self.target = target  # Store the player's position at the time of creation
         self.initial_target_position = target.copy() if target else None  # Copy the initial target position if not None
@@ -287,10 +289,42 @@ class Collider(Component):
     def collision_enter(self, other):
         self._other_colliders.append(other)
 
+        if self.gameObject.tag == "Player" and other.gameObject.tag == "MissileProjectile":
+                # print("player is hit")
+                player = self.gameObject.get_component("Player")  
+                if player:
+                    print("player is hit by missile")
+                    player.take_damage()  
+                    other.gameObject.destroy()
+                    ScoreManager().decrease_score()
+
+        if self.gameObject.tag == "Player" and other.gameObject.tag == "EnemyProjectile":
+            # print("player is hit")
+            player = self.gameObject.get_component("Player")  
+            if player:
+                print("player is hit")
+                player.take_damage()  
+                other.gameObject.destroy()
+                ScoreManager().decrease_score()
+
         if self.gameObject.tag == "Enemy" and other.gameObject.tag == "PlayerProjectile":
+            projectile_component = other.gameObject.get_component("Projectile")
+            damage = projectile_component.damage if projectile_component else 1 
+
+            print(f"Collision! Enemy hit by projectile with {damage} damage") 
+
+            other.gameObject.destroy()
             enemy = self.gameObject.get_component("Enemy")
+            
             if enemy:
-                enemy.destroy()  
+                print(f"Before damage: Enemy has {enemy._lives} HP")
+                enemy.take_damage(damage) 
+                print(f"After damage: Enemy has {enemy._lives} HP")
+
+            boss = self.gameObject.get_component("Boss")
+            if boss:
+                boss.take_damage(damage) 
+                ScoreManager().increase_score()
             other.gameObject.destroy()
         
 
@@ -298,8 +332,9 @@ class Collider(Component):
             print("player flew into enemy")
             player = self.gameObject.get_component("Player")  
             if player:
-                player.take_damage()  
-
+                player.take_damage()
+                ScoreManager().decrease_score()
+        
         if "collision_enter" in self._listeners:
             self._listeners["collision_enter"](other)
 
