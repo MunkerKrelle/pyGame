@@ -36,53 +36,42 @@ class PowerUpSelector(Component):
         print(self.player)
         
     def update(self, delta_time) -> None:
-        # self.select_power()
         pass
+
     # Selects the power based on player input, calls the appropiate component power up.
     def select_power(self):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_1]:
             print("1 was pressed")
             print(self.player)
-            bob = self.player.get_component("Player")
-            print(bob)
-            bob.aqquire_fireball()
+            my_power = self.player.get_component("Player")
+            print(my_power)
+            my_power.aqquire_fireball()
             self.power_picked = True
-            # bob.aqquire_multi_shot()
         
         if keys[pygame.K_2]:
             print("2 was pressed")
-            bob = self.player.get_component("Player")
-            print(bob)
-            # bob.aqquire_fireball()
-            bob.aqquire_multi_shot()
+            my_power = self.player.get_component("Player")
+            print(my_power)
+            my_power.aqquire_multi_shot()
             self.power_picked = True
 
         if keys[pygame.K_3]:
             print("3 was pressed")
-            bob = self.player.get_component("Player")
-            print(bob)
-            # bob.aqquire_fireball()
-            bob.aqquire_speed_up()
+            my_power = self.player.get_component("Player")
+            print(my_power)
+            my_power.aqquire_speed_up()
             self.power_picked = True
         
         if keys[pygame.K_4]:
             print("3 was pressed")
-            bob = self.player.get_component("Player")
-            print(bob)
-            # bob.aqquire_fireball()
-            bob.aqquire_lives_up()
+            my_power = self.player.get_component("Player")
+            print(my_power)
+            my_power.aqquire_lives_up()
             self.power_picked = True
     
     def test_method(self):
         print("this test was successful")
-
-    # def get_player(self, obj_list):
-    #     for gameObject in obj_list:
-    #         if gameObject.tag == "Player":
-    #             # print("player found... :")
-    #             # print(gameObject)
-    #             self.player = gameObject
     
     def get_player(self, obj):
             if obj.tag == "Player":

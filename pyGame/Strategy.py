@@ -17,8 +17,8 @@ class Strategy():
     def die(self):
         pass
 
+# Ensure the game object stays within the screen bounds on the x-axis and change direction if needed
     def _keep_within_bounds(self, game_object, screen_width):
-        # Ensure the game object stays within the screen bounds on the x-axis and change direction if needed
         if game_object.transform.position.x < 0:
             game_object.transform.position.x = 0
             self.horizontal_movement = abs(self.horizontal_movement)  # Change direction to right
