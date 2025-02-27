@@ -1,10 +1,10 @@
 import pygame
 from Components import Component, SpriteRenderer
 
-# click or keyboard press for a power up.
+# Handles which power ups the player can aqquire by pressing the correct keyboard input 1-4.
 class PowerUpSelector(Component):
     _instance = None  
-
+    #single ton with potential for extra arguments thanks to *args and **kwargs
     def __new__(cls, player, *args, **kwargs):
         if cls._instance is None:
             cls._instance = super(PowerUpSelector, cls).__new__(cls)
@@ -38,7 +38,7 @@ class PowerUpSelector(Component):
     def update(self, delta_time) -> None:
         # self.select_power()
         pass
-
+    # Selects the power based on player input, calls the appropiate component power up.
     def select_power(self):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_1]:

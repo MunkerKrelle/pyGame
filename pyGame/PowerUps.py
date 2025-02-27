@@ -2,6 +2,8 @@ import pygame
 from Components import Component
 from GameObject import GameObject
 
+# This class handles the component based power ups that the player aqquires over the duration of the game. 
+# The basepowerup class is the default power the player starts with.
 class BasePowerUp(Component):
     def __init__(self,player_pos, damage, proj_amount, proj_speed, proj_spread_angle, sprite) -> None:
         self._gameObject = GameObject(pygame.math.Vector2(0, 0))
@@ -39,6 +41,8 @@ class BasePowerUp(Component):
     #     print("a unique shot was fired")
     #     return projectile_position
     
+    # Method for handling multiple projectiles so they are centered on the player at the time of shooting. 
+    # This method is called inside a for loop, based on the amount of projectiles the attack type has.
     def unique_shoot(self, sr, proj_center, shot_index, total_projectiles, spread):
         # Calculate X offset based on shot index and spread
         offset = (shot_index - (total_projectiles - 1) / 2) * spread  # Center shot at index 1 if 3 shots (0,1,2)
@@ -51,6 +55,7 @@ class BasePowerUp(Component):
         # print(f"A unique shot was fired at position {projectile_position}")
         return projectile_position
 
+# attack type power up, hits hard pr shot.
 class FireballPowerUp(Component):
     def __init__(self,player_pos, damage, proj_amount, proj_speed, proj_spread_angle, sprite) -> None:
         self._gameObject = GameObject(pygame.math.Vector2(0, 0))
@@ -91,6 +96,7 @@ class FireballPowerUp(Component):
         # print(f"A unique fireball was fired at position {projectile_position}")
         return projectile_position
 
+# Attack type power up, shots multiple projectiles.
 class MultiShot(Component):
     def __init__(self,player_pos, damage, proj_amount, proj_speed, proj_spread_angle, sprite) -> None:
         self._gameObject = GameObject(pygame.math.Vector2(0, 0))
@@ -134,6 +140,7 @@ class MultiShot(Component):
         # print(f"A unique multi shot was fired at position {projectile_position}")
         return projectile_position
 
+# Utility type power up, increase player movement speed.
 class SpeedPowerUp(Component):
     def __init__(self,player_pos, speed) -> None:
         self._gameObject = GameObject(pygame.math.Vector2(0, 0))
@@ -156,7 +163,8 @@ class SpeedPowerUp(Component):
         # print("speed has been buffed..")
         # print(self.speed)
         return self.speed
-    
+
+# Defence type power up, gives the player more lives.
 class MoreLivesPowerUp(Component):
     def __init__(self,player_pos, lives) -> None:
         self._gameObject = GameObject(pygame.math.Vector2(0, 0))
