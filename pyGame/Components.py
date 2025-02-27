@@ -169,10 +169,11 @@ class Animator(Component):
 
 # Projectile component to handle projectile behavior
 class Projectile(Component):
-    def __init__(self, speed, target):
+    def __init__(self, speed, target, damage=1):
         self.speed = speed
         self.target = target  # Store the player's position at the time of creation
         self.initial_target_position = target.copy() if target else None  # Copy the initial target position if not None
+        self.damage = damage
 
     def awake(self, game_world):
         pass
