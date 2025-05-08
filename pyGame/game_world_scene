@@ -1,0 +1,21 @@
+import pygame
+
+WHITE = (255, 255, 255)
+GREEN = (0, 150, 0)
+FONT = pygame.font.SysFont(None, 50)
+
+class GameWorldScene:
+    def __init__(self, manager):
+        self.manager = manager
+        # Setup your environment, player, enemies etc.
+
+    def handle_event(self, event):
+        pass  # Add game input handling here later
+
+    def update(self):
+        pass  # Add movement, collisions, etc.
+
+    def render(self, screen):
+        screen.fill(GREEN)
+        game_text = FONT.render("Welcome to the Game World!", True, WHITE)
+        screen.blit(game_text, (150, 250))

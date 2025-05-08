@@ -1,0 +1,51 @@
+import pygame
+from game_world_scene import GameWorldScene
+
+GRAY = (150, 150, 150)
+BLACK = (0, 0, 0)
+WHITE = (255, 255, 255)
+FONT = pygame.font.SysFont(None, 50)
+
+class Button:
+    def __init__(self, text, x, y, width, height, callback):
+        self.text = text
+        self.rect = pygame.Rect(x, y, width, height)
+        self.color = GRAY
+        self.callback = callback
+
+    def draw(self, surface):
+        pygame.draw.rect(surface, self.color, self.rect)
+        text_surf = FONT.render(self.text, True, BLACK)
+        text_rect = text_surf.get_rect(center=self.rect.center)
+        surface.blit(text_surf, text_rect)
+
+    def check_click(self, pos):
+        if self.rect.collidepoint(pos):
+            self.callback()
+
+class MenuScene:
+    def __init__(self, manager):
+        self.manager = manager
+        self.start_button = Button("Start", 300, 200, 200, 60, self.start_game)
+        self.exit_button = Button("Exit", 300, 300, 200, 60, self.exit_game)
+
+    def start_game(self):
+        self.manager.go_to(GameWorldScene(self.manager))
+
+    def exit_game(self):
+        pygame.quit()
+        sys.exit()
+
+    def handle_event(self, event):
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            pos = pygame.mouse.get_pos()
+            self.start_button.check_click(pos)
+            self.exit_button.check_click(pos)
+
+    def update(self):
+        pass
+
+    def render(self, screen):
+        screen.fill(WHITE)
+        self.start_button.draw(screen)
+        self.exit_button.draw(screen)
